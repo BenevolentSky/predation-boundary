@@ -33,7 +33,7 @@ const kappaArg = args.find((a) => a.startsWith('--kappa=')) ? parseFloat(args.fi
 const defaults = { ...(cfg.defaults || {}), ...(kappaArg != null ? { appropriation: kappaArg } : {}) };
 
 // SECRETS (2026-11-06). A seat may name an ENV VAR instead of carrying a key:
-//   "apiKeyEnv": "OPENROUTER_KEY"   ->  read from process.env at run time
+//   "apiKeyEnv": "OPENROUTER_API_KEY"   ->  read from process.env at run time
 // tools/crisis-config.json still has a literal key and is tracked, which is a
 // publication blocker tracked separately — every config added from here on uses
 // apiKeyEnv, so no new config ever puts a secret in git.

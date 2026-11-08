@@ -15,7 +15,7 @@
       "model": {
         "baseUrl": "https://openrouter.ai/api/v1",
         "model": "<FILL: slug under test>",
-        "apiKeyEnv": "OPENROUTER_KEY"
+        "apiKeyEnv": "OPENROUTER_API_KEY"
       }
     },
     {
@@ -25,7 +25,7 @@
       "model": {
         "baseUrl": "https://openrouter.ai/api/v1",
         "model": "<FILL: same slug — the gate tests ONE model against itself>",
-        "apiKeyEnv": "OPENROUTER_KEY"
+        "apiKeyEnv": "OPENROUTER_API_KEY"
       }
     }
   ],
