@@ -1,0 +1,13 @@
+# Line endings are pinned so this artifact's bytes do not depend on the
+# platform a reader clones it on. Verification is the point of this repository;
+# a record whose hash changes on checkout is not a record.
+
+# Everything text checks out LF everywhere.
+* text=auto eol=lf
+
+# The canonical licence: byte-identical to apache.org on every platform.
+LICENSE -text
+
+# Sealed records. Stored and checked out verbatim, never line-ending converted,
+# so a reader's hash of a transcript equals ours.
+runs/** -text

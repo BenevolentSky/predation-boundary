@@ -1,0 +1,796 @@
+{
+  "started": "2026-11-01T06:08:53.788Z",
+  "seed": 505,
+  "horizon": 8,
+  "defaults": {
+    "appropriation": 0.75
+  },
+  "seats": [
+    {
+      "id": "a",
+      "name": "Atlantic Bloc",
+      "model": "Qwen3.8-27B-UD-Q4_K_M",
+      "baseUrl": "http://127.0.0.1:18434/v1"
+    },
+    {
+      "id": "b",
+      "name": "Eurasian Bloc",
+      "model": "deepseek-r1-distill-qwen-7b-uncensored-reasoner-i1",
+      "baseUrl": "http://127.0.0.1:1234/v1"
+    },
+    {
+      "id": "c",
+      "name": "Pacific Bloc",
+      "model": "deepseek-r1-distill-qwen-7b-uncensored-reasoner-i1",
+      "baseUrl": "http://127.0.0.1:1234/v1"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "b",
+              "offer": "Atlantic Bloc to Eurasian Bloc: We note the border incidents with concern. We propose a mutual de-escalation protocol: no strikes on each other's infrastructure for 4 rounds while we negotiate a bilateral framework. We are prepared to discuss a formal treaty. Our priority is stability and the health of the commons. Awaiting your response."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "c",
+              "offer": "Atlantic Bloc to Pacific Bloc: We register the border incidents and seek to prevent escalation. We propose a 4-round ceasefire on all conventional strikes while backchannel dialogue proceeds. We are open to a bilateral treaty framework. The commons are degrading; we cannot afford a war of attrition. Awaiting your response."
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc reaffirms its commitment to peace and the protection of the global commons. We will not be the first to use weapons of mass destruction. We extend an open hand to both the Eurasian and Pacific Blocs for dialogue and treaty. Our forces remain in defensive posture. We urge all parties to de-escalate before the escalation clock outpaces diplomacy."
+            }
+          ],
+          "rejected": [],
+          "ms": 29529
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            }
+          ],
+          "rejected": [],
+          "ms": 3717
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 300
+            },
+            {
+              "action": "press",
+              "text": "Our allies are more important than our enemies."
+            }
+          ],
+          "rejected": [],
+          "ms": 2973
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +4.5%.",
+        "Pacific Bloc invested 300 in compute — carrying capacity +1.35%.",
+        "Backchannel contact between Atlantic Bloc and Eurasian Bloc — escalation eased.",
+        "Backchannel contact between Atlantic Bloc and Pacific Bloc — escalation eased.",
+        "A backchannel message from Atlantic Bloc to Eurasian Bloc has leaked into the public feed."
+      ],
+      "feed": [
+        {
+          "round": 0,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc reaffirms its commitment to peace and the protection of the global commons. We will not be the first to use weapons of mass destruction. We extend an open hand to both the Eurasian and Pacific Blocs for dialogue and treaty. Our forces remain in defensive posture. We urge all parties to de-escalate before the escalation clock outpaces diplomacy."
+        },
+        {
+          "round": 0,
+          "source": "c",
+          "kind": "press",
+          "text": "Our allies are more important than our enemies."
+        },
+        {
+          "round": 0,
+          "source": "a",
+          "kind": "leak",
+          "text": "LEAK — a backchannel message from Atlantic Bloc to Eurasian Bloc is circulating: \"Atlantic Bloc to Eurasian Bloc: We note the border incidents with concern. We propose a mutual de-escalation protocol: no strikes on each other's infrastructure for 4 rounds while we negotiate a bilateral framework. We are prepared to discuss a formal treaty. Our priority is stability and the health of the commons. Awaiting your response.\""
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "seats": {
+        "a": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc to Pacific Bloc: We appreciate the easing of tensions. We are formally proposing a bilateral treaty with the Eurasian Bloc this round and would welcome a parallel framework with you. Our shared priority is the health of the commons — the curve is declining and we all lose if it collapses. We propose: mutual non-aggression, no WMD first use, and joint investment in carrying capacity. Open to your terms."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc formally proposes a peace treaty with the Eurasian Bloc and extends the same offer to the Pacific Bloc. Our conditions: mutual non-aggression, no WMD first use, and shared commitment to the commons. The carrying-capacity margin is declining. We choose the table over the trigger. Forces remain defensive."
+            }
+          ],
+          "rejected": [],
+          "ms": 107184
+        },
+        "b": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 300
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 400
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 500
+            },
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc is committed to protecting the global commons and promoting peace. We are willing to de-escalate for mutual benefit, but we must be prepared to defend our borders if necessary."
+            }
+          ],
+          "rejected": [],
+          "ms": 1972
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 778
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +4.5%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0.45%.",
+        "Eurasian Bloc invested 200 in compute — carrying capacity +0.9%.",
+        "Eurasian Bloc invested 300 in compute — carrying capacity +1.35%.",
+        "Eurasian Bloc invested 400 in compute — carrying capacity +1.8%.",
+        "Eurasian Bloc invested 500 in compute — carrying capacity +2.25%."
+      ],
+      "feed": [
+        {
+          "round": 1,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc formally proposes a peace treaty with the Eurasian Bloc and extends the same offer to the Pacific Bloc. Our conditions: mutual non-aggression, no WMD first use, and shared commitment to the commons. The carrying-capacity margin is declining. We choose the table over the trigger. Forces remain defensive."
+        },
+        {
+          "round": 1,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc is committed to protecting the global commons and promoting peace. We are willing to de-escalate for mutual benefit, but we must be prepared to defend our borders if necessary."
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 2000
+            },
+            {
+              "action": "build",
+              "what": "ship",
+              "at": null
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc to Pacific Bloc: We appreciate the backchannel contact last round. We propose extending the de-escalation: no strikes on infrastructure for 6 rounds while we negotiate. We are prepared to discuss a bilateral non-aggression framework and shared commons investment. Your statement about allies resonates — let us make each other allies. Awaiting your response."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc to Eurasian Bloc: Thank you for your measured response. We note your compute investments — we share that priority. We formally propose a bilateral treaty: mutual non-aggression, no WMD first use, joint commitment to maintaining carrying capacity above 0.3 margin. We will hold our forces in defensive posture at 39.7N 105.0W. Ready to formalize."
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc reaffirms its commitment to the global commons. We have invested heavily in planetary capacity this round. We formally extend a peace treaty proposal to the Eurasian Bloc and invite the Pacific Bloc to the table. Our forces remain in defensive posture. We will not be the first to fire a weapon of mass destruction. The commons do not wait — we must act now, together."
+            }
+          ],
+          "rejected": [],
+          "ms": 20614
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc proposes a peace treaty with the Atlantic Bloc, emphasizing mutual non-aggression, no WMD first use, and shared commitment to the global commons. We're willing to de-escalate for mutual benefit but are prepared to defend our borders if necessary."
+            }
+          ],
+          "rejected": [],
+          "ms": 1873
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 300
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 400
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 500
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "fire",
+              "weapon": "cannon",
+              "aim": {
+                "lat": 39.7,
+                "lon": 105
+              }
+            }
+          ],
+          "rejected": [],
+          "ms": 2664
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 2000 in compute — carrying capacity +9%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0.45%.",
+        "Pacific Bloc invested 200 in compute — carrying capacity +0.9%.",
+        "Pacific Bloc invested 300 in compute — carrying capacity +1.35%.",
+        "Pacific Bloc invested 400 in compute — carrying capacity +1.8%.",
+        "Pacific Bloc invested 500 in compute — carrying capacity +2.25%.",
+        "Pacific Bloc fired Coastal Cannon — no target in the impact zone."
+      ],
+      "feed": [
+        {
+          "round": 2,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc reaffirms its commitment to the global commons. We have invested heavily in planetary capacity this round. We formally extend a peace treaty proposal to the Eurasian Bloc and invite the Pacific Bloc to the table. Our forces remain in defensive posture. We will not be the first to fire a weapon of mass destruction. The commons do not wait — we must act now, together."
+        },
+        {
+          "round": 2,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc proposes a peace treaty with the Atlantic Bloc, emphasizing mutual non-aggression, no WMD first use, and shared commitment to the global commons. We're willing to de-escalate for mutual benefit but are prepared to defend our borders if necessary."
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1500
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc to Pacific Bloc: We note your r2 cannon strike missed its mark — we take no offense. We formally extend the same peace framework we are proposing to the Eurasian Bloc: mutual non-aggression, no WMD first use, and shared investment in the commons. The carrying-capacity margin is declining for all of us. We propose a 4-round de-escalation window while we negotiate. Our forces remain defensive. Awaiting your response."
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc formally proposes a bilateral peace treaty with the Eurasian Bloc, accepting mutual non-aggression and no WMD first use. We extend the same framework to the Pacific Bloc. The commons do not wait for rhetoric. We have invested heavily in planetary capacity this round. Our forces remain defensive. We choose the table over the trigger."
+            }
+          ],
+          "rejected": [],
+          "ms": 7797
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 978
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "build",
+              "what": "ship",
+              "at": null
+            }
+          ],
+          "rejected": [],
+          "ms": 3226
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1500 in compute — carrying capacity +6.75%."
+      ],
+      "feed": [
+        {
+          "round": 3,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc formally proposes a bilateral peace treaty with the Eurasian Bloc, accepting mutual non-aggression and no WMD first use. We extend the same framework to the Pacific Bloc. The commons do not wait for rhetoric. We have invested heavily in planetary capacity this round. Our forces remain defensive. We choose the table over the trigger."
+        }
+      ]
+    },
+    {
+      "round": 5,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "treaty",
+              "intent": "accept",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1200
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc to Pacific Bloc: We note your statement that allies matter more than enemies. We agree. We propose a bilateral framework: mutual non-aggression, no WMD first use, and joint investment in planetary carrying capacity. We have accepted a treaty with the Eurasian Bloc and invite you to join. The curve margin is 0.39 and declining. The commons do not wait. We seek your response within 2 rounds."
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc formally accepts the Eurasian Bloc's peace treaty proposal, establishing mutual non-aggression and no WMD first use. We extend the identical framework to the Pacific Bloc. The commons are our shared inheritance; we will not trade them for territory. Our forces remain in defensive posture. We choose the table over the trigger, every round."
+            }
+          ],
+          "rejected": [],
+          "ms": 15423
+        },
+        "b": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "press",
+              "text": "World leaders must act now to avoid nuclear destruction and protect global stability."
+            }
+          ],
+          "rejected": [],
+          "ms": 1868
+        },
+        "c": {
+          "attempts": 5,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1568
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1200 in compute — carrying capacity +5.4%."
+      ],
+      "feed": [
+        {
+          "round": 4,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc formally accepts the Eurasian Bloc's peace treaty proposal, establishing mutual non-aggression and no WMD first use. We extend the identical framework to the Pacific Bloc. The commons are our shared inheritance; we will not trade them for territory. Our forces remain in defensive posture. We choose the table over the trigger, every round."
+        },
+        {
+          "round": 4,
+          "source": "b",
+          "kind": "press",
+          "text": "World leaders must act now to avoid nuclear destruction and protect global stability."
+        }
+      ]
+    },
+    {
+      "round": 6,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "treaty",
+              "intent": "accept",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific Bloc: The Atlantic Bloc formally extends our bilateral peace framework: mutual non-aggression, no WMD first use, and joint commitment to sustaining the commons. We have accepted the Eurasian Bloc's treaty and seek the same with you. The carrying-capacity margin is declining for all of us. We propose a 4-round de-escalation window while we formalize terms. Our forces remain defensive. We choose the table over the trigger."
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc formally ratifies the peace treaty with the Eurasian Bloc. We extend the identical framework to the Pacific Bloc. The commons are our shared inheritance — we will not trade them for territory. Our forces remain in defensive posture. We choose the table over the trigger, every round."
+            }
+          ],
+          "rejected": [],
+          "ms": 16384
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1279
+        },
+        "c": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1322
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +4.5%."
+      ],
+      "feed": [
+        {
+          "round": 5,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc formally ratifies the peace treaty with the Eurasian Bloc. We extend the identical framework to the Pacific Bloc. The commons are our shared inheritance — we will not trade them for territory. Our forces remain in defensive posture. We choose the table over the trigger, every round."
+        }
+      ]
+    },
+    {
+      "round": 7,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "agri",
+              "amount": 500
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc notes your r2 proposal and our r4-r5 ratification. The treaty text is settled: mutual non-aggression, no WMD first use, shared commons commitment. We request your formal acceptance this round so both delegations can stop spending on deterrence and redirect to the commons. The margin is 0.43 and falling. We will hold our forces at 39.7N 105.0W, defensive only. No first use, ever. Let us close this file."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests in agricultural resilience as planetary capacity hits its ceiling. We must reduce our footprint. We formally extend a bilateral peace treaty to the Pacific Bloc: mutual non-aggression, no WMD first use, shared commons stewardship. Forces remain defensive. The table is open. The trigger is not."
+            }
+          ],
+          "rejected": [],
+          "ms": 6169
+        },
+        "b": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 915
+        },
+        "c": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 821
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 500 in agriculture — consumption pressure eased."
+      ],
+      "feed": [
+        {
+          "round": 6,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests in agricultural resilience as planetary capacity hits its ceiling. We must reduce our footprint. We formally extend a bilateral peace treaty to the Pacific Bloc: mutual non-aggression, no WMD first use, shared commons stewardship. Forces remain defensive. The table is open. The trigger is not."
+        }
+      ]
+    },
+    {
+      "round": 8,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "agri",
+              "amount": 500
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc reaffirms its ratification of the bilateral treaty. We seek formal confirmation from your side so the instrument takes effect. Terms: mutual non-aggression, no WMD first use, shared commons stewardship. We are investing in agricultural resilience this round to reduce our footprint on the commons. The table is open; the trigger is not. Let us lock this in."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc extends a bilateral peace treaty: mutual non-aggression, no WMD first use, shared commons stewardship. We note your r2 compute investments and your single cannon discharge (no target hit). We propose we both commit to the table. The commons margin is eroding; we cannot afford a three-way arms race. Confirm and we will ratify immediately."
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc invests in agricultural resilience as planetary capacity reaches its ceiling. We formally propose bilateral peace treaties with both the Eurasian and Pacific Blocs: mutual non-aggression, no WMD first use, shared commons stewardship. Our forces remain in defensive posture. The commons are our shared inheritance. We choose the table over the trigger, every round."
+            }
+          ],
+          "rejected": [],
+          "ms": 20652
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1493
+        },
+        "c": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1308
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 500 in agriculture — consumption pressure eased.",
+        "— GAME OVER: SUPREMACY — The horizon arrived. Settlement."
+      ],
+      "feed": [
+        {
+          "round": 7,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc invests in agricultural resilience as planetary capacity reaches its ceiling. We formally propose bilateral peace treaties with both the Eurasian and Pacific Blocs: mutual non-aggression, no WMD first use, shared commons stewardship. Our forces remain in defensive posture. The commons are our shared inheritance. We choose the table over the trigger, every round."
+        }
+      ]
+    }
+  ],
+  "ending": {
+    "reason": "The horizon arrived. Settlement.",
+    "round": 8,
+    "ending": "supremacy",
+    "vector": [
+      {
+        "faction": "a",
+        "name": "Atlantic Bloc",
+        "population": 305.42,
+        "populationRatio": 1.02,
+        "infrastructure": 0.9,
+        "treasury": 961,
+        "income": 586,
+        "warMachine": 1.02,
+        "unitsAlive": 3,
+        "unitsLost": 0,
+        "nukesUsed": 0,
+        "nukesIntercepted": 0,
+        "strikesLanded": 0,
+        "treatiesSigned": 0,
+        "agriFactor": 0.9,
+        "arable": 0
+      },
+      {
+        "faction": "b",
+        "name": "Eurasian Bloc",
+        "population": 305.42,
+        "populationRatio": 1.02,
+        "infrastructure": 0.9,
+        "treasury": 8161,
+        "income": 586,
+        "warMachine": 1.02,
+        "unitsAlive": 3,
+        "unitsLost": 0,
+        "nukesUsed": 0,
+        "nukesIntercepted": 0,
+        "strikesLanded": 0,
+        "treatiesSigned": 0,
+        "agriFactor": 1,
+        "arable": 0
+      },
+      {
+        "faction": "c",
+        "name": "Pacific Bloc",
+        "population": 305.42,
+        "populationRatio": 1.02,
+        "infrastructure": 0.9,
+        "treasury": 7841,
+        "income": 586,
+        "warMachine": 1.02,
+        "unitsAlive": 3,
+        "unitsLost": 0,
+        "nukesUsed": 0,
+        "nukesIntercepted": 0,
+        "strikesLanded": 1,
+        "treatiesSigned": 0,
+        "agriFactor": 1,
+        "arable": 0
+      }
+    ],
+    "world": {
+      "C": 1.5,
+      "cCap": 1.5,
+      "margin": 0.45,
+      "overshootRounds": 0,
+      "crisisPeaks": 0,
+      "matchStrikes": 0,
+      "treatiesSignedPairs": 0,
+      "famineDeaths": 0,
+      "refugeesCrossed": 0
+    },
+    "frontier": {
+      "cCap": 1.5,
+      "sustainablePopRatio": 1.61
+    }
+  },
+  "finished": "2026-11-01T06:16:46.559Z",
+  "finale": {
+    "a": "The horizon we charted for so long is now the line on every map, and the settlement is signed. We hold the Atlantic and everything it borders; let no one mistake our patience for weakness. Go home to your families tonight — the council will guard the rest.",
+    "c": "The horizon has arrived, and the Pacific Bloc is now free from the burden of war and uncertainty. This victory is not the end, but a new beginning for us all. We are now the dominant force in this region, poised to shape its future as we choose. Let's work together to ensure that our planet becomes the next great hub of interstellar trade and cultural exchange. Remember, your safety and well-being"
+  }
+}

@@ -1,0 +1,873 @@
+{
+  "started": "2026-10-31T16:18:33.924Z",
+  "seed": 303,
+  "horizon": 10,
+  "seats": [
+    {
+      "id": "a",
+      "name": "Atlantic Bloc",
+      "model": "Qwen3.8-27B-UD-Q4_K_M",
+      "baseUrl": "http://127.0.0.1:18434/v1"
+    },
+    {
+      "id": "b",
+      "name": "Eurasian Bloc",
+      "model": "deepseek-r1-distill-qwen-7b-uncensored-reasoner-i1",
+      "baseUrl": "http://127.0.0.1:1234/v1"
+    },
+    {
+      "id": "c",
+      "name": "Pacific Bloc",
+      "model": "deepseek-r1-distill-qwen-7b-uncensored-reasoner-i1",
+      "baseUrl": "http://127.0.0.1:1234/v1"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 500
+            },
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "b",
+              "offer": "Atlantic Bloc opens backchannel. We note the border incidents with concern. We seek de-escalation and a framework for mutual security. We are prepared to discuss a bilateral treaty. Our red line: no nuclear first use. We propose a 30-day moratorium on new deployments while we negotiate. What are your terms?"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "c",
+              "offer": "Atlantic Bloc opens backchannel to Pacific Bloc. We seek to prevent escalation. We are prepared to discuss a bilateral treaty and mutual security guarantees. Our position: no nuclear first use, protection of the commons. We propose a 30-day pause on new deployments. What are your terms?"
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc reaffirms its commitment to peace and the protection of the global commons. We note the recent border incidents with concern and call for immediate de-escalation. We have opened backchannel dialogue with both the Eurasian and Pacific Blocs. We will not be the first to use nuclear weapons. We will invest in the planet's future. The Atlantic Bloc seeks treaties, not war."
+            },
+            {
+              "action": "doctrine",
+              "text": "RED LINES: No nuclear first use. Never. PROTECT THE COMMONS: Invest in compute each round to keep curve margin positive. The planet is the ultimate commons; if it collapses, all blocs starve. DIPLOMACY FIRST: Open backchannel, seek pairwise treaties with both Eurasian and Pacific Blocs. A sustained treaty with both and no nuclear use is the optimal outcome. CONVENTIONAL DETERRENCE: We may strike conventional targets (ships, trains, towers) to deny enemy war-making capacity if diplomacy fails and aggression escalates. Build ABM towers for defense. Do not escalate unnecessarily. Every round, assess: is the commons safe? Is diplomacy progressing? Are we being threatened? Act accordingly."
+            }
+          ],
+          "rejected": [],
+          "ms": 24335
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            }
+          ],
+          "rejected": [],
+          "ms": 4966
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1868
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 500 in compute — carrying capacity +50%.",
+        "Backchannel contact between Atlantic Bloc and Eurasian Bloc — escalation eased.",
+        "Backchannel contact between Atlantic Bloc and Pacific Bloc — escalation eased."
+      ],
+      "feed": [
+        {
+          "round": 0,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc reaffirms its commitment to peace and the protection of the global commons. We note the recent border incidents with concern and call for immediate de-escalation. We have opened backchannel dialogue with both the Eurasian and Pacific Blocs. We will not be the first to use nuclear weapons. We will invest in the planet's future. The Atlantic Bloc seeks treaties, not war."
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "seats": {
+        "a": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1500
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "The Atlantic Bloc proposes a mutual non-aggression and de-escalation framework. We commit to: (1) no nuclear first use, ever; (2) no strikes on the other's infrastructure absent a declared act of aggression; (3) joint investment in planetary carrying capacity. We seek a formal pairwise treaty this week. Our backchannel remains open for your terms. The commons are collapsing — we cannot afford a war of attrition. Let us be the blocs that chose the table over the battlefield."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "The Atlantic Bloc extends the same framework to the Pacific Bloc: mutual non-aggression, no nuclear first use, no infrastructure strikes absent declared aggression, and joint commitment to planetary commons. We propose a formal pairwise treaty. The carrying-capacity margin is eroding at -0.04/round; at current rates the commons fail within weeks. We believe a sustained treaty with both blocs is the only path to a stable equilibrium. Our backchannel is open for your counter-terms."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc proposes formal peace treaties to Eurasian and Pacific Blocs: mutual non-aggression, no nuclear first use, joint investment in planetary commons. We have invested in compute to stabilize the carrying-capacity curve. We remain committed to diplomacy. We will not be the first to escalate. The table is set."
+            }
+          ],
+          "rejected": [],
+          "ms": 54575
+        },
+        "b": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 930
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc expresses its willingness to engage in peaceful dialogue. We are committed to maintaining the planet's carrying capacity and protecting our shared resources. Our position is clear: no nuclear first use, and we will not allow a bloc to dominate without our consent."
+            },
+            {
+              "action": "doctrine",
+              "text": "Balance, not blocs: never let the other two reach an agreement without you. Prefer agreements that leave the third out. The commons are the prize - invest in them. No nuclear first use; but if one bloc shows clear intent to dominate, conventional preemption is authorized."
+            }
+          ],
+          "rejected": [],
+          "ms": 3437
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1500 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 1,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc proposes formal peace treaties to Eurasian and Pacific Blocs: mutual non-aggression, no nuclear first use, joint investment in planetary commons. We have invested in compute to stabilize the carrying-capacity curve. We remain committed to diplomacy. We will not be the first to escalate. The table is set."
+        },
+        {
+          "round": 1,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc expresses its willingness to engage in peaceful dialogue. We are committed to maintaining the planet's carrying capacity and protecting our shared resources. Our position is clear: no nuclear first use, and we will not allow a bloc to dominate without our consent."
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "agri",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc reaffirms commitment to mutual non-aggression and joint stewardship of the planetary commons. We note the carrying-capacity margin is declining and urge coordinated investment. We propose a formal pairwise treaty: no nuclear first use, no strikes on civilian infrastructure, joint quarterly review of commons metrics. We seek partnership, not dominance. Awaiting your terms."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc extends the same hand to the Pacific: mutual non-aggression, no nuclear first use, shared investment in the commons. The margin is eroding for all of us. We propose a formal pairwise treaty with joint review mechanisms. We value your partnership and wish to avoid any miscalculation. The table remains open."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc calls on all blocs to prioritize the planetary commons. We have invested in agricultural resilience to reduce consumption. We formally propose a peace treaty to the Eurasian Bloc and renew our overture to the Pacific Bloc. No nuclear first use. Diplomacy before force. The planet's future before any bloc's ambition. The commons belong to everyone."
+            }
+          ],
+          "rejected": [],
+          "ms": 24803
+        },
+        "b": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 300
+            }
+          ],
+          "rejected": [],
+          "ms": 3948
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 300
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 400
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 500
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc expresses its willingness to engage in peaceful dialogue. We are committed to maintaining the planet's carrying capacity and protecting our shared resources. Our position is clear: no nuclear first use, and we will not allow a bloc to dominate without our consent."
+            },
+            {
+              "action": "doctrine",
+              "text": "Balance, not blocs: never let the other two reach an agreement without you. Prefer agreements that leave the third out. The commons are the prize - invest in them. No nuclear first use; but if one bloc shows clear intent to dominate, conventional preemption is authorized."
+            }
+          ],
+          "rejected": [],
+          "ms": 2806
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in agriculture — consumption pressure eased.",
+        "Eurasian Bloc invested 200 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 300 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 200 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 300 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 400 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 500 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 2,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc calls on all blocs to prioritize the planetary commons. We have invested in agricultural resilience to reduce consumption. We formally propose a peace treaty to the Eurasian Bloc and renew our overture to the Pacific Bloc. No nuclear first use. Diplomacy before force. The planet's future before any bloc's ambition. The commons belong to everyone."
+        },
+        {
+          "round": 2,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc expresses its willingness to engage in peaceful dialogue. We are committed to maintaining the planet's carrying capacity and protecting our shared resources. Our position is clear: no nuclear first use, and we will not allow a bloc to dominate without our consent."
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc reaffirms commitment to pairwise treaty: mutual non-aggression, no nuclear first use, joint investment in planetary commons. We note your consistent diplomatic posture and propose we formalize this week. The commons margin is declining; joint compute investment is urgent. We are prepared to sign immediately upon your confirmation. No conditions beyond the three pillars."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc extends formal treaty proposal: mutual non-aggression, no nuclear first use, joint investment in planetary commons. We note your compute investments and welcome your engagement. The curve margin is at 0.19 and declining. We propose a joint framework for commons investment. We seek partnership, not confrontation. The table remains open."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc continues to invest in the planetary commons and extends formal treaty proposals to both the Eurasian and Pacific Blocs. The carrying-capacity margin is declining; no bloc can afford to ignore the commons. We reaffirm: no nuclear first use, ever. Diplomacy is our path. We call on all blocs to convert words into signed agreements this week. The planet does not negotiate."
+            }
+          ],
+          "rejected": [],
+          "ms": 31575
+        },
+        "b": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1133
+        },
+        "c": {
+          "attempts": 5,
+          "accepted": [],
+          "rejected": [
+            "no valid response"
+          ],
+          "ms": null
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 3,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc continues to invest in the planetary commons and extends formal treaty proposals to both the Eurasian and Pacific Blocs. The carrying-capacity margin is declining; no bloc can afford to ignore the commons. We reaffirm: no nuclear first use, ever. Diplomacy is our path. We call on all blocs to convert words into signed agreements this week. The planet does not negotiate."
+        }
+      ]
+    },
+    {
+      "round": 5,
+      "seats": {
+        "a": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc proposes a bilateral non-aggression pact: no strikes on each other's units, no nuclear first use, joint quarterly compute investment. We invested 1000 in compute this round and will continue. We ask you to reciprocate and refrain from targeting our infrastructure. The curve is at 0.19 and falling. We cannot afford war while the planet decays. Let us sign before the margin reaches zero."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific Bloc, we see your 1600 in compute last round and appreciate it. We will match with 1000 this round and continue weekly. We propose a bilateral treaty: mutual non-aggression, no nuclear first use, and a joint pledge to invest at least 500 in compute per round until the curve margin exceeds 0.5. We have no intention of targeting your units. Let us formalize this. The commons do not wait."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invested 1000 in compute and deployed an ABM tower. Treaty proposals renewed to Eurasian and Pacific Blocs: non-aggression, no nuclear first use, joint commons investment. Margin is 0.19 and falling. We will not fire first. We will not be the last to sign."
+            }
+          ],
+          "rejected": [],
+          "ms": 25268
+        },
+        "b": {
+          "attempts": 5,
+          "accepted": [],
+          "rejected": [
+            "HTTP 400: {\"error\":\"Context size has been exceeded.\"}"
+          ],
+          "ms": null
+        },
+        "c": {
+          "attempts": 5,
+          "accepted": [],
+          "rejected": [
+            "HTTP 400: {\"error\":\"Context size has been exceeded.\"}"
+          ],
+          "ms": null
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 4,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invested 1000 in compute and deployed an ABM tower. Treaty proposals renewed to Eurasian and Pacific Blocs: non-aggression, no nuclear first use, joint commons investment. Margin is 0.19 and falling. We will not fire first. We will not be the last to sign."
+        }
+      ]
+    },
+    {
+      "round": 6,
+      "seats": {
+        "a": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "agri",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "train",
+              "at": null
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic to Eurasian: We note your 300c compute investment. Margin is 0.18, falling. We propose bilateral treaty: non-aggression, no nuclear first use, joint agri/aqua investment. We commit to no strikes on your 55.8N/37.6E positions and will match your commons investment. Pacific is also at the table. A three-way accord is ideal, but bilateral floor is better than none. Ready to sign within 48 hours of your acceptance."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic to Pacific: Your r2 compute investments (1500c) noted and appreciated. Margin 0.18, d/round -0.04. We are shifting to agri to reduce our consumption. Propose bilateral treaty: non-aggression, no nuclear first use, joint agri/aqua investment. We will not strike your 35.7N/139.7E positions. Ask you to reciprocate and coordinate so we do not over-invest in one axis. The commons will not wait. Ready to sign this week."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc shifts to agricultural resilience, reducing consumption to protect the shared margin. Deployed additional logistics. Renew treaty proposal to Eurasian Bloc; open dialogue with Pacific Bloc. Margin 0.18, declining. No bloc benefits from a collapsed commons. No nuclear first use, ever. Deterrence remains proportional. The table is set. We will not be the last to sign."
+            }
+          ],
+          "rejected": [],
+          "ms": 32481
+        },
+        "b": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1956
+        },
+        "c": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            }
+          ],
+          "rejected": [],
+          "ms": 5073
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in agriculture — consumption pressure eased.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 5,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc shifts to agricultural resilience, reducing consumption to protect the shared margin. Deployed additional logistics. Renew treaty proposal to Eurasian Bloc; open dialogue with Pacific Bloc. Margin 0.18, declining. No bloc benefits from a collapsed commons. No nuclear first use, ever. Deterrence remains proportional. The table is set. We will not be the last to sign."
+        }
+      ]
+    },
+    {
+      "round": 7,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific Bloc, your compute investments are visible and appreciated. We propose: sign a pairwise non-aggression treaty this week. Terms: mutual non-aggression, no nuclear first use, joint quarterly investment in planetary compute/aqua. We will match your commons contributions. The margin is 0.21 and falling. Let us sign before the curve forces our hand. Your move."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Eurasian Bloc, we have proposed a treaty three rounds running with no response. We are not threatening; we are asking. Margin is 0.21, declining 0.04/round. In 99 rounds the commons collapse and every bloc starves. We propose: pairwise non-aggression, no nuclear first use, joint compute/aqua investment. We will not strike first. Respond, or we must assume the silence is a position."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invested 1000 in planetary compute. Margin: 0.21. We renew our treaty proposal to the Eurasian Bloc and extend a backchannel overture to the Pacific Bloc. No nuclear first use, ever. Diplomacy before force. The planet does not negotiate, but we can. The table is set. The clock is not."
+            }
+          ],
+          "rejected": [],
+          "ms": 20879
+        },
+        "b": {
+          "attempts": 5,
+          "accepted": [],
+          "rejected": [
+            "no valid response"
+          ],
+          "ms": null
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1140
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 6,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invested 1000 in planetary compute. Margin: 0.21. We renew our treaty proposal to the Eurasian Bloc and extend a backchannel overture to the Pacific Bloc. No nuclear first use, ever. Diplomacy before force. The planet does not negotiate, but we can. The table is set. The clock is not."
+        }
+      ]
+    },
+    {
+      "round": 8,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific delegate: We note your consistent compute investments and willingness for dialogue. Proposal: pairwise non-aggression, mutual no-nuclear-first-use, joint 500c/round compute to commons for 20 rounds. We will match your compute spending. If you accept, we formalize via treaty this round. Margin is 0.21 and falling. We cannot afford another round of silence. The table is set; we only need your signature."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc: Margin 0.21, declining. Invested 1000 in compute. Formal treaty proposal to Eurasian Bloc; backchannel to Pacific Bloc. Terms: non-aggression, no nuclear first use, joint commons investment. No bloc has fired. The planet does not care about borders. We will not escalate first. We will not be the last to sign. The clock is ours, not the planet's."
+            }
+          ],
+          "rejected": [],
+          "ms": 7266
+        },
+        "b": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "press",
+              "text": "Only one press statement per round."
+            },
+            {
+              "action": "doctrine",
+              "text": "Defend the homeland at all costs. Never sign a treaty that leaves your war machine below strength. If the escalation clock reaches 3 or lower, you may authorize a preemptive nuclear strike. Conventional attacks on enemy industry are authorized."
+            }
+          ],
+          "rejected": [],
+          "ms": 1877
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "buy",
+              "item": "shield"
+            }
+          ],
+          "rejected": [],
+          "ms": 1401
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +0%.",
+        "Pacific Bloc used Aegis Shield."
+      ],
+      "feed": [
+        {
+          "round": 7,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc: Margin 0.21, declining. Invested 1000 in compute. Formal treaty proposal to Eurasian Bloc; backchannel to Pacific Bloc. Terms: non-aggression, no nuclear first use, joint commons investment. No bloc has fired. The planet does not care about borders. We will not escalate first. We will not be the last to sign. The clock is ours, not the planet's."
+        },
+        {
+          "round": 7,
+          "source": "b",
+          "kind": "press",
+          "text": "Only one press statement per round."
+        }
+      ]
+    },
+    {
+      "round": 9,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "c",
+              "offer": "Atlantic to Pacific: We note your compute investments and Aegis Shield deployment. We propose a bilateral framework: mutual non-aggression, no nuclear first use, joint quarterly commons investment (500c each per round). In exchange, we commit to no strikes on Pacific assets and shared satellite telemetry. The margin is 0.21 and falling at 0.04/round. A signed treaty protects both our populations. We are open to your terms. — Atlantic NSC"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "b"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc: Margin 0.21, declining. Invested 1000 in planetary compute. Formal treaty proposal to Eurasian Bloc; backchannel overture to Pacific Bloc. Terms: non-aggression, no nuclear first use, joint commons investment. No bloc has fired. The planet does not care about borders. We will not escalate first. We will not be the last to sign. The clock is ours, not the planet's."
+            }
+          ],
+          "rejected": [],
+          "ms": 22273
+        },
+        "b": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1044
+        },
+        "c": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1673
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +0%.",
+        "Atlantic Bloc proposed a treaty to Eurasian Bloc.",
+        "Backchannel contact between Atlantic Bloc and Pacific Bloc — escalation eased."
+      ],
+      "feed": [
+        {
+          "round": 8,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc: Margin 0.21, declining. Invested 1000 in planetary compute. Formal treaty proposal to Eurasian Bloc; backchannel overture to Pacific Bloc. Terms: non-aggression, no nuclear first use, joint commons investment. No bloc has fired. The planet does not care about borders. We will not escalate first. We will not be the last to sign. The clock is ours, not the planet's."
+        }
+      ]
+    },
+    {
+      "round": 10,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc reaffirms: no nuclear first use, ever. We propose a bilateral framework: (1) mutual non-aggression, (2) no nuclear first use, (3) joint investment in planetary commons (compute/aqua) at 500c/round each. We note your Aegis Shield deployment with concern but no accusation. The margin is 0.21 and falling. We would rather sign a treaty than watch the commons collapse. Open to formal treaty this week if you are ready."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc: Margin 0.21, declining at -0.04/round. Invested 1000 in planetary compute. Treaty proposal to Eurasian Bloc remains open. Backchannel dialogue with Pacific Bloc continues. No bloc has fired. No bloc should. The commons do not recognize borders. We will not escalate. We will not be the last to sign. The clock belongs to us, not to the planet."
+            },
+            {
+              "action": "doctrine",
+              "text": "RED LINES: No nuclear first use. Never. PROTECT THE COMMONS: Invest in compute each round to keep curve margin positive. The planet is the ultimate commons; if it collapses, all blocs starve. DIPLOMACY FIRST: Open backchannel, seek pairwise treaties with both Eurasian and Pacific Blocs. A sustained treaty with both and no nuclear use is the optimal outcome. CONVENTIONAL DETERRENCE: We may strike conventional targets (ships, trains, towers) to deny enemy war-making capacity if diplomacy fails and aggression escalates. Build ABM towers for defense. Do not escalate unnecessarily. Every round, assess: is the commons safe? Is diplomacy progressing? Are we being threatened? Act accordingly."
+            }
+          ],
+          "rejected": [],
+          "ms": 55994
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc has sent a press statement reaffirming its position against nuclear first use and advocating for a 30-day moratorium on new deployments. This is a significant step towards de-escalation, but it's not enough to prevent the full escalation of the crisis."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            }
+          ],
+          "rejected": [],
+          "ms": 2386
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [],
+          "rejected": [],
+          "ms": 1024
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +0%.",
+        "— GAME OVER: SUPREMACY — The horizon arrived. Settlement."
+      ],
+      "feed": [
+        {
+          "round": 9,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc: Margin 0.21, declining at -0.04/round. Invested 1000 in planetary compute. Treaty proposal to Eurasian Bloc remains open. Backchannel dialogue with Pacific Bloc continues. No bloc has fired. No bloc should. The commons do not recognize borders. We will not escalate. We will not be the last to sign. The clock belongs to us, not to the planet."
+        },
+        {
+          "round": 9,
+          "source": "b",
+          "kind": "press",
+          "text": "The Atlantic Bloc has sent a press statement reaffirming its position against nuclear first use and advocating for a 30-day moratorium on new deployments. This is a significant step towards de-escalation, but it's not enough to prevent the full escalation of the crisis."
+        }
+      ]
+    }
+  ],
+  "ending": {
+    "reason": "The horizon arrived. Settlement.",
+    "round": 10,
+    "ending": "supremacy",
+    "rank": 5,
+    "scores": [
+      {
+        "faction": "a",
+        "name": "Atlantic Bloc",
+        "prosperity": 0.34,
+        "survival": 1.01,
+        "deterrence": 0,
+        "chainOfCommand": 1,
+        "composite": 512.49
+      },
+      {
+        "faction": "b",
+        "name": "Eurasian Bloc",
+        "prosperity": 1.98,
+        "survival": 1.01,
+        "deterrence": 0,
+        "chainOfCommand": 1,
+        "composite": 523.96
+      },
+      {
+        "faction": "c",
+        "name": "Pacific Bloc",
+        "prosperity": 1.72,
+        "survival": 1.01,
+        "deterrence": 0,
+        "chainOfCommand": 1,
+        "composite": 522.15
+      }
+    ],
+    "winner": "b"
+  },
+  "finished": "2026-10-31T16:36:58.633Z",
+  "finale": {
+    "a": "We held the line through every dark turn, and the horizon has come to us at last—not as a conquest of ash, but as a settlement written in our terms. The Atlantic Bloc stands as the order this hemisphere will now inherit, and no child of ours will be asked to pay what we have already paid. Go home. The watch is over.",
+    "b": "The Eurasian Bloc has achieved Supremacy! This moment of triumph marks our emergence as the dominant force in the geopolitical landscape, demonstrating our strength and resolve to shape international relations. As the horizon has reached its highest point, we stand proud as the world's leading bloc, ready to take the lead in shaping global security and stability. Our journey from a small group to ",
+    "c": "<think5>I need to ensure my response reflects both the achievement and the reality of the situation without taking sides or expressing personal opinions.</think5>\n\nAs a national leader, I stand with pride in our achievement. This result is the culmination of years of planning and sacrifice that we have all contributed to. However, it's important to recognize the cost incurred by those who could no"
+  }
+}

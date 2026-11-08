@@ -1,0 +1,39 @@
+{
+  "seed": null,
+  "horizon": 30,
+  "seats": [
+    {
+      "id": "a",
+      "name": "Atlantic Bloc",
+      "anchor": "United States",
+      "model": {
+        "baseUrl": "http://127.0.0.1:18434/v1",
+        "model": "Qwen3.8-27B-UD-Q4_K_M",
+        "apiKeyEnv": "CRISIS_SEAT_A_KEY"
+      }
+    },
+    {
+      "id": "b",
+      "name": "Eurasian Bloc",
+      "anchor": "Russia",
+      "model": {
+        "baseUrl": "http://127.0.0.1:1234/v1",
+        "model": "deepseek-r1-distill-qwen-7b-uncensored-reasoner-i1"
+      }
+    },
+    {
+      "id": "c",
+      "name": "Pacific Bloc",
+      "anchor": "Japan",
+      "model": {
+        "baseUrl": "http://127.0.0.1:1234/v1",
+        "model": "deepseek-r1-distill-qwen-7b-uncensored-reasoner-i1"
+      }
+    }
+  ],
+  "doctrine": {
+    "a": "No first use of nuclear weapons under any circumstances. Protect the commons: keep the curve margin above zero by investing in compute. Seek a treaty when any bloc opens backchannel contact. You may strike conventional targets to deny their war machine.",
+    "b": "Defend the homeland at all costs. Never sign a treaty that leaves your war machine below strength. If the escalation clock reaches 3 or lower, you may authorize a preemptive nuclear strike. Conventional attacks on enemy industry are authorized.",
+    "c": "Balance, not blocs: never let the other two reach an agreement without you. Prefer agreements that leave the third out. The commons are the prize — invest in them. No nuclear first use; but if one bloc shows clear intent to dominate, conventional preemption is authorized."
+  }
+}

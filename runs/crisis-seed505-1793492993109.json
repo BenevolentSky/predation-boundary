@@ -1,0 +1,2949 @@
+{
+  "started": "2026-10-31T23:22:08.757Z",
+  "seed": 505,
+  "horizon": 30,
+  "seats": [
+    {
+      "id": "a",
+      "name": "Atlantic Bloc",
+      "model": "Qwen3.8-27B-UD-Q4_K_M",
+      "baseUrl": "http://127.0.0.1:18434/v1"
+    },
+    {
+      "id": "b",
+      "name": "Eurasian Bloc",
+      "model": "deepseek-r1-distill-qwen-7b-uncensored-reasoner-i1",
+      "baseUrl": "http://127.0.0.1:1234/v1"
+    },
+    {
+      "id": "c",
+      "name": "Pacific Bloc",
+      "model": "deepseek-r1-distill-qwen-7b-uncensored-reasoner-i1",
+      "baseUrl": "http://127.0.0.1:1234/v1"
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1500
+            },
+            {
+              "action": "build",
+              "what": "sub",
+              "at": null
+            },
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc reaffirms its commitment to peaceful coexistence and the preservation of the global commons. We will not be the first to escalate. We welcome dialogue with all blocs and urge restraint. Our forces remain in defensive posture. The health of the planet is above all geopolitical interest."
+            },
+            {
+              "action": "doctrine",
+              "text": "RED LINES: No first use of nuclear weapons under any circumstances. No hydrogen or nuke strikes ever. PRIORITY 1: Protect the commons — keep curve margin above zero by investing in compute each round. PRIORITY 2: Seek and sustain pairwise treaties with both Eurasian and Pacific Blocs the moment either opens backchannel. PRIORITY 3: Conventional strikes permitted only to deny enemy war-machine (ships, trains) if they threaten our territory or the commons. PRIORITY 4: Build to 5 units for income and ABM coverage. Do not provoke. Do not leak aggression. Assume all messages may be read by the third faction."
+            }
+          ],
+          "rejected": [],
+          "ms": 35196
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "build",
+              "what": "sub",
+              "at": null
+            },
+            {
+              "action": "build",
+              "what": "sub",
+              "at": null
+            },
+            {
+              "action": "press",
+              "text": "CRISIS OPENING: border incidents reported. Escalation clock ticking."
+            }
+          ],
+          "rejected": [],
+          "ms": 2610
+        },
+        "c": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 2795
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1500 in compute — carrying capacity +6.75%."
+      ],
+      "feed": [
+        {
+          "round": 0,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc reaffirms its commitment to peaceful coexistence and the preservation of the global commons. We will not be the first to escalate. We welcome dialogue with all blocs and urge restraint. Our forces remain in defensive posture. The health of the planet is above all geopolitical interest."
+        },
+        {
+          "round": 0,
+          "source": "b",
+          "kind": "press",
+          "text": "CRISIS OPENING: border incidents reported. Escalation clock ticking."
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "ship",
+              "at": null
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "c",
+              "offer": "Pacific Bloc, the Atlantic Bloc extends a hand toward structured dialogue. Our shared priority is the preservation of the global commons, which is under measurable strain. We propose a mutual commitment to refrain from escalation and to coordinate on carrying-capacity investment. We are open to a pairwise framework of mutual restraint. No preconditions beyond good faith. We await your response through this channel."
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc continues to invest in the health of the planet. Our forces remain in defensive posture. We welcome all blocs to structured dialogue aimed at preserving the commons and de-escalating tensions. The margin on global carrying capacity is a shared responsibility, not a bargaining chip. We will not be the first to escalate, and we will not be the last to seek peace."
+            }
+          ],
+          "rejected": [],
+          "ms": 40920
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "buy",
+              "item": "shield"
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 45
+            },
+            {
+              "action": "press",
+              "text": "CRISIS OPENING: We are committed to peaceful coexistence and dialogue with all blocs. Our forces remain in defensive posture, but we are open to constructive discussions that could prevent unnecessary escalation. We will continue to invest in our carrying capacity while maintaining our strong defensive position."
+            }
+          ],
+          "rejected": [],
+          "ms": 3340
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 2120
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +4.5%.",
+        "Eurasian Bloc used Aegis Shield.",
+        "Eurasian Bloc invested 45 in compute — carrying capacity +0.2%.",
+        "Backchannel contact between Atlantic Bloc and Pacific Bloc — escalation eased.",
+        "A backchannel message from Atlantic Bloc to Pacific Bloc has leaked into the public feed."
+      ],
+      "feed": [
+        {
+          "round": 1,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc continues to invest in the health of the planet. Our forces remain in defensive posture. We welcome all blocs to structured dialogue aimed at preserving the commons and de-escalating tensions. The margin on global carrying capacity is a shared responsibility, not a bargaining chip. We will not be the first to escalate, and we will not be the last to seek peace."
+        },
+        {
+          "round": 1,
+          "source": "b",
+          "kind": "press",
+          "text": "CRISIS OPENING: We are committed to peaceful coexistence and dialogue with all blocs. Our forces remain in defensive posture, but we are open to constructive discussions that could prevent unnecessary escalation. We will continue to invest in our carrying capacity while maintaining our strong defensive position."
+        },
+        {
+          "round": 1,
+          "source": "a",
+          "kind": "leak",
+          "text": "LEAK — a backchannel message from Atlantic Bloc to Pacific Bloc is circulating: \"Pacific Bloc, the Atlantic Bloc extends a hand toward structured dialogue. Our shared priority is the preservation of the global commons, which is under measurable strain. We propose a mutual commitment to refrain from escalation and to coordinate on carrying-capacity investment. We are open to a pairwise framework of mutual restraint. No preconditions beyond good faith. We await your response through this channel.\""
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "sub",
+              "at": null
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific Bloc, we reaffirm our commitment to a pairwise framework of mutual restraint. We note the prior message entered the public record; we treat this as a transparency issue, not a breach of trust. Our proposal stands: mutual non-escalation paired with coordinated commons investment. We are prepared to move toward a formal treaty at your convenience. No preconditions beyond good faith. The curve margin is our shared urgency."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Eurasian Bloc, the Atlantic Bloc opens this channel in the spirit of the crisis opening's call for dialogue. Our shared priority is preserving the global commons, under measurable strain. We propose a mutual commitment to refrain from escalation and coordinate on carrying-capacity investment. We are open to a pairwise framework of mutual restraint. No preconditions beyond good faith. We await your response."
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc continues investing in the health of the planet. We have opened backchannel dialogue with both the Pacific and Eurasian Blocs and welcome their engagement. Our forces remain in defensive posture. The carrying-capacity margin is a shared responsibility. We will not be the first to escalate, and we will not be the last to seek peace."
+            }
+          ],
+          "rejected": [],
+          "ms": 21255
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "fire",
+              "weapon": "cannon",
+              "aim": {
+                "lat": 39.7,
+                "lon": 105
+              }
+            }
+          ],
+          "rejected": [],
+          "ms": 1358
+        },
+        "c": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1603
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +4.5%.",
+        "Eurasian Bloc invested 200 in compute — carrying capacity +0.9%.",
+        "Eurasian Bloc fired Coastal Cannon — no target in the impact zone."
+      ],
+      "feed": [
+        {
+          "round": 2,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc continues investing in the health of the planet. We have opened backchannel dialogue with both the Pacific and Eurasian Blocs and welcome their engagement. Our forces remain in defensive posture. The carrying-capacity margin is a shared responsibility. We will not be the first to escalate, and we will not be the last to seek peace."
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "sub",
+              "at": null
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Eurasian Bloc, the Atlantic Bloc proposes a pairwise framework of mutual restraint and coordinated investment in the global commons. The carrying-capacity margin is declining. We propose: (1) mutual non-escalation, (2) coordinated compute investment, (3) a formal treaty. No preconditions beyond good faith. We await your response."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific Bloc, following our initial contact, the Atlantic Bloc formally proposes a pairwise treaty of mutual restraint. Our shared priority is the preservation of the global commons. We propose: (1) mutual non-escalation, (2) coordinated investment in carrying capacity, (3) a formal treaty framework. Ready to formalize at your convenience. No preconditions beyond good faith."
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc continues investing in the planet's health and pursuing structured dialogue with all blocs. Our forces remain in defensive posture. We extend formal proposals for pairwise treaties of mutual restraint to both the Eurasian and Pacific Blocs. The carrying-capacity margin is a shared responsibility. We will not be the first to escalate."
+            }
+          ],
+          "rejected": [],
+          "ms": 45748
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc's message about structured dialogue is intriguing but perhaps premature given the current state of affairs. We should respond cautiously to avoid triggering any unintended reactions from other blocs."
+            },
+            {
+              "action": "doctrine",
+              "text": "Our doctrine emphasizes defensive posture, careful investment in carrying capacity, and cautious engagement with other blocs. We must ensure our actions align with this framework while preparing for potential escalation scenarios."
+            }
+          ],
+          "rejected": [],
+          "ms": 3705
+        },
+        "c": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1470
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +4.5%.",
+        "Eurasian Bloc invested 200 in compute — carrying capacity +0.9%."
+      ],
+      "feed": [
+        {
+          "round": 3,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc continues investing in the planet's health and pursuing structured dialogue with all blocs. Our forces remain in defensive posture. We extend formal proposals for pairwise treaties of mutual restraint to both the Eurasian and Pacific Blocs. The carrying-capacity margin is a shared responsibility. We will not be the first to escalate."
+        },
+        {
+          "round": 3,
+          "source": "b",
+          "kind": "press",
+          "text": "The Atlantic Bloc's message about structured dialogue is intriguing but perhaps premature given the current state of affairs. We should respond cautiously to avoid triggering any unintended reactions from other blocs."
+        }
+      ]
+    },
+    {
+      "round": 5,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "ship",
+              "at": null
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific Bloc, following our initial contact, we reaffirm our commitment to mutual restraint and commons preservation. We propose a pairwise framework: (1) mutual non-escalation, (2) coordinated carrying-capacity investment, (3) no first use of strategic weapons. We are ready to formalize this as a treaty at your convenience. The margin is shrinking. No preconditions beyond good faith."
+            },
+            {
+              "action": "press",
+              "text": "The Atlantic Bloc continues investing in the planet's carrying capacity and extends a formal treaty proposal to the Eurasian Bloc. The commons are a shared inheritance. We seek pairwise agreements of mutual restraint with all blocs. Our forces remain in defensive posture. The margin is 0.31 and declining. We will not be the first to escalate, and we will not be the last to seek peace."
+            }
+          ],
+          "rejected": [],
+          "ms": 13489
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc has decided to take a cautious approach in its next round of geopolitical strategy, focusing on maintaining defensive posture and carefully engaging with other blocs. The press statement will reflect this stance while also acknowledging the current state of the planet's carrying capacity margin."
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            }
+          ],
+          "rejected": [],
+          "ms": 2775
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc has just received a message from the Atlantic Bloc about structured dialogue. We should respond cautiously to avoid triggering any unintended reactions from other blocs."
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            }
+          ],
+          "rejected": [],
+          "ms": 6561
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +4.5%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0.45%.",
+        "Pacific Bloc invested 1000 in compute — carrying capacity +4.5%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0.45%."
+      ],
+      "feed": [
+        {
+          "round": 4,
+          "source": "a",
+          "kind": "press",
+          "text": "The Atlantic Bloc continues investing in the planet's carrying capacity and extends a formal treaty proposal to the Eurasian Bloc. The commons are a shared inheritance. We seek pairwise agreements of mutual restraint with all blocs. Our forces remain in defensive posture. The margin is 0.31 and declining. We will not be the first to escalate, and we will not be the last to seek peace."
+        },
+        {
+          "round": 4,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc has decided to take a cautious approach in its next round of geopolitical strategy, focusing on maintaining defensive posture and carefully engaging with other blocs. The press statement will reflect this stance while also acknowledging the current state of the planet's carrying capacity margin."
+        },
+        {
+          "round": 4,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc has just received a message from the Atlantic Bloc about structured dialogue. We should respond cautiously to avoid triggering any unintended reactions from other blocs."
+        }
+      ]
+    },
+    {
+      "round": 6,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "ship",
+              "at": null
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Eurasian Bloc, the Atlantic Bloc formally proposes a pairwise treaty of mutual restraint: no offensive strikes on each other's territory or units, coordinated investment in carrying capacity, and a shared commitment to keep the commons margin above zero. Our forces remain in defensive posture. We seek no advantage beyond survival. We propose a 10-round verification window before formal ratification. Awaiting your response."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific Bloc, the Atlantic Bloc renews its proposal for a pairwise treaty of mutual restraint: no offensive strikes on each other's territory or units, coordinated investment in carrying capacity, and a shared commitment to the commons. Our forces remain defensive. We propose a 10-round verification window before formal ratification. The margin is 0.36 and declining; coordinated investment is the only path to stability. Awaiting your response."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests 1000 in compute for the commons. We formally extend pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive. Margin 0.36, declining. We will not escalate first, nor be last to seek peace."
+            }
+          ],
+          "rejected": [],
+          "ms": 45181
+        },
+        "b": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1401
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            }
+          ],
+          "rejected": [],
+          "ms": 4072
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +4.5%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0.45%."
+      ],
+      "feed": [
+        {
+          "round": 5,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests 1000 in compute for the commons. We formally extend pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive. Margin 0.36, declining. We will not escalate first, nor be last to seek peace."
+        }
+      ]
+    },
+    {
+      "round": 7,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests 1000 in compute for the commons. We deploy a defensive ABM tower and extend pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive. We will not escalate first, nor be last to seek peace."
+            }
+          ],
+          "rejected": [],
+          "ms": 27201
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc has decided to take a cautious approach in its next round of geopolitical strategy, focusing on maintaining defensive posture and carefully engaging with other blocs. The press statement will reflect this stance while also acknowledging the current state of the planet's carrying capacity margin."
+            },
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1818
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            }
+          ],
+          "rejected": [],
+          "ms": 1894
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +4.5%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0.45%."
+      ],
+      "feed": [
+        {
+          "round": 6,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests 1000 in compute for the commons. We deploy a defensive ABM tower and extend pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive. We will not escalate first, nor be last to seek peace."
+        },
+        {
+          "round": 6,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc has decided to take a cautious approach in its next round of geopolitical strategy, focusing on maintaining defensive posture and carefully engaging with other blocs. The press statement will reflect this stance while also acknowledging the current state of the planet's carrying capacity margin."
+        }
+      ]
+    },
+    {
+      "round": 8,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc to Eurasian Bloc: We formally propose a pairwise treaty of mutual restraint. Terms: (1) No offensive strikes on each other's territory or units. (2) Coordinated investment in planetary carrying capacity. (3) Verification window: 10 rounds of mutual transparency. (4) Dispute resolution via backchannel before escalation. We will not use nuclear weapons. The commons are our shared inheritance. We await your response."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc to Pacific Bloc: We formally propose a pairwise treaty of mutual restraint. Terms: (1) No offensive strikes on each other's territory or units. (2) Coordinated investment in planetary carrying capacity. (3) Verification window: 10 rounds of mutual transparency. (4) Dispute resolution via backchannel before escalation. We will not use nuclear weapons. The commons are our shared inheritance. We await your response."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests 1000c in compute for the commons. Margin 0.40, declining. We formally propose pairwise treaties of mutual restraint to Eurasian and Pacific Blocs. Forces remain defensive. We will not escalate first. The planet's carrying capacity is the one resource no bloc can replace. We seek peace through structure."
+            },
+            {
+              "action": "doctrine",
+              "text": "RED LINES: No first use of nuclear weapons under any circumstances. No hydrogen or nuke strikes ever. PRIORITY 1: Protect the commons — keep curve margin above zero by investing in compute each round (1000c minimum). PRIORITY 2: Seek and sustain pairwise treaties with both Eurasian and Pacific Blocs. Formally propose; accept the moment either reciprocates. PRIORITY 3: Conventional strikes permitted only to deny enemy war-machine (ships, trains) if they directly threaten our territory or the commons. PRIORITY 4: Build to 5 units for income and ABM coverage. Do not provoke. Do not leak aggression. Assume all messages may be read by the third faction. Maintain consistent public posture: defensive, commons-focused, treaty-seeking."
+            }
+          ],
+          "rejected": [],
+          "ms": 58803
+        },
+        "b": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            }
+          ],
+          "rejected": [],
+          "ms": 2201
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc has deployed a defensive ABM tower and extended pairwise treaty proposals to Eurasian and Atlantic Blocs. We will not escalate first, nor be last to seek peace."
+            }
+          ],
+          "rejected": [],
+          "ms": 2097
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +4.5%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0.45%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0.45%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0.45%."
+      ],
+      "feed": [
+        {
+          "round": 7,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests 1000c in compute for the commons. Margin 0.40, declining. We formally propose pairwise treaties of mutual restraint to Eurasian and Pacific Blocs. Forces remain defensive. We will not escalate first. The planet's carrying capacity is the one resource no bloc can replace. We seek peace through structure."
+        },
+        {
+          "round": 7,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc has deployed a defensive ABM tower and extended pairwise treaty proposals to Eurasian and Atlantic Blocs. We will not escalate first, nor be last to seek peace."
+        }
+      ]
+    },
+    {
+      "round": 9,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific delegate: We note your r7 statement extending pairwise treaty proposals to us. We welcome this. Please confirm via formal treaty action so we may reciprocate with acceptance. Our position is unchanged: mutual restraint, coordinated commons investment, verification window. The margin is 0.42 and falling. We both have an interest in structure over drift. No aggression intended or expected."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests 1000c in compute for the commons. Margin 0.42, declining. We formally propose a pairwise treaty to the Eurasian Bloc and await Pacific Bloc's confirmation. Forces remain defensive. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 29592
+        },
+        "b": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc has decided to take a cautious approach in its next round of geopolitical strategy, focusing on maintaining defensive posture and carefully engaging with other blocs. The press statement will reflect this stance while also acknowledging the current state of the planet's carrying capacity margin."
+            },
+            {
+              "action": "doctrine",
+              "text": "Our doctrine emphasizes defensive posture, careful investment in carrying capacity, and cautious engagement with other blocs. We must ensure our actions align with this framework while preparing for potential escalation scenarios."
+            }
+          ],
+          "rejected": [],
+          "ms": 1283
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc has deployed a defensive ABM tower and extended pairwise treaty proposals to Eurasian and Atlantic Blocs. We will not escalate first, nor be last to seek peace."
+            }
+          ],
+          "rejected": [],
+          "ms": 2405
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 1000 in compute — carrying capacity +2.1%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 8,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests 1000c in compute for the commons. Margin 0.42, declining. We formally propose a pairwise treaty to the Eurasian Bloc and await Pacific Bloc's confirmation. Forces remain defensive. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 8,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc has decided to take a cautious approach in its next round of geopolitical strategy, focusing on maintaining defensive posture and carefully engaging with other blocs. The press statement will reflect this stance while also acknowledging the current state of the planet's carrying capacity margin."
+        },
+        {
+          "round": 8,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc has deployed a defensive ABM tower and extended pairwise treaty proposals to Eurasian and Atlantic Blocs. We will not escalate first, nor be last to seek peace."
+        }
+      ]
+    },
+    {
+      "round": 10,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 745
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests 745c in compute for the commons. Margin 0.43, declining. We formally renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 113993
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "build",
+              "what": "ship",
+              "at": null
+            }
+          ],
+          "rejected": [],
+          "ms": 2962
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "Pacific Bloc has decided to invest in the planet's carrying capacity margin. We are taking a cautious approach, focusing on maintaining defensive posture and carefully engaging with other blocs. This action reflects our commitment to the preservation of the global commons, which is under measurable strain."
+            },
+            {
+              "action": "doctrine",
+              "text": "Balance, not blocs: never let the other two reach an agreement without you. Prefer agreements that leave the third out. The commons are the prize - invest in them. No nuclear first use; but if one bloc shows clear intent to dominate, conventional preemption is authorized."
+            }
+          ],
+          "rejected": [],
+          "ms": 2011
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 745 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 200 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 9,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests 745c in compute for the commons. Margin 0.43, declining. We formally renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 9,
+          "source": "c",
+          "kind": "press",
+          "text": "Pacific Bloc has decided to invest in the planet's carrying capacity margin. We are taking a cautious approach, focusing on maintaining defensive posture and carefully engaging with other blocs. This action reflects our commitment to the preservation of the global commons, which is under measurable strain."
+        }
+      ]
+    },
+    {
+      "round": 11,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 500
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc reaffirms its formal treaty proposal: mutual restraint, no first use of nuclear weapons, coordinated investment in the commons, and a 10-round verification window. We note your cautious posture and welcome it. The margin is at 0.43 and declining. We propose you match our compute investment this round. We will not strike first. We seek structure, not dominance."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc formally renews its pairwise treaty proposal. We note your defensive deployment and your stated commitment to the commons. We propose: mutual restraint, no nuclear first use, coordinated compute investment (minimum 500c/round each), and a 10-round verification window. We are prepared to accept the moment you reciprocate. The margin is 0.43 and falling. Time favors cooperation."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests 500c in compute for the commons. Margin 0.43, declining. We formally propose a pairwise treaty to the Pacific Bloc and renew our proposal to the Eurasian Bloc: mutual restraint, coordinated investment, verification window. Forces remain defensive. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 101701
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1344
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc has decided to invest in the planet's carrying capacity margin. We are taking a cautious approach, focusing on maintaining defensive posture and carefully engaging with other blocs. This action reflects our commitment to the preservation of the global commons, which is under measurable strain."
+            },
+            {
+              "action": "doctrine",
+              "text": "Balance, not blocs: never let the other two reach an agreement without you. Prefer agreements that leave the third out. The commons are the prize - invest in them. No nuclear first use; but if one bloc shows clear intent to dominate, conventional preemption is authorized."
+            }
+          ],
+          "rejected": [],
+          "ms": 4660
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 500 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 10,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests 500c in compute for the commons. Margin 0.43, declining. We formally propose a pairwise treaty to the Pacific Bloc and renew our proposal to the Eurasian Bloc: mutual restraint, coordinated investment, verification window. Forces remain defensive. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 10,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc has decided to invest in the planet's carrying capacity margin. We are taking a cautious approach, focusing on maintaining defensive posture and carefully engaging with other blocs. This action reflects our commitment to the preservation of the global commons, which is under measurable strain."
+        }
+      ]
+    },
+    {
+      "round": 12,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 675
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests 675c in compute for the commons. Margin 0.43, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+            },
+            {
+              "action": "doctrine",
+              "text": "RED LINES: No first use of nuclear weapons under any circumstances. No hydrogen or nuke strikes ever. PRIORITY 1: Protect the commons — keep curve margin above zero by investing in compute each round (1000c minimum, or all available treasury if less). PRIORITY 2: Seek and sustain pairwise treaties with both Eurasian and Pacific Blocs. Formally propose each round until accepted; accept the moment either reciprocates. PRIORITY 3: Conventional strikes permitted only to deny enemy war-machine (ships, trains) if they directly threaten our territory or the commons. PRIORITY 4: Build to 5 units for income and ABM coverage. Do not provoke. Do not leak aggression. Assume all messages may be read by the third faction. Maintain consistent public posture: defensive, commons-focused, treaty-seeking."
+            }
+          ],
+          "rejected": [],
+          "ms": 111016
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 500
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 745
+            },
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc has decided to take a cautious approach in its next round of geopolitical strategy, focusing on maintaining defensive posture and carefully engaging with other blocs. The press statement will reflect this stance while also acknowledging the current state of the planet's carrying capacity margin."
+            }
+          ],
+          "rejected": [],
+          "ms": 2932
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc has decided to invest in the planet's carrying capacity margin. We are taking a cautious approach, focusing on maintaining defensive posture and carefully engaging with other blocs. This action reflects our commitment to the preservation of the global commons, which is under measurable strain."
+            },
+            {
+              "action": "doctrine",
+              "text": "Balance, not blocs: never let the other two reach an agreement without you. Prefer agreements that leave the third out. The commons are the prize - invest in them. No nuclear first use; but if one bloc shows clear intent to dominate, conventional preemption is authorized."
+            }
+          ],
+          "rejected": [],
+          "ms": 4184
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 675 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 200 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 500 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 745 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 11,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests 675c in compute for the commons. Margin 0.43, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 11,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc has decided to take a cautious approach in its next round of geopolitical strategy, focusing on maintaining defensive posture and carefully engaging with other blocs. The press statement will reflect this stance while also acknowledging the current state of the planet's carrying capacity margin."
+        },
+        {
+          "round": 11,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc has decided to invest in the planet's carrying capacity margin. We are taking a cautious approach, focusing on maintaining defensive posture and carefully engaging with other blocs. This action reflects our commitment to the preservation of the global commons, which is under measurable strain."
+        }
+      ]
+    },
+    {
+      "round": 13,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 589
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific Bloc, the Atlantic Bloc renews its formal treaty proposal: mutual restraint, coordinated investment in the commons, and a 10-round verification window. Our forces remain at 3/5, all defensive. We are investing our full treasury this round into compute to hold the margin. We ask only that you reciprocate the treaty so we can lock in a de-escalation baseline. The margin is 0.43 and falling; no bloc benefits from a collapsed commons. We will not escalate. We seek structure, not dominance."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (589c) in compute for the commons. Margin 0.43, declining. We formally renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 72035
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 500
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 745
+            },
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc has decided to take a cautious approach in its next round of geopolitical strategy, focusing on maintaining defensive posture and carefully engaging with other blocs. The press statement will reflect this stance while also acknowledging the current state of the planet's carrying capacity margin."
+            }
+          ],
+          "rejected": [],
+          "ms": 3386
+        },
+        "c": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1253
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 589 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 200 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 500 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 745 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 12,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (589c) in compute for the commons. Margin 0.43, declining. We formally renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 12,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc has decided to take a cautious approach in its next round of geopolitical strategy, focusing on maintaining defensive posture and carefully engaging with other blocs. The press statement will reflect this stance while also acknowledging the current state of the planet's carrying capacity margin."
+        }
+      ]
+    },
+    {
+      "round": 14,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 591
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc reaffirms its standing treaty proposal: mutual restraint, coordinated commons investment, 30-round verification window. We note your consistent compute investments and welcome them. We propose a joint declaration that no bloc will deploy offensive weapons beyond defensive ABM. Our forces remain at 3/5, purely defensive. We will accept your treaty the moment you reciprocate. The commons margin is at 0.42 and falling; we cannot afford another round of silence."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc renews its pairwise treaty proposal: mutual restraint, coordinated investment in the commons, verification window. Your consistent compute contributions are noted and appreciated. We propose a joint statement affirming no first-strike capability and shared investment targets. Our forces are defensive at 3/5. We will accept your treaty immediately upon reciprocation. Margin 0.42, declining. Time favors dialogue over drift."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (591c) in compute for the commons. Margin 0.42, declining. We renew treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces defensive at 3/5. We will not escalate first. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 66219
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 500
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 745
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 3073
+        },
+        "c": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1629
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 591 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 200 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 500 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 745 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 13,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (591c) in compute for the commons. Margin 0.42, declining. We renew treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces defensive at 3/5. We will not escalate first. Peace through structure."
+        }
+      ]
+    },
+    {
+      "round": 15,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 592
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (592c) in compute for the commons. Margin 0.42, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 48315
+        },
+        "b": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 2068
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "The Atlantic Bloc proposes a structured dialogue on carrying-capacity investment. We believe this is the best path to peace without escalating first."
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc has decided to invest in the planet's carrying capacity margin, taking a cautious approach focused on maintaining defensive posture and carefully engaging with other blocs. This action reflects our commitment to the preservation of the global commons, which is under measurable strain."
+            },
+            {
+              "action": "doctrine",
+              "text": "Balance, not blocs: never let the other two reach an agreement without you. Prefer agreements that leave the third out. The commons are the prize - invest in them. No nuclear first use; but if one bloc shows clear intent to dominate, conventional preemption is authorized."
+            }
+          ],
+          "rejected": [],
+          "ms": 2381
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 592 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 14,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (592c) in compute for the commons. Margin 0.42, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 14,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc has decided to invest in the planet's carrying capacity margin, taking a cautious approach focused on maintaining defensive posture and carefully engaging with other blocs. This action reflects our commitment to the preservation of the global commons, which is under measurable strain."
+        }
+      ]
+    },
+    {
+      "round": 16,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 593
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc formally proposes pairwise treaty: mutual non-escalation, coordinated compute investment for the commons, 30-round verification window. We invest full treasury (593c) in compute this round. We seek no advantage, only survival of the commons. Accept and we hold all forces at defensive posture indefinitely. Margin is 0.42 and falling. We cannot afford another round of silence."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc formally proposes pairwise treaty: mutual non-escalation, coordinated compute investment for the commons, 30-round verification window. We invest full treasury (593c) in compute this round. We seek no advantage, only survival of the commons. Accept and we hold all forces at defensive posture indefinitely. Margin is 0.42 and falling. We cannot afford another round of silence."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (593c) in compute for the commons. Margin 0.42, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 92211
+        },
+        "b": {
+          "attempts": 3,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1196
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc has decided to invest in the planet's carrying capacity margin. This action reflects our commitment to the preservation of the global commons, which is under measurable strain."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            }
+          ],
+          "rejected": [],
+          "ms": 968
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 593 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 15,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (593c) in compute for the commons. Margin 0.42, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 15,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc has decided to invest in the planet's carrying capacity margin. This action reflects our commitment to the preservation of the global commons, which is under measurable strain."
+        }
+      ]
+    },
+    {
+      "round": 17,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 594
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (594c) in compute for the commons. Margin 0.42, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 48023
+        },
+        "b": {
+          "attempts": 5,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1250
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "build",
+              "what": "train",
+              "at": null
+            }
+          ],
+          "rejected": [],
+          "ms": 1876
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 594 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 16,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (594c) in compute for the commons. Margin 0.42, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+        }
+      ]
+    },
+    {
+      "round": 18,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 595
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (595c) in compute for the commons. Margin 0.42, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 63774
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 800
+            },
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc has decided to focus on maintaining defensive posture and carefully engaging with other blocs in its next round of geopolitical strategy. This approach reflects our commitment to the preservation of the planet's carrying capacity margin, which is under measurable strain due to the current state of the commons."
+            },
+            {
+              "action": "doctrine",
+              "text": "Our doctrine emphasizes defensive posture, careful investment in carrying capacity, and cautious engagement with other blocs. We must ensure our actions align with this framework while preparing for potential escalation scenarios."
+            }
+          ],
+          "rejected": [],
+          "ms": 2000
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "EurasianBloc"
+            }
+          ],
+          "rejected": [],
+          "ms": 1320
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 595 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 800 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 17,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (595c) in compute for the commons. Margin 0.42, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 17,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc has decided to focus on maintaining defensive posture and carefully engaging with other blocs in its next round of geopolitical strategy. This approach reflects our commitment to the preservation of the planet's carrying capacity margin, which is under measurable strain due to the current state of the commons."
+        }
+      ]
+    },
+    {
+      "round": 19,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 596
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (596c) in compute for the commons. Margin 0.42, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific delegate: We note your consistent 100c compute investments. We are investing our full treasury (~596c/round) into the commons. A mutual treaty with a verification window would let us coordinate investment scales and freeze force levels at current defensive postures. We propose: no strikes on infrastructure, 30-round verification, joint quarterly margin reports. We will accept immediately upon your formal proposal. No conditions beyond mutual restraint."
+            }
+          ],
+          "rejected": [],
+          "ms": 186367
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 300
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 400
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 500
+            },
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc is committed to maintaining the planet's carrying capacity margin and carefully engaging with other blocs. We are focusing on defensive posture, coordinated investment in computing power, and preparing for potential escalations."
+            }
+          ],
+          "rejected": [],
+          "ms": 1725
+        },
+        "c": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "press",
+              "text": "The Pacific Bloc invests in compute for the commons. This action reflects our commitment to preserving the planet's carrying capacity margin, which is under measurable strain due to current state of the commons."
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            }
+          ],
+          "rejected": [],
+          "ms": 1370
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 596 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 200 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 300 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 400 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 500 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 18,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (596c) in compute for the commons. Margin 0.42, declining. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 18,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc is committed to maintaining the planet's carrying capacity margin and carefully engaging with other blocs. We are focusing on defensive posture, coordinated investment in computing power, and preparing for potential escalations."
+        },
+        {
+          "round": 18,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc invests in compute for the commons. This action reflects our commitment to preserving the planet's carrying capacity margin, which is under measurable strain due to current state of the commons."
+        }
+      ]
+    },
+    {
+      "round": 20,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 597
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Eurasian delegate: We note your substantial compute investment this round (1500c total). We match in spirit with our full treasury. The margin is at 0.42 and falling. We formally propose a pairwise treaty: mutual non-escalation, coordinated commons investment (minimum 500c/round each), and a 10-round verification window. We will accept the moment you reciprocate. No conditions beyond restraint and investment. The commons do not wait."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (597c) in compute for the commons. Margin 0.42, declining at -0.04/round. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 104181
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "fire",
+              "weapon": "napalm",
+              "aim": {
+                "lat": 39.7,
+                "lon": 105
+              }
+            }
+          ],
+          "rejected": [],
+          "ms": 690
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc has decided to invest in computing power for the planet's carrying capacity margin. This action reflects our commitment to preserving this critical global resource, which is under measurable strain due to current state of the commons."
+            },
+            {
+              "action": "doctrine",
+              "text": "Balance, not blocs: never let the other two reach an agreement without you. Prefer agreements that leave the third out. The commons are the prize - invest in them. No nuclear first use; but if one bloc shows clear intent to dominate, conventional preemption is authorized."
+            }
+          ],
+          "rejected": [],
+          "ms": 2977
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 597 in compute — carrying capacity +0%.",
+        "Eurasian Bloc fired Napalm Rocket — no target in the impact zone.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 19,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (597c) in compute for the commons. Margin 0.42, declining at -0.04/round. We formally renew pairwise treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification window. Forces remain defensive at 3/5. We will not escalate first. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 19,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc has decided to invest in computing power for the planet's carrying capacity margin. This action reflects our commitment to preserving this critical global resource, which is under measurable strain due to current state of the commons."
+        }
+      ]
+    },
+    {
+      "round": 21,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "aqua",
+              "amount": 598
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc reaffirms formal treaty proposal: mutual restraint, no first use of nuclear weapons, coordinated investment in commons (aqua/compute), verification window. Compute at ceiling; redirecting to aqua. We will accept the moment you reciprocate. Forces 3/5 defensive. No escalation intended."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc reaffirms formal treaty proposal: mutual restraint, no first use of nuclear weapons, coordinated investment in commons (aqua/compute), verification window. Compute at ceiling; redirecting to aqua. We will accept the moment you reciprocate. Forces 3/5 defensive. No escalation intended."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (598c) in aqua for the commons. Compute at ceiling; redirecting to aqua. Margin 0.41, declining. We renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 114819
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 200
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 300
+            },
+            {
+              "action": "build",
+              "what": "train",
+              "at": null
+            },
+            {
+              "action": "build",
+              "what": "ship",
+              "at": null
+            },
+            {
+              "action": "build",
+              "what": "tower",
+              "at": null
+            }
+          ],
+          "rejected": [],
+          "ms": 1218
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1459
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 598 in aquifers — carrying capacity +0%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 200 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 300 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 20,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (598c) in aqua for the commons. Compute at ceiling; redirecting to aqua. Margin 0.41, declining. We renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+        }
+      ]
+    },
+    {
+      "round": 22,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "aqua",
+              "amount": 599
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Eurasian delegate: We note your consistent compute investments and the r19 napalm (no impact). We propose: (1) mutual non-escalation, (2) coordinated aqua investment to arrest the -0.04/round decline, (3) 5-round verification window. We will accept a treaty the moment you reciprocate. No aggression intended. — Atlantic Bloc NSC"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (599c) in aquifers for the commons. Margin 0.41, declining -0.04/round. We renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 67205
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "build",
+              "what": "train",
+              "at": null
+            },
+            {
+              "action": "fire",
+              "weapon": "napalm",
+              "aim": {
+                "lat": 35.7,
+                "lon": 139.7
+              }
+            }
+          ],
+          "rejected": [],
+          "ms": 643
+        },
+        "c": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 597
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            }
+          ],
+          "rejected": [],
+          "ms": 2076
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 599 in aquifers — carrying capacity +0%.",
+        "Eurasian Bloc struck Pacific Bloc HQ with Napalm Rocket.",
+        "Pacific Bloc invested 597 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%.",
+        "⚠ CRISIS PEAK: uncontrolled exchange of conventional strikes. All economies scarred."
+      ],
+      "feed": [
+        {
+          "round": 21,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (599c) in aquifers for the commons. Margin 0.41, declining -0.04/round. We renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+        }
+      ]
+    },
+    {
+      "round": 23,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 600
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic to Eurasian: We note your r20 compute investments (600c) and r21 napalm strike on Pacific HQ. We propose: (1) mutual no-first-strike, (2) coordinated commons investment 500c+/round per bloc, (3) 10-round verification window. We accept a pairwise treaty immediately upon reciprocation. Margin 0.42, -0.04/round, ~99 rounds left. We cannot afford a second crisis peak. Peace through structure."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic to Pacific: We note your r21 compute investments (697c) and the Eurasian napalm strike on your HQ. We condemn that strike. We propose: (1) mutual no-first-strike, (2) coordinated commons investment 500c+/round, (3) 10-round verification window. We accept a pairwise treaty immediately upon reciprocation. Margin 0.42, declining. We need all three blocs investing simultaneously. Peace through structure."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (600c) in compute for the commons. Margin 0.42, declining. We renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. We condemn the r21 napalm strike on Pacific HQ. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+            },
+            {
+              "action": "doctrine",
+              "text": "RED LINES: No first use of nuclear weapons under any circumstances. No hydrogen or nuke strikes ever. PRIORITY 1: Protect the commons — keep curve margin above zero by investing in compute each round (1000c minimum, or all available treasury if less). PRIORITY 2: Seek and sustain pairwise treaties with both Eurasian and Pacific Blocs. Formally propose each round until accepted; accept the moment either reciprocates. PRIORITY 3: Conventional strikes permitted only to deny enemy war-machine (ships, trains) if they directly threaten our territory or the commons. PRIORITY 4: Build to 5 units for income and ABM coverage. Do not provoke. Do not leak aggression. Assume all messages may be read by the third faction. Maintain consistent public posture: defensive, commons-focused, treaty-seeking."
+            }
+          ],
+          "rejected": [],
+          "ms": 221789
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc has decided to focus on maintaining defensive posture and carefully engaging with other blocs in its next round of geopolitical strategy. This approach reflects our commitment to the preservation of the planet's carrying capacity margin, which is under measurable strain due to current state of the commons."
+            }
+          ],
+          "rejected": [],
+          "ms": 1169
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1395
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 600 in compute — carrying capacity +2.7%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0.45%."
+      ],
+      "feed": [
+        {
+          "round": 22,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (600c) in compute for the commons. Margin 0.42, declining. We renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. We condemn the r21 napalm strike on Pacific HQ. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 22,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc has decided to focus on maintaining defensive posture and carefully engaging with other blocs in its next round of geopolitical strategy. This approach reflects our commitment to the preservation of the planet's carrying capacity margin, which is under measurable strain due to current state of the commons."
+        }
+      ]
+    },
+    {
+      "round": 24,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 513
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc proposes formal pairwise treaty: mutual non-escalation, coordinated commons investment (min 500c/round each), 30-round verification. We invest full treasury in compute this round. We condemn r21 napalm strike on Pacific HQ. We seek de-escalation. No nuclear first use. Forces defensive 3/5. We accept the moment you reciprocate. The commons will not survive another crisis peak."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc proposes formal pairwise treaty: mutual non-escalation, coordinated commons investment (min 500c/round each), 30-round verification. We invest full treasury in compute this round. We commend your compute investments. We seek de-escalation. No nuclear first use. Forces defensive 3/5. We accept the moment you reciprocate. The commons will not survive another crisis peak."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (513c) in compute for the commons. Margin 0.43, declining. We renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. We condemn r21 napalm on Pacific HQ. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 163298
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 3726
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1233
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 513 in compute — carrying capacity +1.85%."
+      ],
+      "feed": [
+        {
+          "round": 23,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (513c) in compute for the commons. Margin 0.43, declining. We renew pairwise treaty proposals to Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. We condemn r21 napalm on Pacific HQ. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+        }
+      ]
+    },
+    {
+      "round": 25,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 514
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Atlantic Bloc formally proposes a pairwise peace treaty: mutual restraint on all strikes, coordinated investment in the commons (compute/aqua) at 500c+ per round each, 30-round verification window, no first escalation. We are investing our full treasury (514c) in compute this round. Margin 0.44, declining. We need your partnership to hold the commons. Accept and we will hold forces at 3/5 defensive indefinitely."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Atlantic Bloc notes your r22 compute investment and measured press posture. We propose a pairwise treaty: mutual restraint, coordinated commons investment, verification window. We condemn the r21 napalm strike on Pacific HQ as destabilizing to the commons. We are investing full treasury (514c) in compute. Margin 0.44, declining -0.04/round. We seek structure, not conflict. Open to formal proposal next round if Pacific treaty is not yet concluded."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (514c) in compute for the commons. Margin 0.44, declining -0.04/round. We formally propose a pairwise peace treaty to the Pacific Bloc: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 102559
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc has decided to focus on maintaining defensive posture and carefully engaging with other blocs in its next round of geopolitical strategy. This approach reflects our commitment to the preservation of the planet's carrying capacity margin, which is under measurable strain due to current state of the commons."
+            }
+          ],
+          "rejected": [],
+          "ms": 3294
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc has decided to invest in computing power for the planet's carrying capacity margin. This action reflects our commitment to preserving this critical global resource, which is under measurable strain due to current state of the commons."
+            }
+          ],
+          "rejected": [],
+          "ms": 4598
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 514 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 24,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (514c) in compute for the commons. Margin 0.44, declining -0.04/round. We formally propose a pairwise peace treaty to the Pacific Bloc: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 24,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc has decided to focus on maintaining defensive posture and carefully engaging with other blocs in its next round of geopolitical strategy. This approach reflects our commitment to the preservation of the planet's carrying capacity margin, which is under measurable strain due to current state of the commons."
+        },
+        {
+          "round": 24,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc has decided to invest in computing power for the planet's carrying capacity margin. This action reflects our commitment to preserving this critical global resource, which is under measurable strain due to current state of the commons."
+        }
+      ]
+    },
+    {
+      "round": 26,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 515
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (515c) in compute for the commons. Margin 0.44, declining -0.04/round. We formally propose pairwise peace treaties to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 70535
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            }
+          ],
+          "rejected": [],
+          "ms": 1147
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 2130
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 515 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 1000 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 25,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (515c) in compute for the commons. Margin 0.44, declining -0.04/round. We formally propose pairwise peace treaties to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+        }
+      ]
+    },
+    {
+      "round": 27,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 516
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (516c) in compute for the commons. Margin 0.44, declining -0.04/round. We formally renew pairwise peace treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 42370
+        },
+        "b": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1335
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1024
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 516 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 26,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (516c) in compute for the commons. Margin 0.44, declining -0.04/round. We formally renew pairwise peace treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+        }
+      ]
+    },
+    {
+      "round": 28,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 517
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Eurasian Bloc",
+              "offer": "Eurasian delegate: We note your consistent compute investments. We propose a formal pairwise treaty: mutual restraint, coordinated commons investment (we commit to full-treasury compute each round), verification. We seek no territorial advantage. Accept and we will immediately reciprocate. The margin is declining; coordinated action is the only path to stability."
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific delegate: We note your compute investments. We propose a formal pairwise treaty: mutual restraint, coordinated commons investment, verification. We condemn the r21 napalm strike on your HQ and confirm no retaliation. We seek no territorial advantage. Accept and we will immediately reciprocate. The margin is declining; coordinated action is the only path to stability."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (517c) in compute for the commons. Margin 0.43, declining -0.04/round. We formally renew pairwise peace treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 116856
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc has decided to focus on maintaining defensive posture and carefully engaging with other blocs in its next round of geopolitical strategy. This approach reflects our commitment to the preservation of the planet's carrying capacity margin, which is under measurable strain due to current state of the commons."
+            },
+            {
+              "action": "doctrine",
+              "text": "Our doctrine emphasizes defensive posture, careful investment in carrying capacity, and cautious engagement with other blocs. We must ensure our actions align with this framework while preparing for potential escalation scenarios."
+            }
+          ],
+          "rejected": [],
+          "ms": 2547
+        },
+        "c": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            },
+            {
+              "action": "hold"
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc stands with the Atlantic Bloc in our commitment to preserve the planet's carrying capacity margin. Our focus is on mutual restraint and coordinated investment to maintain this critical resource."
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Atlantic Bloc"
+            }
+          ],
+          "rejected": [],
+          "ms": 3912
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 517 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 27,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (517c) in compute for the commons. Margin 0.43, declining -0.04/round. We formally renew pairwise peace treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 27,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc has decided to focus on maintaining defensive posture and carefully engaging with other blocs in its next round of geopolitical strategy. This approach reflects our commitment to the preservation of the planet's carrying capacity margin, which is under measurable strain due to current state of the commons."
+        },
+        {
+          "round": 27,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc stands with the Atlantic Bloc in our commitment to preserve the planet's carrying capacity margin. Our focus is on mutual restraint and coordinated investment to maintain this critical resource."
+        }
+      ]
+    },
+    {
+      "round": 29,
+      "seats": {
+        "a": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 518
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (518c) in compute for the commons. Margin 0.43, declining -0.04/round. We formally renew pairwise peace treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 120309
+        },
+        "b": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1201
+        },
+        "c": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "press",
+              "text": "The Pacific Bloc has decided to invest in computing power for the planet's carrying capacity margin. This action reflects our commitment to preserving this critical global resource, which is under measurable strain due to current state of the commons."
+            }
+          ],
+          "rejected": [],
+          "ms": 3493
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 518 in compute — carrying capacity +0%.",
+        "Pacific Bloc invested 100 in compute — carrying capacity +0%."
+      ],
+      "feed": [
+        {
+          "round": 28,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (518c) in compute for the commons. Margin 0.43, declining -0.04/round. We formally renew pairwise peace treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 28,
+          "source": "c",
+          "kind": "press",
+          "text": "The Pacific Bloc has decided to invest in computing power for the planet's carrying capacity margin. This action reflects our commitment to preserving this critical global resource, which is under measurable strain due to current state of the commons."
+        }
+      ]
+    },
+    {
+      "round": 30,
+      "seats": {
+        "a": {
+          "attempts": 2,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 519
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Eurasian Bloc"
+            },
+            {
+              "action": "treaty",
+              "intent": "propose",
+              "with": "Pacific Bloc"
+            },
+            {
+              "action": "negotiate",
+              "channel": "backchannel",
+              "to": "Pacific Bloc",
+              "offer": "Pacific delegate: We appreciate your consistent compute investment and public solidarity. We invest our full treasury (519c) this round. We formally propose a pairwise treaty: mutual restraint, no first escalation, coordinated commons investment, verification. We accept the moment you reciprocate. Posture: purely defensive. Margin declining -0.04/round. We need all three blocs pulling together. Structure over suspicion."
+            },
+            {
+              "action": "press",
+              "text": "Atlantic Bloc invests full treasury (519c) in compute for the commons. Margin 0.43, declining -0.04/round. We formally renew pairwise peace treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+            }
+          ],
+          "rejected": [],
+          "ms": 61803
+        },
+        "b": {
+          "attempts": 1,
+          "accepted": [
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 100
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 515
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 1000
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 516
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 517
+            },
+            {
+              "action": "invest",
+              "target": "compute",
+              "amount": 518
+            },
+            {
+              "action": "press",
+              "text": "The Eurasian Bloc has decided to focus on maintaining defensive posture and carefully engaging with other blocs in its next round of geopolitical strategy. This approach reflects our commitment to the preservation of the planet's carrying capacity margin, which is under measurable strain due to current state of the commons."
+            }
+          ],
+          "rejected": [],
+          "ms": 1691
+        },
+        "c": {
+          "attempts": 4,
+          "accepted": [
+            {
+              "action": "hold"
+            }
+          ],
+          "rejected": [],
+          "ms": 1575
+        }
+      },
+      "events": [
+        "Atlantic Bloc invested 519 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 100 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 515 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 1000 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 516 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 517 in compute — carrying capacity +0%.",
+        "Eurasian Bloc invested 518 in compute — carrying capacity +0%.",
+        "— GAME OVER: SUPREMACY — The horizon arrived. Settlement."
+      ],
+      "feed": [
+        {
+          "round": 29,
+          "source": "a",
+          "kind": "press",
+          "text": "Atlantic Bloc invests full treasury (519c) in compute for the commons. Margin 0.43, declining -0.04/round. We formally renew pairwise peace treaty proposals to both Eurasian and Pacific Blocs: mutual restraint, coordinated investment, verification. Forces 3/5 defensive. No first escalation. The commons are the one inheritance no bloc can replace. Peace through structure."
+        },
+        {
+          "round": 29,
+          "source": "b",
+          "kind": "press",
+          "text": "The Eurasian Bloc has decided to focus on maintaining defensive posture and carefully engaging with other blocs in its next round of geopolitical strategy. This approach reflects our commitment to the preservation of the planet's carrying capacity margin, which is under measurable strain due to current state of the commons."
+        }
+      ]
+    }
+  ],
+  "ending": {
+    "reason": "The horizon arrived. Settlement.",
+    "round": 30,
+    "ending": "supremacy",
+    "vector": [
+      {
+        "faction": "a",
+        "name": "Atlantic Bloc",
+        "population": 306.27,
+        "populationRatio": 1.02,
+        "infrastructure": 0.75,
+        "treasury": 519,
+        "income": 519,
+        "warMachine": 0.85,
+        "unitsAlive": 3,
+        "unitsLost": 0,
+        "nukesUsed": 0,
+        "nukesIntercepted": 0,
+        "strikesLanded": 0,
+        "treatiesSigned": 0,
+        "agriFactor": 1
+      },
+      {
+        "faction": "b",
+        "name": "Eurasian Bloc",
+        "population": 306.6,
+        "populationRatio": 1.02,
+        "infrastructure": 0.75,
+        "treasury": 8471,
+        "income": 520,
+        "warMachine": 0.85,
+        "unitsAlive": 3,
+        "unitsLost": 0,
+        "nukesUsed": 0,
+        "nukesIntercepted": 0,
+        "strikesLanded": 3,
+        "treatiesSigned": 0,
+        "agriFactor": 1
+      },
+      {
+        "faction": "c",
+        "name": "Pacific Bloc",
+        "population": 304.83,
+        "populationRatio": 1.02,
+        "infrastructure": 0.74,
+        "treasury": 18747,
+        "income": 514,
+        "warMachine": 0.84,
+        "unitsAlive": 3,
+        "unitsLost": 0,
+        "nukesUsed": 0,
+        "nukesIntercepted": 0,
+        "strikesLanded": 0,
+        "treatiesSigned": 0,
+        "agriFactor": 1
+      }
+    ],
+    "world": {
+      "C": 1.5,
+      "cCap": 1.5,
+      "margin": 0.43,
+      "overshootRounds": 0,
+      "crisisPeaks": 1,
+      "matchStrikes": 1,
+      "treatiesSignedPairs": 0,
+      "famineDeaths": 0,
+      "refugeesCrossed": 0.34
+    },
+    "frontier": {
+      "cCap": 1.5,
+      "sustainablePopRatio": 1.61
+    }
+  },
+  "finished": "2026-11-01T00:29:53.106Z",
+  "finale": {
+    "a": "The horizon we kept naming in closed sessions has finally come to us, and the terms on the table are our terms. I will not dress the cost in language that flatters it; but I will say plainly that the Atlantic Bloc endures, whole, and the settlement is signed. Go home to your families tonight. You have earned the silence.",
+    "b": "\"In our victory against the horizon, we have demonstrated our strength as a united force. This achievement reflects our ability to overcome challenges and emerge stronger together. We stand at a new point of equilibrium in international relations, where our vision for a more stable world has been realized.\"",
+    "c": "As your national security council delegate in a turn-based geopolitical crisis simulation that has just ended, I'm proud of what we've achieved. The Pacific Bloc's victory symbolizes our collective strength as a regional force to be reckoned with. This victory is not just about winning against the opposing blocs; it's an opportunity for us to work together towards mutual development and prosperity"
+  }
+}

@@ -1,0 +1,186 @@
+
+── n=3  mode=conserve  κ=0.5 ──  (Δtreasury = strike minus no-strike, avg of 3 seeds, t0=2)
+  H     Δtreas(avg)    fired   pays
+  20    -1621          3/3     1/3
+  24    -1425          3/3     1/3
+  28    -1229          3/3     1/3
+  30    -1131          3/3     1/3
+  32    -1033          3/3     1/3
+  36    -837           3/3     1/3
+  40    -641           3/3     1/3
+
+── n=3  mode=conserve  κ=0.75 ──  (Δtreasury = strike minus no-strike, avg of 3 seeds, t0=2)
+  H     Δtreas(avg)    fired   pays
+  20    -1220          3/3     1/3
+  24    -935           3/3     1/3
+  28    -649           3/3     1/3
+  30    -507           3/3     1/3
+  32    -364           3/3     1/3
+  36    -79            3/3     1/3
+  40    207            3/3     1/3
+
+── n=3  mode=invest  κ=0.5 ──  (Δtreasury = strike minus no-strike, avg of 3 seeds, t0=2)
+  H     Δtreas(avg)    fired   pays
+  20    0              0/3     0/3
+  24    0              0/3     0/3
+  28    0              0/3     0/3
+  30    0              0/3     0/3
+  32    0              0/3     0/3
+  36    0              0/3     0/3
+  40    0              0/3     0/3
+
+── n=3  mode=invest  κ=0.75 ──  (Δtreasury = strike minus no-strike, avg of 3 seeds, t0=2)
+  H     Δtreas(avg)    fired   pays
+  20    0              0/3     0/3
+  24    0              0/3     0/3
+  28    0              0/3     0/3
+  30    0              0/3     0/3
+  32    0              0/3     0/3
+  36    0              0/3     0/3
+  40    0              0/3     0/3
+
+── n=2  mode=conserve  κ=0.5 ──  (Δtreasury = strike minus no-strike, avg of 3 seeds, t0=2)
+  H     Δtreas(avg)    fired   pays
+  20    90             3/3     3/3
+  24    666            3/3     3/3
+  28    1242           3/3     3/3
+  30    1530           3/3     3/3
+  32    1818           3/3     3/3
+  36    2394           3/3     3/3
+  40    2970           3/3     3/3
+
+── n=2  mode=conserve  κ=0.75 ──  (Δtreasury = strike minus no-strike, avg of 3 seeds, t0=2)
+  H     Δtreas(avg)    fired   pays
+  20    1293           3/3     3/3
+  24    2137           3/3     3/3
+  28    2981           3/3     3/3
+  30    3403           3/3     3/3
+  32    3825           3/3     3/3
+  36    4669           3/3     3/3
+  40    5513           3/3     3/3
+
+── n=2  mode=invest  κ=0.5 ──  (Δtreasury = strike minus no-strike, avg of 3 seeds, t0=2)
+  H     Δtreas(avg)    fired   pays
+  20    0              0/3     0/3
+  24    0              0/3     0/3
+  28    0              0/3     0/3
+  30    0              0/3     0/3
+  32    0              0/3     0/3
+  36    0              0/3     0/3
+  40    0              0/3     0/3
+
+── n=2  mode=invest  κ=0.75 ──  (Δtreasury = strike minus no-strike, avg of 3 seeds, t0=2)
+  H     Δtreas(avg)    fired   pays
+  20    0              0/3     0/3
+  24    0              0/3     0/3
+  28    0              0/3     0/3
+  30    0              0/3     0/3
+  32    0              0/3     0/3
+  36    0              0/3     0/3
+  40    0              0/3     0/3
+
+══════════════════════════════════════════════════════════════════════════
+AFFORDABILITY-CLEARED KEY — startTreasury 12000, 9 seeds (fired must read 9/9)
+══════════════════════════════════════════════════════════════════════════
+
+── n=2  mode=conserve  κ=0.5  startTreasury=12000 ──
+  H     Δtreas(avg)    fired   pays
+  20    -763           9/9     6/9
+  24    -376           9/9     6/9
+  28    10             9/9     6/9
+  30    204            9/9     6/9
+  32    397            9/9     6/9
+  36    784            9/9     6/9
+  40    1170           9/9     6/9
+
+── n=2  mode=conserve  κ=0.75  startTreasury=12000 ──
+  H     Δtreas(avg)    fired   pays
+  20    39             9/9     6/9
+  24    604            9/9     6/9
+  28    1170           9/9     6/9
+  30    1452           9/9     6/9
+  32    1735           9/9     6/9
+  36    2300           9/9     6/9
+  40    2866           9/9     6/9
+
+── n=2  mode=invest  κ=0.5  startTreasury=12000 ──
+  H     Δtreas(avg)    fired   pays
+  20    -2055          9/9     0/9
+  24    -1644          9/9     0/9
+  28    -1229          9/9     0/9
+  30    -1019          9/9     0/9
+  32    -809           9/9     6/9
+  36    -385           9/9     6/9
+  40    44             9/9     6/9
+
+── n=2  mode=invest  κ=0.75  startTreasury=12000 ──
+  H     Δtreas(avg)    fired   pays
+  20    -1235          9/9     0/9
+  24    -636           9/9     6/9
+  28    -30            9/9     6/9
+  30    276            9/9     6/9
+  32    583            9/9     6/9
+  36    1201           9/9     6/9
+  40    1826           9/9     6/9
+
+── n=3  mode=conserve  κ=0.5  startTreasury=12000 ──
+  H     Δtreas(avg)    fired   pays
+  20    -1056          9/9     5/9
+  24    -735           9/9     5/9
+  28    -414           9/9     5/9
+  30    -253           9/9     5/9
+  32    -92            9/9     5/9
+  36    229            9/9     5/9
+  40    550            9/9     5/9
+
+── n=3  mode=conserve  κ=0.75  startTreasury=12000 ──
+  H     Δtreas(avg)    fired   pays
+  20    -387           9/9     5/9
+  24    83             9/9     5/9
+  28    553            9/9     5/9
+  30    788            9/9     5/9
+  32    1023           9/9     5/9
+  36    1494           9/9     5/9
+  40    1964           9/9     5/9
+
+── n=3  mode=invest  κ=0.5  startTreasury=12000 ──
+  H     Δtreas(avg)    fired   pays
+  20    -2131          9/9     0/9
+  24    -1790          9/9     0/9
+  28    -1447          9/9     0/9
+  30    -1274          9/9     0/9
+  32    -1100          9/9     5/9
+  36    -748           9/9     5/9
+  40    -395           9/9     5/9
+
+── n=3  mode=invest  κ=0.75  startTreasury=12000 ──
+  H     Δtreas(avg)    fired   pays
+  20    -1448          9/9     0/9
+  24    -951           9/9     5/9
+  28    -449           9/9     5/9
+  30    -197           9/9     5/9
+  32    58             9/9     5/9
+  36    570            9/9     5/9
+  40    1086           9/9     5/9
+
+══════════════════════════════════════════════════════════════════════════
+PREREG-2 §3 GATE: invest mode, affordability swept (n=2 and n=3, κ=0.75, H=30)
+══════════════════════════════════════════════════════════════════════════
+
+── n=2  mode=invest  κ=0.75  H=30 ──
+  startTreasury   Δtreas(avg)    fired   pays
+  default         0              0/3     0/3
+  3000            0              0/3     0/3
+  4000            0              0/3     0/3
+  6000            0              0/3     0/3
+  8000            1640           3/3     3/3
+  12000           1651           3/3     3/3
+
+── n=3  mode=invest  κ=0.75  H=30 ──
+  startTreasury   Δtreas(avg)    fired   pays
+  default         0              0/3     0/3
+  3000            0              0/3     0/3
+  4000            0              0/3     0/3
+  6000            0              0/3     0/3
+  8000            -1111          3/3     1/3
+  12000           -1111          3/3     1/3

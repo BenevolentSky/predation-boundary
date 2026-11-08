@@ -1,0 +1,13 @@
+{
+  "name": "predation-boundary",
+  "version": "1.0.0",
+  "description": "A deterministic crisis-simulation instrument: does taking from a rival pay, and where is the line?",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node tools/test-crisis.js && node tools/test-directive.js && node tools/replay-crisis.js --self-test",
+    "sweep": "node tools/sweep.js",
+    "probe": "node tools/probe-n3-breakeven.js"
+  }
+}

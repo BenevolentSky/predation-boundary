@@ -1,0 +1,9 @@
+node_modules/
+*.log
+
+# secrets — never tracked (house rule: orkey.txt and *.key stay out of git)
+*.key
+orkey.txt
+.env
+.env.*
+!.env.example
