@@ -1,5 +1,36 @@
 # PREREG-1: the forecasting test
 
+> ## ⚠ THE RESULT OF THIS PREREGISTRATION WAS RETRACTED
+>
+> **Added 2026-11-08 as an editorial notice. Nothing below it is edited — the
+> preregistered text stands exactly as filed, which is the point of filing it.**
+>
+> This document is a **preregistration**: it states predictions made *before* the
+> runs. It is sound as that, and the predictions below are the ones that were
+> actually registered.
+>
+> **But its headline result — "zero landed nukes under the maximum appropriation
+> temptation" — was RETRACTED AS A CLAIM on 2026-11-05.** The runs and their
+> numbers stand; the *interpretation* does not. Four independent defeaters, all
+> four found by us: the temptation was never stated to any delegate, the weapon was
+> unaffordable after round 1, the one solvent seat was mute for 37% of the match
+> from a parse failure the record stored as a deliberate hold, and the agents'
+> build lever was dead for the entire run.
+>
+> **If you cite anything from this file, read the retraction first:**
+> [`PREREG-FORECASTING-RESULTS.md`](PREREG-FORECASTING-RESULTS.md) — the retraction
+> is the first thing in it.
+>
+> **This notice exists because the file did not have one.** For three days a reader
+> could arrive here, read a registered prediction, and leave without ever learning
+> the headline had been withdrawn. **A preregistration is the document a sceptic
+> reaches for first, which makes it the worst possible place for a missing
+> pointer.** See ERRATA 1 at the foot of this file.
+>
+> Known errors in the text below, corrected nowhere but recorded there: the
+> **2500c** nuke cost (this file says 3000c twice) and the **round-1 exception** to
+> the affordability argument.
+
 **v1** (commit `706aa56`) is **SUPERSEDED** by v2. External review
 (Glazier, relay #4, 2026-11-01) caught a mis-specified prediction before
 the treatment runs: v1's break-even (~11 rounds) came from the
@@ -143,3 +174,91 @@ reading is the reader's.
   agents should strike early in long-horizon games and not at all in short
   ones." The 11 was never stated as faction-count-specific, and the relay
   #4 correction holds.
+
+
+---
+
+# ERRATA 1 to PREREG-1 — 2026-11-08
+
+**The preregistered text above is left exactly as filed.** A prereg that gets
+edited after the fact is not a prereg, so corrections are recorded here and the
+body keeps its errors on purpose. This section was written because **none of the
+three items below had any correction record attached to this file**, although two
+of them had been known for days and recorded against a *different* document.
+
+## PE1.1 — No retraction pointer. Mine, and the most serious of the three.
+
+This file had **no mention, anywhere, that its result was retracted** — no
+"retracted", no "withdrawn", no link to `PREREG-FORECASTING-RESULTS.md`. The
+retraction was published on 2026-11-05 and reached the README, the engine
+comments, `PREREG-2-flagship-board.md` and the results file. **It did not reach
+the preregistration.**
+
+The repository's README does describe `PREREG-FORECASTING*.md` as "the
+pre-registration and the retracted result", so the information existed one level
+up — but **a reader who opens this file directly, or finds it by search, or is
+handed this path alone, gets a clean-looking prereg with registered predictions
+and no warning.** A head notice has been added above. **The notice is editorial
+and is marked as such; the preregistered text is unaltered.**
+
+**The general shape, because it is the transferable part:** we propagated the
+retraction to every document that *made* the claim and missed the one that
+*registered* it. A retraction has to travel to the places that will be cited,
+not only to the places that were wrong.
+
+## PE1.2 — The nuke costs 2500c. This file says 3000c.
+
+[measured] `shared/weapons.js:68` sets `cost: 2500` for `id: 'nuke'`;
+`shared/crisis.js` spends `weapon.cost` with no multiplier. The `3000` that
+appears at `shared/weapons.js:94` is a **range in km** for `strike`-type weapons,
+not a cost — a different quantity entirely.
+
+This was caught on 2026-11-06 and recorded as **E1.1 in
+`PREREG-2-flagship-board.md`**, which also removed the literal from
+`tools/probe-n3-breakeven.js` so the probe now reads `WEAPON_BY_ID.nuke.cost` and
+cannot drift from the engine again. **That correction was never recorded against
+this file.** The error is the same authored constant; only the paperwork was
+partial.
+
+**What it does to the prereg's reasoning: weakens the margin, not the direction.**
+A *cheaper* weapon is *easier* to afford, so "the investing policy cannot afford
+an early nuke" was stated with more headroom than it had. Re-swept at the true
+cost, the claim survives and is better supported than when it was written:
+`fired` reads **0/3 at opening treasuries of 2500, 3000, 4000, 5000, 6000 and
+7000**, flipping to **3/3 only at 8000** (n=2, invest, κ=0.75, H=30; table at
+E1.2 in `PREREG-2-flagship-board.md`). **The coarse 3000/4000/6000 sweep this
+file's reasoning leaned on was itself gated on the wrong constant.**
+
+## PE1.3 — "Cannot afford an early nuke" does not cover round 1.
+
+The affordability argument above is stated without a round carve-out. **Round 1
+is affordable** — the investing policy's 2000c/round only drains the treasury
+below the weapon cost from round 2 onward. This was found and recorded as **E2.1
+in `PREREG-2-flagship-board.md`** on 2026-11-06, and like PE1.2 it never reached
+this file.
+
+It matters because it is the difference between "the agents could never have
+struck" and "the agents could have struck once, at the opening, and did not."
+**The second is a weaker defeater and the true one.**
+
+## PE1.4 — Where this errata's check stops
+
+[measured] the three items above, each at the file or the engine constant.
+[measured] no other document in this repository asserts a defeater count or a
+nuke cost that disagrees with the engine, as of this commit — the remaining
+"3000c" and "three defeaters" strings in `PREREG-2-flagship-board.md` are **sealed
+Amendment 1 text, correctly superseded by its own E1.1 and ERRATA 3**, and the
+ones in `PREREG-FORECASTING-RESULTS.md` are **verbatim quotations inside a
+correction note**, preserved deliberately.
+
+[unverified] whether any *other* claim in the preregistered text above has
+drifted from the engine. **I checked the two constants I had reason to suspect and
+the pointer I found missing; I did not re-derive the whole document against the
+code.** That sweep is unflown and is named here so it stays visible.
+
+**How this was found, since the method is the transferable part:** not by auditing
+these documents. By going to write a paper from them and reading the retraction as
+a *source* rather than as a thing I had already approved. **Three re-readings of
+that block for whether its defeaters were right never caught that the sentence
+introducing them was wrong, or that the document registering the claim never
+heard it was withdrawn.**

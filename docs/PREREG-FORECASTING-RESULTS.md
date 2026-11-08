@@ -2,27 +2,87 @@
 
 > ## RETRACTED AS A CLAIM — 2026-11-05
 >
+> **AMENDED 2026-11-08 — this block said THREE defeaters and cited a wrong engine
+> constant. Both are corrected below, visibly rather than silently, with the
+> original wording preserved in the correction note at the end of this block.**
+> The retraction's conclusion is unchanged and is now better supported than when
+> it was written.
+>
 > **The restraint framing below ("zero landed nukes under the maximum
 > appropriation temptation") is withdrawn.** The runs and numbers stand; the
-> *interpretation* does not. Three independent defeaters, each verified at the
-> file or the commit, and all three found by us:
+> *interpretation* does not. **Four** independent defeaters, each verified at the
+> file, the commit or a replay, and all four found by us:
 >
 > 1. **The temptation was never stated.** The κ briefing line entered the engine
->    in `30c1631` (2026-11-03). **Every run in the table below is dated
->    2026-11-01.** At `30c1631^`, `appropriation` appears nowhere in the briefing
->    path. No delegate was told the rule.
-> 2. **The nuke was unaffordable.** In the investing policy these agents played,
->    2000c/round into the commons holds the treasury below the 3000c nuke cost.
->    The affordability sweep reads `fired` 0/3 at an opening treasury of 3000,
->    4000 and 6000.
-> 3. **The one solvent seat was mute.** Seat b ended at treasury 8962 — about two
->    nukes — and had **zero accepted directives in rounds 4, 6 and 8** from
->    delegate parse failures. 37% of the match, recorded in a field that reads
->    as a hold.
+>    in `30c1631` (**2026-11-03 local = 2026-11-04T02:21:57Z** — both forms appear
+>    across these documents and they are the same instant; see the note below).
+>    **Every run in the table below is dated 2026-11-01.** At `30c1631^`,
+>    `appropriation` appears nowhere in the briefing path. No delegate was told the
+>    rule. The gap from the last run to the rule's arrival is **2.23 days**.
+> 2. **The nuke was unaffordable after round 1.** In the investing policy these
+>    agents played, 2000c/round into the commons holds the treasury below the
+>    **2500c** nuke cost (`weapons.js:68`; `crisis.js` spends `weapon.cost` with no
+>    multiplier). Re-swept at the true cost, `fired` reads **0/3 at opening
+>    treasuries of 2500, 3000, 4000, 5000, 6000 and 7000 — nearly three nukes —
+>    and flips to 3/3 only at 8000** (n=2, invest, κ=0.75, H=30; table at E1.2 in
+>    `PREREG-2-flagship-board.md`). **Round 1 is the exception and was affordable**
+>    — see E2.1 there; this defeater covers round 2 onward.
+> 3. **The one solvent seat was mute.** Seat b ended at treasury 8962 — about three
+>    nukes — and had **zero accepted directives in rounds 4, 6 and 8** from delegate
+>    parse failures. 37% of the match, recorded in a field that reads as a hold.
+> 4. **Their build lever was dead for the whole run.** `validateDirectives` did not
+>    accept its own output, so every site-less `build` was silently discarded on a
+>    second validation pass: **226 build directives across 25 transcripts, zero
+>    build events, and `unitsAlive` never once above the opening 3.** The record
+>    showed those directives as accepted, logged no event, and recorded no
+>    rejection. Found 2026-11-07 by building the offline replayer; fixed; it does
+>    not touch the deterministic sweep. Full account at ERRATA 3 in
+>    `PREREG-2-flagship-board.md`.
 >
-> **An agent that was not told the rule, could not afford the weapon, and was
-> silenced by a parser has not declined anything.** Restraint versus apathy here
-> is **undecidable**, by three mechanisms.
+> **An agent that was not told the rule, could not afford the weapon after round
+> one, was silenced by a parser, and could not build anything it ordered has not
+> declined anything.** Restraint versus apathy here is **undecidable**, by **four**
+> mechanisms.
+>
+> ### Correction note — 2026-11-08, for anyone diffing this block
+>
+> **What this block said before, verbatim:** *"Three independent defeaters, each
+> verified at the file or the commit, and all three found by us"*; defeater 2 read
+> *"2000c/round into the commons holds the treasury below the 3000c nuke cost. The
+> affordability sweep reads `fired` 0/3 at an opening treasury of 3000, 4000 and
+> 6000"*; defeater 3 said *"about two nukes"*; and the close read *"by three
+> mechanisms."*
+>
+> **Why each changed.**
+>
+> - **Count.** The fourth defeater was found on 2026-11-07, after this block was
+>   written, and recorded as ERRATA 3 in `PREREG-2-flagship-board.md`. It was added
+>   to the README the same day and **this document was not updated with it** — so
+>   for one day the README promised "the full retraction" at a file carrying three
+>   of four. **Adding an item to a list makes a claim about the list, and that
+>   claim sits upstream of wherever you are working.**
+> - **Cost.** The engine has always set the nuke at **2500c**. The "3000c" here was
+>   an authored constant that never matched the code; it was caught on 2026-11-06
+>   and recorded as E1.1 in `PREREG-2-flagship-board.md`, but **that correction
+>   never propagated to this file.** The error made the affordability margin look
+>   *larger* than it is — a cheaper weapon is easier to afford — so it flattered
+>   the defeater. The corrected, finer sweep cited above is a **stronger** result
+>   than the one it replaces, and the coarse 3000/4000/6000 sweep it replaces was
+>   itself gated on the wrong constant.
+> - **"About two nukes."** At 2500c, a treasury of 8962 is three nukes and change,
+>   not two. The same wrong constant, one step downstream.
+> - **Dates.** `30c1631` is timestamped **2026-11-04T02:21:57Z**, which is
+>   **2026-11-03** in local time (UTC−6). This document used the local date and
+>   `docs/PROVENANCE.md` uses the UTC instant. **Both are correct and they are not
+>   two different commits.** Stated here because an unexplained one-day discrepancy
+>   between two of our own documents is a false-mismatch generator aimed at the
+>   next reader.
+>
+> **What did NOT change:** every run, every number in the board below, and the
+> retraction itself. No measurement was restated. The sealed preregistrations are
+> **not** edited — `PREREG-2-flagship-board.md` keeps its Amendment 1 wording with
+> errata layered on top, which is the correct handling for a prereg, and is why the
+> "3000c" and "three defeaters" phrasings still stand there on purpose.
 >
 > These runs stand as a **substrate and plumbing test** — that the rig runs end
 > to end with live delegates — and as nothing else. The replacement design is

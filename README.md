@@ -57,8 +57,27 @@ found by us rather than by a reviewer:
 > by a bug, and could not build anything it ordered has not declined anything.
 > **Restraint versus apathy there is undecidable**, by four mechanisms.
 
-The full retraction is at the head of `docs/PREREG-FORECASTING-RESULTS.md`. It
-is kept, unaltered, beside the original table.
+The full retraction is at the head of
+[`docs/PREREG-FORECASTING-RESULTS.md`](docs/PREREG-FORECASTING-RESULTS.md),
+beside the original result table — **that table is unaltered, and no measurement
+in it has been restated.**
+
+**The retraction block itself was amended once, on 2026-11-08.** As first written
+it listed **three** defeaters and gave the weapon's cost as 3000c, which the
+engine has never said. Defeater 4 was found on 2026-11-07 and reached the README
+and the engine comments but not that file; the cost error was caught on 2026-11-06
+and recorded against a different document. **Both are now corrected there in
+place, with the previous wording quoted verbatim in a dated correction note, so
+the amendment is diffable rather than silent.** The corrected affordability sweep
+is a *stronger* result than the one it replaces.
+
+The preregistration that produced the claim is
+[`docs/PREREG-FORECASTING.md`](docs/PREREG-FORECASTING.md). **Its text is sealed
+and has not been edited** — a preregistration that gets edited after the fact is
+not one — so its known errors are left standing with corrections layered as
+errata at its foot, under an editorial retraction notice at its head. **That
+notice was added on 2026-11-08 because for three days the file registering the
+claim carried no mention that the claim had been withdrawn.**
 
 **The deterministic sweep is a different artifact and is not affected by any of
 this.** It uses scripted policies, not models. Its claim is about an
