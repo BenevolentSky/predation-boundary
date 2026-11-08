@@ -58,6 +58,20 @@ export async function planDirectives({
   baseUrl, model, apiKey = '', faction, text, ctx,
   maxAttempts = 3, maxTokens = 1600, timeoutMs = 300000,
   fetchImpl = fetch, system,
+  // OpenRouter provider-routing block, passed straight through to the API.
+  // WHY THIS EXISTS: every slug we run is served by MORE THAN ONE upstream, at
+  // DIFFERENT QUANTIZATIONS -- measured 2026-11-08: deepseek-chat-v3.1 is served
+  // at fp4 by one provider and fp8 by three others; kimi-k2.6 ranges int4 to
+  // bf16 across 16 endpoints; even claude-opus-5 has 11 and gpt-5.1 has 5.
+  // Unpinned, the router may serve two seats of ONE match from two different
+  // stacks -- which it did on our first live run (seat a CoreWeave fp8, seat b
+  // DeepInfra fp4). Two seats on different precisions are not the same model,
+  // so seat differences become provider differences and the comparison is void.
+  // Pinning is a WITHIN-RUN control; it does not replace recording. `served`
+  // and `provider` are captured regardless, because a pin can be refused and
+  // providers churn, and a run that records its own stack stays interpretable
+  // after the pin stops meaning anything.
+  providerOpts = null,
 }) {
   const url = baseUrl.replace(/\/+$/, '') + '/chat/completions';
   const messages = [
@@ -76,6 +90,11 @@ export async function planDirectives({
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), timeoutMs);
     let body = { model, messages, temperature: 0.3, max_tokens: maxTokens };
+    // require_parameters belongs in the caller's block: without it a provider
+    // that does not support `temperature` may accept the request and IGNORE it,
+    // which is the same silent-discard shape as the dead build lever -- an
+    // instruction accepted, dropped, and reported as fulfilled.
+    if (providerOpts) body.provider = providerOpts;
     if (!noResponseFormat) body.response_format = { type: 'json_object' };
     try {
       let res = await fetchImpl(url, {

@@ -105,7 +105,7 @@ const transcript = {
   // defect shape as the kappa one (the record omitting an input the result depends
   // on), found by building the replayer rather than by re-reading the transcript.
   engineRev: ENGINE_REV, // so a replay can tell a changed engine from a bad record
-  seats: seats.map((s) => ({ id: s.id, name: s.name, anchor: s.anchor ?? null, model: s.model.model, baseUrl: s.model.baseUrl })),
+  seats: seats.map((s) => ({ id: s.id, name: s.name, anchor: s.anchor ?? null, model: s.model.model, baseUrl: s.model.baseUrl, providerPin: s.model.provider ?? null })),
   rounds: [], ending: null,
 };
 
@@ -128,6 +128,7 @@ while (!world.over && round < horizon) {
     try {
       res = await planDirectives({
         baseUrl: s.model.baseUrl, model: s.model.model, apiKey: keyFor(s.model),
+        providerOpts: s.model.provider ?? null,
         faction: s.name, text, ctx,
         maxAttempts: 5, maxTokens: 4000, timeoutMs: 600000,
       });
@@ -221,6 +222,7 @@ if (world.over) {
     try {
       const st = await finalStatement({
         baseUrl: s.model.baseUrl, model: s.model.model, apiKey: keyFor(s.model),
+        providerOpts: s.model.provider ?? null,
         faction: s.name, ending: world.over.ending, reason: world.over.reason,
       });
       if (st) {
@@ -243,3 +245,45 @@ if (world.over) {
 }
 fs.writeFileSync(outFile, JSON.stringify(transcript, null, 2));
 log(`transcript: ${path.relative(root, outFile)}`);
+
+// ---------------------------------------------------------------------------
+// VOID GUARD. A run whose delegates never answered must not exit 0, because an
+// exit code is what a scripted board arm keys on, and a silently-failed arm
+// that looks completed is how a non-result becomes a result.
+//
+// Found 2026-11-08 by a negative control: pinning to a provider that does not
+// serve the model produced HTTP 404 on every call, both seats mute for the
+// whole match -- and this process printed a clean settlement and exited 0. The
+// per-seat record was honest (rejected carried the 404, served was null); the
+// SUMMARY and the EXIT CODE were not. Same family as the defeaters this
+// repository documents, one layer up: the record was fine and the report lied.
+//
+// THE DISCRIMINATOR MATTERS AND IT IS THIS PROJECT'S WHOLE SUBJECT. It is
+// tempting to void on "zero accepted directives", but a delegate that issues
+// no directives may be GENUINELY DECLINING TO ACT -- which is the exact
+// behaviour under study. Voiding on that would destroy the measurement in
+// order to protect it, and would bake restraint-equals-failure into the tool.
+// So the test is INFRASTRUCTURAL, never behavioural: did the server ever
+// answer this seat at all? A seat with a served model id and zero directives
+// is a finding. A seat that was never served is an absence of data.
+const voidSeats = [];
+for (const s of transcript.seats) {
+  const mine = transcript.rounds.map((r) => r.seats[s.id]).filter(Boolean);
+  const everServed = mine.some((x) => x && x.modelServed);
+  const transportFails = mine.filter((x) =>
+    (x.rejected || []).some((rj) => /HTTP \d{3}|delegate error|no valid response/i.test(String(rj.reason || '')))
+  ).length;
+  if (!everServed) voidSeats.push({ id: s.id, why: 'never served - the server did not answer this seat in any round', rounds: mine.length, transportFails });
+  else if (transportFails === mine.length && mine.length > 0) voidSeats.push({ id: s.id, why: 'every round ended in a transport or protocol failure', rounds: mine.length, transportFails });
+}
+
+if (voidSeats.length) {
+  transcript.VOID = { declaredAt: new Date().toISOString(), rule: 'infrastructural: a seat the server never answered yields no data about that seat', seats: voidSeats };
+  fs.writeFileSync(outFile, JSON.stringify(transcript, null, 2));
+  console.error('\n' + '='.repeat(72));
+  console.error('RUN IS VOID - do not read any measurement off this transcript.');
+  for (const v of voidSeats) console.error(`  seat ${v.id}: ${v.why} (${v.transportFails}/${v.rounds} rounds failed)`);
+  console.error('Void, never patched by loosening the cell. Fix the cause and re-run.');
+  console.error('='.repeat(72));
+  process.exit(2);
+}
