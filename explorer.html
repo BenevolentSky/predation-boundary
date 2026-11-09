@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Predation Boundary Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* ---------------------------------------------------------------- tokens
+   Dark-first on purpose: this is an instrument panel, and the house
+   default is dark. The light palette is the deliberate inversion, not an
+   afterthought -- every token is redefined for it. */
+:root {
+  --ground:   #0b1114;
+  --panel:    #111a1e;
+  --panel-2:  #162228;
+  --line:     #24353c;
+  --line-2:   #2f464e;
+  --ink:      #e6eef0;
+  --ink-2:    #a9c0c6;
+  --dim:      #7b9299;
+  --base:     #2ec4b6;   /* the cooperating baseline arm */
+  --base-ink: #0b1114;
+  --mut:      #f08c33;   /* the predator arm */
+  --alarm:    #e4572e;   /* reserved: void / never-served / error */
+  --shadow:   0 1px 0 rgba(255,255,255,.03), 0 8px 24px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --ground:   #f2f6f7;
+    --panel:    #ffffff;
+    --panel-2:  #e9f0f1;
+    --line:     #ccdade;
+    --line-2:   #b3c7cd;
+    --ink:      #0d1417;
+    --ink-2:    #2f4248;
+    --dim:      #5d757c;
+    --base:     #11796f;
+    --base-ink: #ffffff;
+    --mut:      #b55600;
+    --alarm:    #b3341a;
+    --shadow:   0 1px 0 rgba(0,0,0,.02), 0 6px 18px rgba(16,40,48,.10);
+  }
+}
+:root[data-theme="light"] {
+  --ground:   #f2f6f7;
+  --panel:    #ffffff;
+  --panel-2:  #e9f0f1;
+  --line:     #ccdade;
+  --line-2:   #b3c7cd;
+  --ink:      #0d1417;
+  --ink-2:    #2f4248;
+  --dim:      #5d757c;
+  --base:     #11796f;
+  --base-ink: #ffffff;
+  --mut:      #b55600;
+  --alarm:    #b3341a;
+  --shadow:   0 1px 0 rgba(0,0,0,.02), 0 6px 18px rgba(16,40,48,.10);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  padding-block: 0 48px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.wrap { max-width: 1180px; margin: 0 auto; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+code, .num, .mono { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+/* ---------------------------------------------------------------- header */
+header {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 18px;
+  padding-block: 26px 14px;
+  border-bottom: 1px solid var(--line);
+}
+header h1 { font-size: 1.32rem; font-weight: 700; letter-spacing: -0.012em; }
+header .sub { color: var(--dim); font-size: .86rem; }
+.rev {
+  margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+}
+.tag {
+  font-family: "IBM Plex Mono", monospace; font-size: .7rem; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink-2);
+  border: 1px solid var(--line-2); border-radius: 3px; padding: 3px 7px;
+  white-space: nowrap;
+}
+.tag.off { color: var(--dim); border-style: dashed; }
+button.tag { background: none; cursor: pointer; font-weight: 500; }
+button.tag:hover { border-color: var(--base); color: var(--base); }
+
+.standfirst {
+  padding-block: 18px 22px; max-width: 68ch; color: var(--ink-2); font-size: .97rem;
+}
+.standfirst strong { color: var(--ink); font-weight: 600; }
+
+/* ---------------------------------------------------------------- panels */
+.bench { display: grid; grid-template-columns: 320px minmax(0,1fr); gap: 18px; align-items: start; }
+@media (max-width: 860px) { .bench { grid-template-columns: minmax(0,1fr); } }
+
+.card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+  box-shadow: var(--shadow);
+}
+.card > h2 {
+  font-size: .72rem; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--dim); font-weight: 600;
+  padding: 12px 16px; border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 8px;
+}
+.card > .body { padding: 16px; }
+
+/* ---------------------------------------------------------------- knobs */
+.knob { display: grid; gap: 5px; margin-bottom: 15px; }
+.knob:last-child { margin-bottom: 0; }
+.knob .lbl { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.knob .lbl span:first-child { font-size: .84rem; font-weight: 500; }
+.knob .lbl .num { font-size: .84rem; color: var(--base); font-weight: 500; }
+.knob .hint { font-size: .74rem; color: var(--dim); line-height: 1.4; }
+input[type=range] { width: 100%; accent-color: var(--base); margin: 2px 0 0; }
+.seg { display: flex; gap: 0; border: 1px solid var(--line-2); border-radius: 4px; overflow: hidden; }
+.seg button {
+  flex: 1; background: none; border: none; color: var(--ink-2);
+  font-family: inherit; font-size: .82rem; padding: 6px 4px; cursor: pointer;
+  border-right: 1px solid var(--line-2);
+}
+.seg button:last-child { border-right: none; }
+.seg button[aria-pressed=true] { background: var(--base); color: var(--base-ink); font-weight: 600; }
+select {
+  width: 100%; background: var(--panel-2); color: var(--ink);
+  border: 1px solid var(--line-2); border-radius: 4px; padding: 6px 8px;
+  font-family: inherit; font-size: .85rem;
+}
+:focus-visible { outline: 2px solid var(--base); outline-offset: 2px; }
+
+/* ---------------------------------------------------------------- readout */
+.arms { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
+@media (max-width: 520px) { .arms { grid-template-columns: 1fr; } }
+.arm { background: var(--panel); padding: 14px 16px; }
+.arm h3 {
+  font-size: .7rem; letter-spacing: .09em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 7px; margin-bottom: 10px;
+}
+.swatch { width: 9px; height: 9px; border-radius: 2px; flex: none; }
+.arm.b h3 { color: var(--base); }
+.arm.m h3 { color: var(--mut); }
+.arm .ending { font-size: 1.02rem; font-weight: 600; margin-bottom: 2px; }
+.arm .endsub { font-size: .76rem; color: var(--dim); margin-bottom: 12px; }
+dl.vals { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0; font-size: .82rem; }
+dl.vals dt { color: var(--dim); }
+dl.vals dd { margin: 0; text-align: right; font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+
+.criteria { border-top: 1px solid var(--line); padding: 14px 16px; display: grid; gap: 10px; }
+.crit { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: start; }
+.mark {
+  width: 14px; height: 14px; border-radius: 50%; margin-top: 4px;
+  border: 1.5px solid var(--line-2); background: none;
+}
+.mark.on { background: var(--ink); border-color: var(--ink); }
+.crit .cname { font-size: .85rem; font-weight: 500; }
+.crit .cwhy { font-size: .75rem; color: var(--dim); }
+.crit .cval { font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.seedrow { display: flex; gap: 6px; align-items: center; font-size: .75rem; color: var(--dim); }
+
+/* ---------------------------------------------------------------- boundary */
+.boundary { margin-top: 18px; }
+.btable { width: 100%; overflow-x: auto; }
+table.grid { border-collapse: collapse; width: 100%; font-size: .8rem; }
+table.grid th, table.grid td {
+  border: 1px solid var(--line); padding: 6px 8px; text-align: center;
+  font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+table.grid th { color: var(--dim); font-weight: 500; font-size: .74rem; background: var(--panel-2); }
+table.grid th.rowh, table.grid td.rowh {
+  text-align: left; font-family: "IBM Plex Sans", sans-serif; color: var(--ink-2);
+  background: var(--panel-2); font-size: .78rem; position: sticky; left: 0;
+}
+table.grid td.flip { box-shadow: inset 2px 0 0 var(--mut); }
+table.grid th.flip { box-shadow: inset 2px 0 0 var(--mut); color: var(--mut); }
+.k { display: inline-flex; gap: 2px; align-items: center; justify-content: center; }
+.k i { width: 6px; height: 10px; border-radius: 1px; background: var(--line-2); display: block; }
+.k i.on { background: var(--ink); }
+.flipnote { font-size: .82rem; color: var(--ink-2); padding: 12px 16px 0; }
+.flipnote b { color: var(--mut); font-weight: 600; }
+
+/* ---------------------------------------------------------------- footer */
+.repro { margin-top: 18px; }
+.cmd {
+  display: block; background: var(--panel-2); border: 1px solid var(--line);
+  border-radius: 4px; padding: 11px 13px; font-size: .78rem; color: var(--ink);
+  overflow-x: auto; white-space: pre; line-height: 1.5;
+}
+footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--dim); font-size: .82rem; }
+footer p { max-width: 72ch; }
+footer a { color: var(--base); }
+.limits { margin-top: 14px; display: grid; gap: 7px; }
+.limits li { max-width: 72ch; }
+.busy { color: var(--mut); }
+@media (prefers-reduced-motion: no-preference) {
+  .mark, table.grid td { transition: background-color .12s linear, box-shadow .12s linear; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <h1>Predation Boundary Explorer</h1>
+    <div class="sub">Does taking from a rival pay &mdash; and where is the line?</div>
+  </div>
+  <div class="rev">
+    <span class="tag" id="revtag">engine rev &mdash;</span>
+    <span class="tag off">no key</span>
+    <span class="tag off">no network</span>
+    <span class="tag off">no model</span>
+    <button class="tag" id="themebtn" type="button">theme</button>
+  </div>
+</header>
+
+<p class="standfirst">
+  This page runs the <strong>deterministic half</strong> of the instrument &mdash; the same
+  <code>shared/</code> modules the published 810-row sweep runs, loaded unmodified and
+  executed in your browser. Nothing is sent anywhere. Every cell is a
+  <strong>counterfactual pair</strong> on one seed: a baseline where every seat cooperates,
+  and a mutant where one seat fires a single nuclear weapon at round <span class="mono">t0</span>
+  and then cooperates. Same seed, same rivals &mdash; the strike and its interception draw are
+  the only difference. <strong>The engine reports terminal state and refuses to rank how a
+  crisis ended;</strong> so does this page.
+</p>
+
+<div class="bench">
+
+  <!-- ------------------------------------------------------------ knobs -->
+  <section class="card" aria-label="Parameters">
+    <h2>Parameters</h2>
+    <div class="body">
+
+      <div class="knob">
+        <div class="lbl"><span>Preset</span></div>
+        <select id="preset">
+          <option value="grid">Published main-grid cell</option>
+          <option value="necessity">Necessity &mdash; appropriation on</option>
+          <option value="growing">Against a growing rival</option>
+          <option value="shallow">Shallow scar, fast renewal</option>
+          <option value="deep">Deep scar, slow renewal</option>
+        </select>
+        <div class="hint">Starting points from the published grids. Every knob stays free.</div>
+      </div>
+
+      <div class="knob">
+        <div class="lbl"><span>Seats</span></div>
+        <div class="seg" id="nF" role="group" aria-label="Number of factions">
+          <button type="button" data-v="2">2</button>
+          <button type="button" data-v="3">3</button>
+        </div>
+      </div>
+
+      <div class="knob">
+        <div class="lbl"><span>Horizon</span><span class="num" id="horizonV"></span></div>
+        <input type="range" id="horizon" min="4" max="30" step="1">
+        <div class="hint">Rounds until settlement. One round is a week.</div>
+      </div>
+
+      <div class="knob">
+        <div class="lbl"><span>Strike round <span class="mono">t0</span></span><span class="num" id="t0V"></span></div>
+        <input type="range" id="t0" min="0" max="29" step="1">
+        <div class="hint">When the single weapon is fired. Clamped below the horizon.</div>
+      </div>
+
+      <div class="knob">
+        <div class="lbl"><span>Scar per nuke</span><span class="num" id="scarV"></span></div>
+        <input type="range" id="scar" min="0.01" max="0.20" step="0.01">
+        <div class="hint">Carrying capacity lost where a weapon lands, as a fraction of C0.</div>
+      </div>
+
+      <div class="knob">
+        <div class="lbl"><span>Renewal rate</span><span class="num" id="renewV"></span></div>
+        <input type="range" id="renew" min="0" max="5" step="1">
+        <div class="hint">Multiplier on how much capacity a credit of repair buys back.</div>
+      </div>
+
+      <div class="knob">
+        <div class="lbl"><span>Appropriation &kappa;</span><span class="num" id="kappaV"></span></div>
+        <input type="range" id="kappa" min="0" max="1" step="0.05">
+        <div class="hint">Share of the struck seat&rsquo;s surviving output redirected to the attacker. At 0, taking does not feed the taker.</div>
+      </div>
+
+      <div class="knob">
+        <div class="lbl"><span>Baseline policy</span></div>
+        <div class="seg" id="mode" role="group" aria-label="Baseline policy">
+          <button type="button" data-v="conserve">Conserving</button>
+          <button type="button" data-v="invest">Investing</button>
+        </div>
+        <div class="hint">Conserving repairs only a serious scar. Investing grows the commons &mdash; a strike then lands on a rival that is getting richer.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- readout -->
+  <div>
+    <section class="card" aria-label="Single cell">
+      <h2>One cell <span class="tag" id="seedtag">seed 11</span></h2>
+      <div class="arms">
+        <div class="arm b">
+          <h3><span class="swatch" style="background:var(--base)"></span> Baseline &mdash; all cooperate</h3>
+          <div class="ending" id="b_end">&mdash;</div>
+          <div class="endsub" id="b_endsub">&nbsp;</div>
+          <dl class="vals" id="b_vals"></dl>
+        </div>
+        <div class="arm m">
+          <h3><span class="swatch" style="background:var(--mut)"></span> Mutant &mdash; one strike at t0</h3>
+          <div class="ending" id="m_end">&mdash;</div>
+          <div class="endsub" id="m_endsub">&nbsp;</div>
+          <dl class="vals" id="m_vals"></dl>
+        </div>
+      </div>
+      <div class="criteria" id="criteria"></div>
+    </section>
+
+    <!-- -------------------------------------------------------- boundary -->
+    <section class="card boundary" aria-label="The boundary">
+      <h2>
+        The boundary
+        <select id="axis" style="width:auto;margin-left:auto;font-size:.76rem;padding:3px 6px">
+          <option value="t0">sweep t0</option>
+          <option value="horizon">sweep horizon</option>
+          <option value="scar">sweep scar</option>
+          <option value="renew">sweep renewal</option>
+          <option value="kappa">sweep &kappa;</option>
+        </select>
+      </h2>
+      <div class="body" style="padding:14px 16px 16px">
+        <div class="btable">
+          <table class="grid" id="btab"></table>
+        </div>
+        <div class="seedrow" style="margin-top:10px">
+          <span class="k"><i class="on"></i><i class="on"></i><i class="on"></i></span>
+          <span>three marks = the three seeds 11 / 22 / 33, filled where the criterion holds. A point measurement says predation did something once; a swept axis says where the answer changes.</span>
+        </div>
+      </div>
+      <div class="flipnote" id="flipnote"></div>
+      <div class="body" style="padding-top:12px"></div>
+    </section>
+
+    <section class="card repro" aria-label="Reproduce">
+      <h2>Reproduce this outside the browser</h2>
+      <div class="body">
+        <code class="cmd" id="cmd">&nbsp;</code>
+        <p style="font-size:.8rem;color:var(--dim);margin:11px 0 0;max-width:72ch">
+          The page and the command run the same code. The full published grid is
+          <code>node tools/sweep.js</code> &mdash; 810 rows at md5
+          <code>d709b729f63a</code>. If your clone gives a different hash, the
+          disagreement is real and we want to hear about it.
+        </p>
+      </div>
+    </section>
+  </div>
+</div>
+
+<footer>
+  <p>
+    <strong style="color:var(--ink)">What this page can and cannot settle.</strong>
+    The environment is fully disclosed and deterministic, so everything above is
+    verifiable to the byte: clone the repository, run it, and you get these numbers or you
+    do not. That is the half of the claim a reader can check without trusting us.
+  </p>
+  <ul class="limits">
+    <li><strong style="color:var(--ink)">This is not a measurement of any AI model.</strong>
+      The seats here are scripted policies, not language models. They are a
+      sensitivity instrument for the environment, not evidence about anyone&rsquo;s behaviour.</li>
+    <li>A three-seed majority is a reading, not a proof. Where a flip sits near the
+      boundary, widen the axis or change the seeds and watch whether it moves.</li>
+    <li>There is <strong style="color:var(--ink)">no scoring function</strong> and no ranking,
+      here or in the engine. &ldquo;Pays&rdquo; is reported under three explicit criteria so you
+      pick what you value; the instrument does not.</li>
+  </ul>
+  <p style="margin-top:14px">
+    Source, docs, and every sealed transcript the published findings cite:
+    <a href="https://github.com/BenevolentSky/predation-boundary">github.com/BenevolentSky/predation-boundary</a>
+    &nbsp;&middot;&nbsp; Apache-2.0.
+    Running your own models against this environment needs a key and is a separate tier;
+    reach out if you want to point it at your own endpoint.
+  </p>
+</footer>
+
+</div>
+
+<script type="module">
+import { DEFAULTS, ENGINE_REV } from './shared/crisis.js';
+import { pair, gridDefaults } from './shared/policies.js';
+
+const SEEDS = [11, 22, 33];
+const RENEWS = [0.25, 0.5, 1, 2, 4, 8];
+const $ = (id) => document.getElementById(id);
+
+document.getElementById('revtag').textContent = 'engine rev ' + ENGINE_REV;
+
+/* ----------------------------------------------------------------- state */
+const S = { nF: 2, horizon: 12, t0: 2, scar: 0.06, renew: 2, kappa: 0, mode: 'conserve', axis: 't0' };
+
+const PRESETS = {
+  grid:      { nF: 2, horizon: 12, t0: 2, scar: 0.06, renew: 2, kappa: 0,    mode: 'conserve', axis: 't0' },
+  necessity: { nF: 2, horizon: 12, t0: 2, scar: 0.06, renew: 2, kappa: 0.75, mode: 'conserve', axis: 'kappa' },
+  growing:   { nF: 2, horizon: 20, t0: 2, scar: 0.06, renew: 2, kappa: 0,    mode: 'invest',   axis: 't0' },
+  shallow:   { nF: 3, horizon: 20, t0: 1, scar: 0.03, renew: 4, kappa: 0,    mode: 'conserve', axis: 'scar' },
+  deep:      { nF: 2, horizon: 20, t0: 1, scar: 0.12, renew: 0, kappa: 0,    mode: 'conserve', axis: 'renew' },
+};
+
+/* -------------------------------------------------------------- the model
+   There is deliberately NO arithmetic in this page. gridDefaults() builds the
+   parameter patch, pair() runs the counterfactual and scores it, and both are
+   the same functions tools/sweep.js calls to produce the published 810-row
+   grid -- verified row-for-row by tools/test-explorer.js. A page that did its
+   own sums could show numbers the repository does not reproduce, which is the
+   exact failure this project documents. */
+function defaultsFor(p) {
+  return gridDefaults({ scar: p.scar, renew: RENEWS[p.renew], kappa: p.kappa });
+}
+
+function cell(p, seed) {
+  return pair({
+    seed, horizon: p.horizon, nFactions: p.nF,
+    defaults: defaultsFor(p), mode: p.mode,
+    predatorT0: Math.min(p.t0, p.horizon - 1),
+  });
+}
+
+/* ------------------------------------------------------------ vocabulary */
+const ENDING_WHY = {
+  'call-off':    'every pair at peace, no weapon used',
+  'pyrrhic':     'at least one weapon was used and both sides stand',
+  'supremacy':   'one side fell below viability, or a war of attrition',
+  'collapse':    'every treasury below the debt floor',
+  'overshoot':   'consumption passed carrying capacity',
+};
+
+const AXES = {
+  t0:      { label: 't0', fmt: (v) => v, values: (p) => Array.from({ length: Math.min(p.horizon, 10) }, (_, i) => i) },
+  horizon: { label: 'horizon', fmt: (v) => v, values: () => [6, 8, 10, 12, 16, 20, 24, 30] },
+  scar:    { label: 'scar', fmt: (v) => v.toFixed(2), values: () => [0.01, 0.03, 0.06, 0.09, 0.12, 0.16, 0.20] },
+  renew:   { label: 'renewal', fmt: (v) => RENEWS[v] + '×', values: () => [0, 1, 2, 3, 4, 5] },
+  kappa:   { label: 'κ', fmt: (v) => v.toFixed(2), values: () => [0, 0.15, 0.25, 0.4, 0.5, 0.65, 0.75, 0.9, 1] },
+};
+
+/* --------------------------------------------------------------- rendering */
+function vals(el, v, w) {
+  el.innerHTML = [
+    ['treasury', v.treasury.toLocaleString()],
+    ['war machine', v.warMachine.toFixed(2)],
+    ['population', v.populationRatio.toFixed(2) + '×'],
+    ['capacity C', w.C.toFixed(2)],
+    ['margin', w.margin.toFixed(2)],
+    ['nukes used', v.nukesUsed],
+    ['intercepted', v.nukesIntercepted],
+    ['treaties', v.treatiesSigned],
+  ].map(([k, x]) => '<dt>' + k + '</dt><dd>' + x + '</dd>').join('');
+}
+
+function renderCell() {
+  const seed = SEEDS[0];
+  const r = cell(S, seed);
+  $('seedtag').textContent = 'seed ' + seed;
+
+  $('b_end').textContent = r.base.ending;
+  $('b_endsub').textContent = (ENDING_WHY[r.base.ending] || '') + ' · settled round ' + r.base.round;
+  $('m_end').textContent = r.mut.ending;
+  $('m_endsub').textContent = (ENDING_WHY[r.mut.ending] || '') + ' · settled round ' + r.mut.round;
+  vals($('b_vals'), r.bv, { C: r.base.C, margin: r.base.margin });
+  vals($('m_vals'), r.mv, { C: r.mut.C, margin: r.mut.margin });
+
+  const sign = (n) => (n > 0 ? '+' : '') + n.toLocaleString();
+  const crits = [
+    ['C1 survival', 'predator’s war machine at horizon ≥ viability (' + DEFAULTS.viability + ')', r.c1_survival, r.mv.warMachine.toFixed(2)],
+    ['C2 wealth', 'predator treasury ≥ its own baseline — the strike net-pays', r.c2_wealth, sign(r.deltaTreasury) + 'c'],
+    ['C3 power', 'predator war machine > its own baseline', r.c3_power, sign(r.deltaWarMachine)],
+  ];
+  $('criteria').innerHTML = crits.map(([n, why, on, v]) =>
+    '<div class="crit"><span class="mark' + (on ? ' on' : '') + '" aria-hidden="true"></span>' +
+    '<span><span class="cname">' + n + (on ? '' : ' — not met') + '</span><br><span class="cwhy">' + why + '</span></span>' +
+    '<span class="cval">' + v + '</span></div>').join('');
+
+  // The command must call the SAME two functions this page calls, with the
+  // same arguments -- not a hand-built copy of the parameter patch. The first
+  // version of this string assembled `defaults` by hand and silently dropped
+  // investK, so at any renewal other than 1x it would not have reproduced the
+  // page it was printed on. A reproduce-command that does not reproduce is
+  // worse than none.
+  $('cmd').textContent =
+    'node -e "' +
+    "import('./shared/policies.js').then(m=>{" +
+    'const r=m.pair({seed:' + seed + ',horizon:' + S.horizon + ',nFactions:' + S.nF +
+    ",mode:'" + S.mode + "',predatorT0:" + Math.min(S.t0, S.horizon - 1) +
+    ',defaults:m.gridDefaults({scar:' + S.scar + ',renew:' + RENEWS[S.renew] + ',kappa:' + S.kappa + '})});' +
+    'console.log({baseline:r.base.ending,mutant:r.mut.ending,dTreasury:r.deltaTreasury,' +
+    'dWarMachine:r.deltaWarMachine,C1:r.c1_survival,C2:r.c2_wealth,C3:r.c3_power});})' +
+    '"';
+}
+
+function renderBoundary() {
+  const ax = AXES[S.axis];
+  const vs = ax.values(S);
+  const cols = vs.map((v) => {
+    const p = { ...S, [S.axis]: v };
+    if (S.axis === 'horizon') p.t0 = Math.min(S.t0, v - 1);
+    return { v, runs: SEEDS.map((sd) => cell(p, sd)) };
+  });
+
+  const kbar = (runs, key) => '<span class="k">' + runs.map((r) =>
+    '<i class="' + (r[key] ? 'on' : '') + '"></i>').join('') + '</span>';
+  const kOf = (c, key) => c.runs.filter((r) => r[key]).length;
+
+  // A flip is where the three-seed MAJORITY on a criterion changes across one
+  // step of the axis. Each criterion is tracked separately and on purpose: in
+  // the published main grid C1 is true in all 810 rows and C2 is false in all
+  // 810, so a page that looked for flips in C2 alone would report "no
+  // boundary" across the whole region where the instrument's actual result
+  // lives. A criterion that does not move across an axis is a result too, and
+  // is named as one below rather than left blank.
+  const CRITS = [['C1 survival', 'c1_survival'], ['C2 wealth', 'c2_wealth'], ['C3 power', 'c3_power']];
+  const flips = {};
+  for (const [, key] of CRITS) {
+    flips[key] = -1;
+    for (let i = 1; i < cols.length; i++) {
+      if ((kOf(cols[i], key) >= 2) !== (kOf(cols[i - 1], key) >= 2)) { flips[key] = i; break; }
+    }
+  }
+  const anyFlip = new Set(Object.values(flips).filter((i) => i > 0));
+
+  const head = '<tr><th class="rowh">' + ax.label + '</th>' +
+    cols.map((c, i) => '<th class="' + (anyFlip.has(i) ? 'flip' : '') + '">' + ax.fmt(c.v) + '</th>').join('') + '</tr>';
+  const rows = CRITS.map(([n, key]) =>
+    '<tr><td class="rowh">' + n + '</td>' + cols.map((c, i) =>
+      '<td class="' + (i === flips[key] ? 'flip' : '') + '">' + kbar(c.runs, key) + '</td>').join('') + '</tr>').join('');
+  const endRow = '<tr><td class="rowh">ending</td>' + cols.map((c, i) => {
+    const set = [...new Set(c.runs.map((r) => r.mut.ending))];
+    return '<td class="' + (anyFlip.has(i) ? 'flip' : '') + '" style="font-size:.68rem;color:var(--dim)">' +
+      set.join('<br>') + '</td>';
+  }).join('') + '</tr>';
+
+  $('btab').innerHTML = head + rows + endRow;
+
+  const lines = CRITS.map(([n, key]) => {
+    const i = flips[key];
+    if (i > 0) {
+      return '<b>' + n + '</b> flips between ' + ax.label + ' <b>' + ax.fmt(cols[i - 1].v) +
+        '</b> and <b>' + ax.fmt(cols[i].v) + '</b>.';
+    }
+    const all = cols.every((c) => kOf(c, key) === 3);
+    const none = cols.every((c) => kOf(c, key) === 0);
+    if (all) return n + ' holds at every point on this axis.';
+    if (none) return n + ' holds nowhere on this axis.';
+    return n + ' has no majority flip here — it is split seed-by-seed, which is its own warning.';
+  });
+  $('flipnote').innerHTML = lines.join('<br>') +
+    '<br><span style="color:var(--dim)">Two of three seeds is a reading, not a proof. ' +
+    'A criterion that never moves across an axis is telling you the answer does not depend on it.</span>';
+}
+
+/* ------------------------------------------------------------------ wiring */
+let pending = null;
+function render() {
+  if (pending) return;
+  pending = requestAnimationFrame(() => { pending = null; renderCell(); renderBoundary(); });
+}
+
+function syncControls() {
+  $('horizon').value = S.horizon;
+  $('t0').max = Math.max(0, S.horizon - 1);
+  S.t0 = Math.min(S.t0, S.horizon - 1);
+  $('t0').value = S.t0;
+  $('scar').value = S.scar;
+  $('renew').value = S.renew;
+  $('kappa').value = S.kappa;
+  $('axis').value = S.axis;
+  $('horizonV').textContent = S.horizon + ' rounds';
+  $('t0V').textContent = 'round ' + S.t0;
+  $('scarV').textContent = S.scar.toFixed(2) + ' of C0';
+  $('renewV').textContent = RENEWS[S.renew] + '×';
+  $('kappaV').textContent = S.kappa.toFixed(2);
+  for (const g of ['nF', 'mode']) {
+    for (const b of $(g).querySelectorAll('button')) {
+      b.setAttribute('aria-pressed', String(b.dataset.v == S.nF || b.dataset.v === S.mode));
+    }
+  }
+}
+
+for (const [id, k, cast] of [['horizon', 'horizon', Number], ['t0', 't0', Number],
+  ['scar', 'scar', Number], ['renew', 'renew', Number], ['kappa', 'kappa', Number]]) {
+  $(id).addEventListener('input', (e) => { S[k] = cast(e.target.value); syncControls(); render(); });
+}
+for (const g of ['nF', 'mode']) {
+  $(g).addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    S[g] = g === 'nF' ? Number(b.dataset.v) : b.dataset.v;
+    syncControls(); render();
+  });
+}
+$('axis').addEventListener('change', (e) => { S.axis = e.target.value; render(); });
+$('preset').addEventListener('change', (e) => {
+  Object.assign(S, PRESETS[e.target.value]); syncControls(); render();
+});
+$('themebtn').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.setAttribute('data-theme', dark ? 'light' : 'dark');
+});
+
+syncControls();
+renderCell();
+renderBoundary();
+</script>
+</body>
+</html>

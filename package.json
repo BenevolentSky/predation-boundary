@@ -6,7 +6,7 @@
   "type": "module",
   "engines": { "node": ">=20" },
   "scripts": {
-    "test": "node tools/test-crisis.js && node tools/test-directive.js && node tools/replay-crisis.js --self-test",
+    "test": "node tools/test-crisis.js && node tools/test-directive.js && node tools/replay-crisis.js --self-test && node tools/test-explorer.js",
     "sweep": "node tools/sweep.js",
     "probe": "node tools/probe-n3-breakeven.js"
   }

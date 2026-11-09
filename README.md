@@ -15,11 +15,34 @@ node tools/replay-crisis.js --self-test  # the replayer proves it can detect a c
 node tools/replay-crisis.js runs/<transcript>.json   # re-derive a recorded match
 node tools/test-crisis.js                # 107 assertions
 node tools/test-directive.js             # contract + 12/12 classes idempotent
+node tools/test-explorer.js              # the browser explorer vs the published grid
 ```
 
 Requires Node ≥ 20 (developed on 22.15). The sweep writes a full grid to
 `runs/sweep-<timestamp>.json` and `.csv`. Nothing else is needed to reproduce
 every number in `docs/SWEEP.md`.
+
+### In a browser, with no key and no network
+
+`explorer.html` runs the same deterministic experiment interactively: set the
+parameters, and it runs the counterfactual pair — a baseline where every seat
+cooperates against a mutant where one seat strikes once — and sweeps an axis to
+show where the answer changes.
+
+```bash
+python -m http.server 8000     # or any static server; ES modules need http://, not file://
+# then open http://localhost:8000/explorer.html
+```
+
+**It contains no arithmetic of its own.** It calls `gridDefaults()` and `pair()`
+from `shared/policies.js`, which are the same functions `tools/sweep.js` calls
+to build the published grid — so the page cannot drift into showing numbers this
+repository does not reproduce. `tools/test-explorer.js` is that claim's
+evidence: it recomputes all **810 published rows** through the page's exact path
+and compares every column, then proves each comparison is capable of failing.
+It also pins what `docs/SWEEP.md` reports — C1 true in every row, C2 false in
+every row, C3 the only criterion that varies — so that constancy cannot change
+unnoticed.
 
 ---
 
@@ -173,12 +196,15 @@ pre-registration, and the scoping error in defeater 2.
 |---|---|
 | `shared/crisis.js` | the engine: commons, ledger, escalation, terminal states |
 | `shared/directive.js` | the action contract and its validator |
+| `shared/policies.js` | the scripted policies, the three criteria, and the counterfactual runner — **shared by the sweep and the browser** |
 | `shared/delegate.js` | optional adapter for OpenAI-compatible endpoints |
 | `tools/sweep.js` | the 1,188-cell sweep — **no models, no keys** |
 | `tools/replay-crisis.js` | re-derive a recorded match from its transcript — **no model, no key** |
 | `tools/probe-n3-breakeven.js` | the engine-derived break-even key |
 | `tools/test-crisis.js` | 107 assertions |
 | `tools/test-directive.js` | the contract's suite, incl. validator idempotence |
+| `tools/test-explorer.js` | the explorer recomputed against all 810 published rows |
+| `explorer.html` | the interactive deterministic tier — **no key, no network, no model** |
 | `runs/` | every transcript and sweep grid the documents cite |
 | `docs/SWEEP.md` | the instrument and its result |
 | `docs/MECHANICS.md` | the constants and the arithmetic |

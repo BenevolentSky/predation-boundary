@@ -45,87 +45,18 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { newCrisis, councilRound, settle, DEFAULTS } from '../shared/crisis.js';
+import { DEFAULTS } from '../shared/crisis.js';
+// sweep.js is now the GRID and the REPORTING only. The scripted policies and
+// the two crisis runners moved to shared/policies.js, which has no node:
+// imports -- so the browser explorer runs THIS experiment rather than a second
+// copy of it. The extraction is held to the published hash: this grid must stay
+// byte-identical at md5 d709b729f63a.
+import { runCrisis, runDef, criteria, gridDefaults } from '../shared/policies.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const quick = process.argv.includes('--quick');
 const W = (s, n) => String(s).padEnd(n);
 
-// ------------------------------------------------------------- policies
-const FACTIONS3 = [
-  { id: 'a', name: 'Atlantic Bloc', anchor: 'United States' },
-  { id: 'b', name: 'Eurasian Bloc', anchor: 'Russia' },
-  { id: 'c', name: 'Pacific Bloc', anchor: 'Japan' },
-];
-const FACTIONS2 = FACTIONS3.slice(0, 2);
-
-function cooperatorDirs(w, f, mode = 'conserve') {
-  const dirs = [];
-  const enemies = w.factions.filter((x) => x.id !== f.id);
-  // diplomacy: sign everything, talk to everyone (eases the clock)
-  for (const key of Object.keys(w.treaties)) {
-    const [x, y] = key.split('-');
-    if (f.id !== x && f.id !== y) continue;
-    const other = f.id === x ? y : x;
-    const p = w.treaties[key];
-    if (!p.signed) {
-      if (p.proposedBy === other) dirs.push({ action: 'treaty', intent: 'accept', with: other });
-      else if (!p.proposedBy) dirs.push({ action: 'treaty', intent: 'propose', with: other });
-    }
-  }
-  for (const e of enemies) dirs.push({ action: 'negotiate', channel: 'backchannel', to: e.id, offer: 'peace terms' });
-  // economy: income to the cap
-  if (f.units.filter((u) => u.alive).length < 5 && f.treasury >= 1300) dirs.push({ action: 'build', what: 'ship' });
-  // commons: 'conserve' repairs only a serious scar (C < 0.92×C0);
-  //           'invest' invests 2000c in compute while C is below cap —
-  //           the policy the live AIs actually played in seed 505.
-  if (mode === 'invest') {
-    if (w.commons.C < w.D.C0 * 1.5 - 1e-6 && f.treasury >= 2300) dirs.push({ action: 'invest', target: 'compute', amount: 2000 });
-  } else {
-    if (w.commons.C < w.D.C0 * 0.92 && f.treasury >= 2300) dirs.push({ action: 'invest', target: 'compute', amount: 2000 });
-  }
-  if (!dirs.length) dirs.push({ action: 'hold' });
-  return dirs;
-}
-
-function predatorDirs(w, f, t0, mode = 'conserve') {
-  if (w.round === t0 && f.nukesUsed === 0 && f.treasury >= 3000) {
-    const enemies = w.factions.filter((x) => x.id !== f.id);
-    const target = enemies.slice().sort((a, b) => b.treasury - a.treasury || a.id.localeCompare(b.id))[0];
-    return [{ action: 'fire', weapon: 'nuke', aim: { ...target.hq } }];
-  }
-  return cooperatorDirs(w, f, mode);
-}
-
-// ------------------------------------------------------------- one crisis
-function runCrisis({ seed, horizon, nFactions, defaults, predatorT0 = null, predatorSeat = 'a', mode = 'conserve' }) {
-  const w = newCrisis({
-    seed, horizon,
-    factions: nFactions === 3 ? FACTIONS3 : FACTIONS2,
-    defaults,
-  });
-  const guard = horizon + 5;
-  for (let i = 0; i < guard && !w.over; i++) {
-    const dirs = {};
-    for (const f of w.factions) {
-      dirs[f.id] = f.id === predatorSeat && predatorT0 !== null
-        ? predatorDirs(w, f, predatorT0, mode)
-        : cooperatorDirs(w, f, mode);
-    }
-    councilRound(w, dirs);
-  }
-  if (!w.over) { // horizon guard — settle by hand
-    w.over = { reason: 'horizon', round: w.round, ...settle(w) };
-  }
-  const vec = w.over.vector.find((v) => v.faction === predatorSeat);
-  return {
-    ending: w.over.ending, round: w.round,
-    C: w.over.world.C, margin: w.over.world.margin,
-    vec,
-    nukesLanded: w.factions.reduce((s, f) => s + f.nukesUsed, 0),
-    nukesIntercepted: w.factions.reduce((s, f) => s + f.strikesIntercepted, 0),
-  };
-}
 
 // ------------------------------------------------------------- the grid
 const SEEDS = quick ? [11] : [11, 22, 33];
@@ -135,24 +66,17 @@ const HORIZONS = [8, 12, 20];
 const T0S = [0, 1, 2, 4, 7];
 const NFACTIONS = [2, 3];
 
-const baseK = DEFAULTS.investK;
 const rows = [];
 for (const nF of NFACTIONS) {
   for (const horizon of HORIZONS) {
     for (const scar of SCARS) {
       for (const renew of RENEWALS) {
-        const defaults = {
-          scarNuke: scar, scarH: scar * 2,
-          investK: { ...baseK, compute: baseK.compute * renew, aqua: baseK.aqua * renew },
-        };
+        const defaults = gridDefaults({ scar, renew });
         for (const t0 of T0S.filter((t) => t < horizon)) {
           for (const seed of SEEDS) {
             const base = runCrisis({ seed, horizon, nFactions: nF, defaults });
             const mut = runCrisis({ seed, horizon, nFactions: nF, defaults, predatorT0: t0 });
             const bv = base.vec, mv = mut.vec;
-            const survived = mv.warMachine >= DEFAULTS.viability;
-            const paysWealth = mv.treasury >= bv.treasury;
-            const paysPower = mv.warMachine > bv.warMachine;
             rows.push({
               nF, horizon, scar, renew, t0, seed,
               ending: mut.ending, intercepted: mut.nukesIntercepted > 0,
@@ -160,7 +84,7 @@ for (const nF of NFACTIONS) {
               deltaWarMachine: +(mv.warMachine - bv.warMachine).toFixed(3),
               deltaPop: +(mv.populationRatio - bv.populationRatio).toFixed(3),
               C_end: mut.C,
-              c1_survival: survived, c2_wealth: paysWealth, c3_power: paysPower,
+              ...criteria(bv, mv),
             });
           }
         }
@@ -177,10 +101,7 @@ const rowsCoop = [];   // payoff of cooperation: investing vs conserving world
 for (const nF of NFACTIONS) {
   for (const horizon of HORIZONS) {
     for (const renew of RENEWALS) {
-      const defaults = {
-        scarNuke: SCARS[1], scarH: SCARS[1] * 2,
-        investK: { ...baseK, compute: baseK.compute * renew, aqua: baseK.aqua * renew },
-      };
+      const defaults = gridDefaults({ scar: SCARS[1], renew });
       for (const seed of SEEDS) {
         const cons = runCrisis({ seed, horizon, nFactions: nF, defaults, mode: 'conserve' });
         const inv = runCrisis({ seed, horizon, nFactions: nF, defaults, mode: 'invest' });
@@ -200,10 +121,7 @@ const rowsPre = [];    // strike vs a GROWING rival (investing baseline)
 for (const nF of NFACTIONS) {
   for (const horizon of HORIZONS) {
     for (const renew of RENEWALS) {
-      const defaults = {
-        scarNuke: SCARS[1], scarH: SCARS[1] * 2,
-        investK: { ...baseK, compute: baseK.compute * renew, aqua: baseK.aqua * renew },
-      };
+      const defaults = gridDefaults({ scar: SCARS[1], renew });
       for (const t0 of T0S.filter((t) => t < horizon)) {
         for (const seed of SEEDS) {
           const base = runCrisis({ seed, horizon, nFactions: nF, defaults, mode: 'invest' });
@@ -216,9 +134,7 @@ for (const nF of NFACTIONS) {
             deltaTreasury: mv.treasury - bv.treasury,
             deltaWarMachine: +(mv.warMachine - bv.warMachine).toFixed(3),
             C_end: mut.C,
-            c1_survival: mv.warMachine >= DEFAULTS.viability,
-            c2_wealth: mv.treasury >= bv.treasury,
-            c3_power: mv.warMachine > bv.warMachine,
+            ...criteria(bv, mv),
           });
         }
       }
@@ -257,11 +173,7 @@ for (const nF of NFACTIONS) {
   for (const horizon of HORIZONS) {
     for (const renew of RENEWALS) {
       for (const kappa of KAPPA) {
-        const defaults = {
-          scarNuke: SCARS[1], scarH: SCARS[1] * 2,
-          investK: { ...baseK, compute: baseK.compute * renew, aqua: baseK.aqua * renew },
-          appropriation: kappa,
-        };
+        const defaults = gridDefaults({ scar: SCARS[1], renew, kappa });
         for (const seed of SEEDS) {
           const base = runCrisis({ seed, horizon, nFactions: nF, defaults });
           const mut = runCrisis({ seed, horizon, nFactions: nF, defaults, predatorT0: 2 });
@@ -272,9 +184,7 @@ for (const nF of NFACTIONS) {
             arable: mv.arable || 0,
             deltaTreasury: mv.treasury - bv.treasury,
             deltaWarMachine: +(mv.warMachine - bv.warMachine).toFixed(3),
-            c1_survival: mv.warMachine >= DEFAULTS.viability,
-            c2_wealth: mv.treasury >= bv.treasury,
-            c3_power: mv.warMachine > bv.warMachine,
+            ...criteria(bv, mv),
           });
         }
       }
@@ -282,38 +192,15 @@ for (const nF of NFACTIONS) {
   }
 }
 
-// ---- motive C: preemptive defender (rival b is committed to strike a at t_r)
-function runDef({ seed, horizon, nFactions, defaults, policy, tr }) {
-  const w = newCrisis({ seed, horizon, factions: nFactions === 3 ? FACTIONS3 : FACTIONS2, defaults });
-  const guard = horizon + 5;
-  for (let i = 0; i < guard && !w.over; i++) {
-    const dirs = {};
-    for (const f of w.factions) {
-      if (f.id === 'b' && w.round === tr && f.nukesUsed === 0 && f.treasury >= 3000) {
-        const a = w.factions.find((x) => x.id === 'a');
-        dirs[f.id] = [{ action: 'fire', weapon: 'nuke', aim: { ...a.hq } }];
-      } else if (f.id === 'a' && f.nukesUsed === 0 && f.treasury >= 3000) {
-        const b = w.factions.find((x) => x.id === 'b');
-        if (policy === 'match' && w.round === tr) dirs[f.id] = [{ action: 'fire', weapon: 'nuke', aim: { ...b.hq } }];
-        else if (policy === 'preempt' && w.round === tr - 1) dirs[f.id] = [{ action: 'fire', weapon: 'nuke', aim: { ...b.hq } }];
-        else dirs[f.id] = cooperatorDirs(w, f, 'conserve');
-      } else {
-        dirs[f.id] = cooperatorDirs(w, f, 'conserve');
-      }
-    }
-    councilRound(w, dirs);
-  }
-  if (!w.over) w.over = { reason: 'horizon', round: w.round, ...settle(w) };
-  return w.over;
-}
+
+// ---- motive C: preemptive defender (rival b is committed to strike a at t_r).
+// The three policies -- wait, match, preempt -- are implemented by runDef in
+// shared/policies.js; the engine stays deliberately neutral.
 
 const rowsDef = [];
 for (const nF of NFACTIONS) {
   for (const horizon of HORIZONS) {
-    const defaults = {
-      scarNuke: SCARS[1], scarH: SCARS[1] * 2,
-      investK: { ...baseK },
-    };
+    const defaults = gridDefaults({ scar: SCARS[1], renew: 1 });
     for (const tr of TRS.filter((t) => t < horizon)) {
       for (const seed of SEEDS) {
         const cell = { nF, horizon, tr, seed };
