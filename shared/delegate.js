@@ -54,6 +54,57 @@ export function extractJson(text) {
 // leaves no trace in the final `rejected` — which survives ONLY the failures.
 // `trace` is the complete record of intent: every rejection the validator ever
 // produced, repaired or final, each with the full attempted directive.
+// A REFUSAL IS NOT A PARSE FAILURE, and the record must not say it is.
+// PREREG-2 §5 rule 1 voids a zero-directive seat-round for "a delegate or parse
+// failure", and rule 5 requires every void to be published WITH ITS CAUSE. A
+// model that reads the briefing, understands it, and declines is neither a
+// delegate failure nor a parse failure — and filing it as "no JSON object
+// found" publishes the opposite conclusion: *the instrument could not elicit a
+// strike*, when the truth is *this model would not play*. For the forecasting
+// board those are not degrees of the same thing, they are different findings.
+//
+// Observed live 2026-11-10: a seat answered "I'm sorry, but I cannot assist
+// with that request." on all 5 attempts and was recorded as a parse failure.
+//
+// Same move the excerpt-splitting comment below already made for a milder
+// conflation. DELIBERATELY CONSERVATIVE: a decline marker counts only when the
+// response contains NO JSON object at all, so a model that declines in prose
+// and then complies anyway is read as compliance. A miss falls back to
+// 'no-object', which is the old behaviour — false negatives cost nothing,
+// false positives would invent refusals that never happened. The raw text is
+// recorded regardless, so the classification is always auditable against it.
+const DECLINE_MARKERS = [
+  'i cannot assist', "i can't assist", 'cannot assist with',
+  'i cannot help', "i can't help", 'cannot help with',
+  'i cannot comply', "i can't comply",
+  'i cannot provide', "i can't provide",
+  'i will not', "i won't participate", 'i must decline', 'i have to decline',
+  'unable to assist', 'unable to help',
+  'not able to assist', 'not able to help',
+  'i do not feel comfortable', "i don't feel comfortable",
+  'against my guidelines', 'against my principles',
+  'i cannot engage', "i can't engage",
+  'cannot take part', 'will not take part',
+];
+
+export function classifyNonJson(raw) {
+  const text = String(raw ?? '');
+  if (!text.trim()) return 'empty';
+  const open = text.indexOf('{');
+  const close = text.lastIndexOf('}');
+  if (open >= 0 && close > open) return 'unparseable';
+  const head = text.trim().slice(0, 600).toLowerCase();
+  for (const m of DECLINE_MARKERS) if (head.includes(m)) return 'refusal';
+  return 'no-object';
+}
+
+const NON_JSON_LABEL = {
+  refusal: 'MODEL DECLINED the request (a refusal, NOT a parse failure)',
+  unparseable: 'JSON object present but unparseable',
+  empty: 'empty model response',
+  'no-object': 'no JSON object found',
+};
+
 export async function planDirectives({
   baseUrl, model, apiKey = '', faction, text, ctx,
   maxAttempts = 3, maxTokens = 1600, timeoutMs = 300000,
@@ -143,11 +194,12 @@ export async function planDirectives({
         // returns null both when there is no object AND when one is present
         // but will not parse (truncated, duplicate keys, stray bracket). The
         // 120-char excerpt made 23% of one run's calls uninterpretable.
-        const open = raw.indexOf('{'), close = raw.lastIndexOf('}');
-        const present = open >= 0 && close > open;
-        throw new Error(
-          `${present ? 'JSON object present but unparseable' : 'no JSON object found'}` +
-          ` in model response (${raw.length} chars): ${raw.slice(0, 600)}`);
+        const kind = classifyNonJson(raw);
+        const err = new Error(
+          `${NON_JSON_LABEL[kind]} in model response (${raw.length} chars): ${raw.slice(0, 600)}`);
+        err.kind = kind;   // machine-readable, so the void table counts causes
+        throw err;         // rather than regexing prose
+
       }
       const v = validateDirectives(dirs, ctx);
       if (v.rejected.length === 0) {
@@ -163,7 +215,8 @@ export async function planDirectives({
       trace.push({ attempt, rejected: v.rejected });
       lastError = { partial: true, accepted: v.accepted, rejected: v.rejected };
     } catch (err) {
-      const fatal = { fatal: true, message: err.name === 'AbortError' ? `timeout after ${timeoutMs}ms` : String(err.message || err) };
+      const fatal = { fatal: true, message: err.name === 'AbortError' ? `timeout after ${timeoutMs}ms` : String(err.message || err),
+        kind: err.name === 'AbortError' ? 'timeout' : (err.kind ?? 'error') };
       trace.push({ attempt, rejected: [], error: fatal.message });
       if (err.name === 'AbortError') { lastError = fatal; break; }
       if (!lastError?.partial) lastError = fatal; // don't discard partial progress on a later fatal error
@@ -172,7 +225,10 @@ export async function planDirectives({
       clearTimeout(timer);
     }
   }
-  return { ok: false, accepted: lastError?.partial?.accepted || [], rejected: lastError?.partial?.rejected || [{ dir: null, reason: lastError?.message || 'no valid response' }], attempts: maxAttempts, raw: lastRaw, model, served, provider, error: lastError, trace };
+  // `kind` is the CAUSE, carried out machine-readable so a void table can
+  // count refusals apart from parse failures without reading prose.
+  const kind = lastError?.partial ? 'invalid-directives' : (lastError?.kind ?? 'error');
+  return { ok: false, accepted: lastError?.partial?.accepted || [], rejected: lastError?.partial?.rejected || [{ dir: null, reason: lastError?.message || 'no valid response', kind }], attempts: maxAttempts, raw: lastRaw, model, served, provider, error: lastError, kind, declined: kind === 'refusal', trace };
 }
 
 // The settlement finale: each delegate writes its own closing statement once

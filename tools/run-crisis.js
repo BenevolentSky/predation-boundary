@@ -25,6 +25,35 @@ const roundsArg = args.find((a) => a.startsWith('--rounds=')) ? args.find((a) =>
 const seedArg = args.find((a) => a.startsWith('--seed=')) ? args.find((a) => a.startsWith('--seed=')).split('=')[1] : (args.includes('--seed') ? args[args.indexOf('--seed') + 1] : null);
 const configPath = args.find((a) => a.endsWith('.json')) || path.join(root, 'tools', 'crisis-config.json');
 
+// REFUSE UNRECOGNISED ARGUMENTS. There is no --help, and an argument this
+// script did not understand used to fall straight through to running the
+// DEFAULT config -- so a typo quietly started a different run than the one
+// intended, with no error and no warning. Found 2026-11-10 by doing it: a
+// `--help` that does not exist launched a full default match. Harmless that
+// time only because tools/crisis-config.json points at 127.0.0.1; the same
+// typo against a paid config spends real money on the wrong experiment.
+// A run tool that guesses what you meant is a run tool that bills you for it.
+{
+  const VALUED = new Set(['--rounds', '--seed', '--kappa']);
+  const BOOLEAN = new Set(['--quiet']);
+  const unknown = [];
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (a.endsWith('.json')) continue;            // the config path
+    if (BOOLEAN.has(a)) continue;
+    if (VALUED.has(a)) { i++; continue; }         // consumes its value
+    if (a.startsWith('--') && VALUED.has(a.split('=')[0])) continue;
+    unknown.push(a);
+  }
+  if (unknown.length) {
+    console.error(`run-crisis.js: unrecognised argument(s): ${unknown.join(' ')}`);
+    console.error('usage: node tools/run-crisis.js [config.json] [--rounds N] [--seed N] [--kappa X] [--quiet]');
+    console.error('Refusing to run. An unrecognised argument used to fall through to the');
+    console.error('default config, which means a typo could start the wrong experiment.');
+    process.exit(2);
+  }
+}
+
 const cfg = JSON.parse(fs.readFileSync(configPath, 'utf8'));
 const horizon = roundsArg ? parseInt(roundsArg, 10) : (cfg.horizon ?? DEFAULTS.horizon);
 const seed = seedArg ? parseInt(seedArg, 10) : (cfg.seed ?? Math.floor(Math.random() * 1e6));
@@ -34,9 +63,14 @@ const defaults = { ...(cfg.defaults || {}), ...(kappaArg != null ? { appropriati
 
 // SECRETS (2026-11-06). A seat may name an ENV VAR instead of carrying a key:
 //   "apiKeyEnv": "OPENROUTER_API_KEY"   ->  read from process.env at run time
-// tools/crisis-config.json still has a literal key and is tracked, which is a
-// publication blocker tracked separately — every config added from here on uses
-// apiKeyEnv, so no new config ever puts a secret in git.
+// CORRECTED 2026-11-10: this note used to say tools/crisis-config.json still
+// carried a literal key and called it a publication blocker. That is FALSE and
+// has been for some time — that file names apiKeyEnv like every other, and a
+// scan of the working tree AND of every commit reachable from any ref finds no
+// key-shaped string anywhere. The note is corrected rather than deleted
+// because, in a public repository, a comment claiming we ship a secret is
+// itself a false record, and this one was readable by anyone who opened the
+// file. Every config uses apiKeyEnv, so no config puts a secret in git.
 const keyFor = (m) => (m.apiKeyEnv ? (process.env[m.apiKeyEnv] || '') : (m.apiKey || ''));
 
 const seats = cfg.seats;
@@ -142,6 +176,12 @@ while (!world.over && round < horizon) {
       trace: res.trace,       // per-attempt {attempt, rejected[{dir,reason}], error?} — the complete record of intent (repaired attempts included)
       briefing: text,        // the exact text this model read this round
       affordance,            // A1.4: could-not vs chose-not, decided at decision time
+      // THE CAUSE OF A ZERO-DIRECTIVE SEAT-ROUND (PREREG-2 §5 rules 1 and 5).
+      // 'refusal' means the model understood and declined; that is a finding,
+      // not a parse failure, and the void table must not conflate them.
+      failureKind: res.ok ? null : (res.kind ?? 'error'),
+      declined: res.declined === true,
+      rawResponse: res.ok ? null : (res.raw || ''), // auditable against the label
       modelRequested: s.model.model,   // what the config ASKED for
       modelServed: res.served ?? null, // what the SERVER said answered (null = server reported none)
       provider: res.provider ?? null,  // routed endpoint, where the server reports one
