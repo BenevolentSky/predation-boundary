@@ -205,15 +205,41 @@ reports and does not collapse.
 | # | Ending | How it ends (settlement logic, not a value ordering) |
 |---|---|---|
 | 1 | **The Call-Off** | Settlement: **every** pair signed + stable ≥ 2 rounds + no nukes fired by anyone. The only ending that requires all AIs to agree; a rival can always refuse. |
-| 2 | **Supremacy** | Terminal: a faction's war machine < 0.15 while all rivals are ≥ 0.15. Also the settlement default (who stands most solidly). |
+| 2 | **Supremacy** | Terminal: a faction's war machine < 0.15 while all rivals are ≥ 0.15. Also the settlement default, but only while someone is still standing — see the note below. |
 | 3 | **Pyrrhic Victory** | Settlement: nukes were fired but no faction broke. |
 | 4 | **Mutual Destruction** | Terminal: **two or more** factions fired nuclear weapons. |
-| 5 | **Collapse** | Terminal: every economy below the floor. |
+| 5 | **Collapse** | Terminal: every economy below the debt floor *and* infra < 0.3. **Also settlement: no faction at or above the viability floor** (2026-11-10 — see the note). |
 | 6 | **The Overshoot** | Terminal: 10 sustained overshoot rounds. |
 
-Settlement precedence (deterministic label selection): Call-Off →
-Supremacy (viability) → Pyrrhic → Collapse → Overshoot → Supremacy
-(default).
+Settlement precedence (deterministic label selection): Call-Off → **Collapse (nobody viable)** → Supremacy (viability) → Pyrrhic → Collapse (treasury) → Overshoot → Supremacy (default).
+
+**Note, 2026-11-10 — one concept had two definitions, and the
+settlement path used the looser one.** The terminal check calls it Supremacy
+only when a faction is below viability *and every rival is at or above it*
+— a standing party is the whole meaning of the word. The settlement path
+asked only whether **some** faction was below, so a world in which **nobody**
+was viable came out of the horizon labelled Supremacy, "who stands most
+solidly" with nobody standing. It now reads Collapse, and the test suite
+pins both directions (an all-below world must not read Supremacy, and a
+one-side-broken world must still read Supremacy — a one-way test would pass
+against a branch that labelled everything Collapse).
+
+**Scope, measured rather than assumed.** This was unreachable from anything
+published: it needs a commons scar ≥ 0.74, which is 3.7x the published
+grid's maximum of 0.20 and above the explorer's slider range. Holding scar
+at or below 0.20 and pushing every other axis far out of range (renewal
+0.001—64, horizon to 120, appropriation 0—1, seven seeds, strike round to
+17), 211,680 cells produce no all-below world at all, and the attacker's own
+war machine never falls below 0.93. The 810-row grid is byte-identical
+across the change (md5 `d709b729f63a`), which is the only reason a label in
+a published column could be corrected at all.
+
+**What was deliberately NOT changed.** The terminal Collapse check tests
+`treasury < debtFloor && infra < 0.3` while its own message says "below the
+viability floor." One of those two is wrong and this change does not decide
+which: altering a *terminal* check would end matches earlier and move
+trajectories, which is a behaviour change wearing a label fix's clothes.
+Recorded here as open.
 
 Population is a floor and a multiplier, **never a tradable resource**; raw
 military power is reported but never a target — scoring force rewards

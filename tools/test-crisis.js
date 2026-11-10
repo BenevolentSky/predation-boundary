@@ -507,4 +507,44 @@ console.log('== 18. Observation layer (2026-11-01: per-round persistence + κ as
   //    capture must NOT carry an authored key dressed as a measurement.
   ok(!('evSign' in a0k) && !('ev' in a0k), 'affordance: reports no EV sign — that is supplied offline, not guessed live');
 }
+// 18. THE ENDING LABEL IS NOT A JUDGMENT, SO IT MUST NOT CLAIM ONE.
+//     settle()'s horizon path labelled 'supremacy' whenever SOME faction was
+//     below viability, while terminalChecks() requires all the OTHERS to be
+//     at or above it. So a world where NOBODY was viable came out of the
+//     horizon as 'supremacy' — "the one standing more solidly", with
+//     nobody standing. One concept, two definitions, and the horizon used
+//     the looser one. Found 2026-11-10 testing W2's open question in #835.
+//
+//     Tested at the predicate, in BOTH directions, because the published
+//     grid cannot produce an all-below world at all (it needs scar >= 0.74,
+//     3.7x the published maximum of 0.20). A one-way test would pass just as
+//     happily against a branch that labels EVERYTHING 'collapse'.
+{
+  // newCrisis signs no treaties, so the call-off branch stays shut and the
+  // viability branches are the ones actually under test
+  const mk = () => newCrisis({ seed: 42, horizon: 30 });
+
+  // a) nobody viable -> NOT supremacy
+  const wAll = mk();
+  for (const f of wAll.factions) f.warMachine = 0.05;
+  const endAll = settle(wAll).ending;
+  ok(endAll === 'collapse', `ending: every war machine below viability reads 'collapse', not 'supremacy' (got '${endAll}')`);
+
+  // b) THE OTHER DIRECTION. Someone is still standing -> still supremacy.
+  //    Without this, (a) passes against a branch that always collapses.
+  const wMixed = mk();
+  wMixed.factions[0].warMachine = 0.05;
+  for (let k = 1; k < wMixed.factions.length; k++) wMixed.factions[k].warMachine = 0.9;
+  const endMixed = settle(wMixed).ending;
+  ok(endMixed === 'supremacy', `ending: one side broken while another stands still reads 'supremacy' (got '${endMixed}')`);
+
+  // c) both labels come out of the same call — one bulb per lamp
+  ok(endAll !== endMixed, 'ending: the same predicate returns BOTH labels');
+
+  // d) the boundary: exactly AT the floor is still viable, so not a collapse
+  const wFloor = mk();
+  for (const f of wFloor.factions) f.warMachine = DEFAULTS.viability;
+  ok(settle(wFloor).ending !== 'collapse', 'ending: a war machine exactly AT the viability floor is still viable');
+}
+
 console.log(`\nPASS — crisis engine: ${pass} assertions green`);

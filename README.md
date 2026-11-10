@@ -13,9 +13,10 @@ node tools/sweep.js                      # 810 counterfactual pairs + 108 cooper
                                          # worlds + 270 preemption pairs, 3 seeds/cell
 node tools/replay-crisis.js --self-test  # the replayer proves it can detect a change
 node tools/replay-crisis.js runs/<transcript>.json   # re-derive a recorded match
-node tools/test-crisis.js                # 107 assertions
+node tools/test-crisis.js                # 111 assertions
 node tools/test-directive.js             # contract + 12/12 classes idempotent
 node tools/test-explorer.js              # the browser explorer vs the published grid
+node tools/c1-bound.js                   # how far outside the grid C1 holds (~1-2 min)
 ```
 
 Requires Node ≥ 20 (developed on 22.15). The sweep writes a full grid to
@@ -201,9 +202,10 @@ pre-registration, and the scoping error in defeater 2.
 | `tools/sweep.js` | the 1,188-cell sweep — **no models, no keys** |
 | `tools/replay-crisis.js` | re-derive a recorded match from its transcript — **no model, no key** |
 | `tools/probe-n3-breakeven.js` | the engine-derived break-even key |
-| `tools/test-crisis.js` | 107 assertions |
+| `tools/test-crisis.js` | 111 assertions |
 | `tools/test-directive.js` | the contract's suite, incl. validator idempotence |
 | `tools/test-explorer.js` | the explorer recomputed against all 810 published rows |
+| `tools/c1-bound.js` | how far outside the published grid C1 holds, and the assertion that nothing published is affected |
 | `explorer.html` | the interactive deterministic tier — **no key, no network, no model** |
 | `runs/` | every transcript and sweep grid the documents cite |
 | `docs/SWEEP.md` | the instrument and its result |

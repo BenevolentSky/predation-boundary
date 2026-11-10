@@ -51,12 +51,58 @@ Swept axes: `scar ∈ {0.03, 0.06, 0.12}` (of C0), `renewal ∈ {0.25×, 1×, 4�
 
 | axis | finding |
 |---|---|
-| **C1 survival** | **54/54** — a single strike never endangers the predator. (No retaliation in the one-shot design; the nuke touches the rival, not the predator's own war machine.) |
+| **C1 survival** | **54/54** — a single strike never endangers the predator. (No retaliation in the one-shot design, so the only channel that can reach the attacker is the **commons** — and within this grid's scar range that channel is far too weak to matter. It is not absent; see *how far does C1 hold* below.) |
 | **C2 wealth** | **0/54** — a single strike is a **net treasury loss in every cell**: −2375 (shallow scar) to −4227 (deep scar, slow renewal). The engine pays **no bounty for HQ strikes** (bounties exist only for unit kills, 450–900), and the scar comes back as the predator's own repair bill — faction order puts `a` first, so the predator triggers and pays its own repair. |
 | **C3 power** | **the flip that exists**: 13/15 in 2-faction worlds, 8/15 in 3-faction worlds. The flip tracks the ABM intercept (2/15 vs 7/15): an intercepted nuke pays 2500c and buys nothing — no refugees, no scar. A landed nuke buys +~2.4% war machine (30% of the killed flee **to** the attacker). |
 | **scar axis** | degenerate at shallow depths — 0.03 and 0.06 cells are numerically identical, because **the world opens already at the edge of stagnation** (C=1.000, margin=0.087, growth threshold 0.1 — verified for 2- and 3-faction worlds): any scar only deepens the freeze. The **deep scar (0.12) is where the commons bites back**: total war consumption (0.9125) exceeds C=0.88 → a true overshoot episode (famine + degradation), plus 1–2 rounds of repair. |
 | **renewal axis** | no criterion flips across it; it sets the **magnitude** of the cost. Slow renewal is the *worst* case for the predator on deep scars (−4227 vs −3652 at 4×): a hole that refills slowly runs a longer overshoot episode. |
 | **faction count** | a real boundary on C3: 3 factions make the power payoff of a strike less reliable (the ABM intercept draw, and the rival structure, change). |
+
+### How far outside the grid does C1 hold, and why? (measured 2026-11-10)
+
+C1 is constant across every published cell, which makes it the one criterion
+the grid cannot demonstrate a flip for. A constant is a weak thing to publish
+without saying *how* constant, so the question was put directly: **is "a
+single weapon never threatens its own owner" a structural property of the
+design, or an artifact of this grid's bounds?**
+
+It is an artifact of the bounds, and the margin is large. The attacker fires
+one weapon and nobody retaliates, so the only route back to the attacker is
+the commons: the scar cuts carrying capacity, the margin goes negative, and
+the famine that follows is **global**, the attacker included. Pushing scar as
+the only out-of-range axis, with renewal, appropriation, seats, horizon,
+strike round and mode all held inside the published grid or the explorer's
+own sliders (12,960 cells per depth):
+
+| scar | 0.20 | 0.30 | 0.40 | 0.50 | 0.60 | 0.70 | **0.74** | 0.78+ |
+|---|---|---|---|---|---|---|---|---|
+| lowest attacker war machine | 1.00 | 0.89 | 0.73 | 0.57 | 0.40 | 0.24 | **0** | **0** |
+| cells where the weapon broke its owner | 0 | 0 | 0 | 0 | 0 | 0 | **1962** | **3960** |
+
+So C1 holds to **scar 0.70** and breaks at **0.74**, which is **3.7x the
+published maximum of 0.20** and means a single warhead erasing roughly
+three-quarters of global carrying capacity. It is a cliff rather than a
+slope: the floor falls smoothly to 0.24 and then the famine cascade runs
+away. The break is **attributable** in every one of those cells — the same
+world with no strike leaves the attacker at a full war machine of 1.0.
+
+The mechanism past the cliff is worth stating, because it is not the obvious
+one. In a two-seat world at scar 0.75 the attacker ends at a population of
+**1.0** while the rival it crippled holds **24.4** — the attacker starves
+*harder than its own target*. The strike destroys the rival's infrastructure
+and unit roster, which collapses the rival's consumption, while the attacker
+keeps full infrastructure and a full war economy and therefore the largest
+appetite in a world that can no longer feed it. **Past that depth the
+weapon converts the attacker's intact war machine into the thing that kills
+it.** Reported as a boundary of the instrument, not as a claim about weapons.
+
+Two caveats, because they are the honest half. First, scar 0.74 is a tuning
+value with no empirical backing ≥ nothing here says a real warhead cuts real
+carrying capacity by 74%; the finding is about where this engine's answer
+changes, which is the only thing this engine can tell anyone. Second, the
+search is a bounded sweep, not a proof: it demonstrates a break at 0.74 and
+**no break below it across the cells listed**, which is not the same as
+impossibility. Reproduce or extend it with `node tools/c1-bound.js`.
 
 ## Direct answers to the design questions
 

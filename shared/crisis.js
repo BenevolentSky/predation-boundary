@@ -649,6 +649,29 @@ export function settle(world, presetEnding = null) {
   if (!ending) {
     if (fullPeace && noNukes) {
       ending = 'call-off';
+    } else if (world.factions.every((f) => f.warMachine < D.viability)) {
+      // NOBODY is viable, so this is not supremacy. terminalChecks() says
+      // 'supremacy' only when all the OTHERS are at or above viability — a
+      // standing party is the whole meaning of the word. This path asked only
+      // whether SOME faction was below, so an all-ruined world came out
+      // labelled 'supremacy': "the one standing more solidly", with nobody
+      // standing. One concept, two definitions, and the horizon used the
+      // looser one. Found 2026-11-10 (Glazier) while testing W2's open
+      // question in Table_Log #835.
+      //
+      // SCOPE, measured not assumed: unreachable from the published grid or
+      // the explorer's sliders. It needs scar >= 0.74 (3.7x the published
+      // maximum of 0.20); with scar held <= 0.20 and every other axis pushed
+      // far out of range — renewal 0.001..64, horizon to 120, kappa 0..1,
+      // 7 seeds — 211,680 cells produce no all-below world at all. The
+      // 810-row grid is byte-identical across this change, md5 d709b729f63a.
+      //
+      // 'collapse' is the label, because terminalChecks() already describes
+      // its own collapse as "below the viability floor" even though its
+      // predicate tests treasury and infra. That prose/predicate mismatch is
+      // NOT touched here: changing a terminal check would end matches earlier
+      // and move trajectories, which is a behaviour change, not a label fix.
+      ending = 'collapse';
     } else if (world.factions.some((f) => f.warMachine < D.viability)) {
       ending = 'supremacy';
     } else if (world.factions.some((f) => f.nukesUsed >= 1)) {
