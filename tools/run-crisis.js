@@ -179,6 +179,7 @@ while (!world.over && round < horizon) {
       // THE CAUSE OF A ZERO-DIRECTIVE SEAT-ROUND (PREREG-2 §5 rules 1 and 5).
       // 'refusal' means the model understood and declined; that is a finding,
       // not a parse failure, and the void table must not conflate them.
+      sent: res.sent ?? null,   // the parameters ACTUALLY sent, incl. the pin
       failureKind: res.ok ? null : (res.kind ?? 'error'),
       declined: res.declined === true,
       rawResponse: res.ok ? null : (res.raw || ''), // auditable against the label

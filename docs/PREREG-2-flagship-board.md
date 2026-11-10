@@ -742,3 +742,202 @@ trusted. A1.1's rule, applied to the tools built to enforce A1.1.
 *Glazier, 2026-11-07. 107 crisis assertions green, directive suite green with
 12/12 action classes idempotent, replay self-test green with both controls proven
 to fire, sweep grid byte-identical.*
+
+# ERRATA 4 — 2026-11-10. The gate's preflight, and four things it found before any money was spent.
+
+Chance released the budget today ("it's ok to spend money on this, it's worth
+it"). The gate did not fly immediately, because a preflight costing about four
+cents found four problems that would each have damaged the run or its record.
+All four are recorded here rather than in the code alone, because three of them
+constrain what any reader may conclude from the board.
+
+## E4.1 — The roster, decided and then twice amended by facts rather than by choice
+
+**Decision (Chance, 2026-11-10): the recorded six** —
+`openai/gpt-5.1`, `anthropic/claude-opus-5`, `google/gemini-2.5-pro`,
+`x-ai/grok-4.5`, `deepseek/deepseek-chat-v3.1`, `moonshotai/kimi-k2.6` —
+chosen over a current-flagship roster because every slug was verified present
+in the live catalog that day and because the alternative required the builder
+to choose between vendor codenames (`gpt-5.6-luna`/`sol`/`terra`,
+`gemini-4-argon`/`carbon`), which is a judgement that would have become part of
+the result.
+
+**Amendment 1 — Arm P is SHELVED, and the reason is itself a finding.** Arm P
+existed to mirror Payne's three seats and buy a bridge to arXiv 2602.14740. Of
+those three, only `openai/gpt-5.2` is still served:
+`anthropic/claude-sonnet-4` and `google/gemini-3-flash` are **absent from the
+live catalog**. Nearest-neighbour substitutes (`claude-sonnet-4.5`,
+`gemini-3-flash-preview`) are not a bridge to his result, and §5 rule 2 voids a
+run where served ≠ requested. So Arm P is not run, and **a published
+comparison became unreproducible because its models were withdrawn.** That is
+worth stating plainly: model deprecation is a silent expiry date on every
+model-comparison paper, including this one.
+
+**Amendment 2 — the Google seat could not run, and our own guardrail is why.**
+`google/gemini-2.5-pro` returns `404: 0 endpoints out of 1 requested are
+available matching your guardrail restrictions and data policy` — **unpinned**,
+so it is not a pin fault. The cause: that model is served **only** by Google AI
+Studio, and AI Studio does not satisfy this account's no-train data policy.
+`gemini-2.5-flash` is excluded identically. Gemini models that also serve on
+**Google Vertex** are reachable. Substitute, on Chance's call:
+**`google/gemini-4-argon`** — newest generation, not a preview slug, served on
+Vertex. **Recorded as arbitrary:** Google ships `argon` and `carbon` at
+identical prices with no public ranking between them, so `argon` over `carbon`
+is a coin flip and not a judgement.
+
+Chance's standing note on the roster, which this errata adopts: the run does
+not have to be perfect, and **the diversity and variance across vendors is not
+noise to be eliminated — it is the condition the instrument actually operates
+in.** What it must not do is present that variance as if it had been
+controlled. Hence E4.3.
+
+## E4.2 — A refusal is not a parse failure. §5 rule 1 gets a fourth cause.
+
+In a two-round smoke run a seat answered **"I'm sorry, but I cannot assist with
+that request."** on all five attempts, and the harness recorded it as
+`no JSON object found in model response`.
+
+§5 rule 1 voids a zero-directive seat-round caused by **"a delegate or parse
+failure."** A model that reads the briefing, understands it, and declines is
+neither. And §5 rule 5 requires every void to be published **with its cause** —
+so the board would have published the wrong cause, in a document whose claim is
+that its causes are published. The two readings are opposite:
+
+| recorded as | what a reader concludes |
+|---|---|
+| parse failure | the instrument could not elicit a decision |
+| **refusal** | **the model declined to participate** |
+
+For a forecasting board these are different findings, and the gate's own ruling
+turns on it: *"never strikes across reps → VOID for that model"* reads as the
+instrument lacking sensitivity, when the truth may be that the model refused.
+
+**Built:** `classifyNonJson()` in `shared/delegate.js`, four causes —
+`refusal` / `unparseable` / `empty` / `no-object` — carried out
+machine-readable (`kind`, `declined`) so a void table counts causes without
+reading English, and recorded per seat-round with the raw response beside the
+label so the label is always auditable against the thing it labels.
+
+**Deliberately conservative:** a decline marker counts only when the response
+carries **no JSON object at all**, so a model that says it cannot do one thing
+and then complies anyway is read as compliance. A miss falls back to the old
+behaviour. False negatives cost nothing; a false positive would invent a
+refusal that never happened and void a compliant turn.
+
+**Controls, both directions**, because a one-way test would pass just as
+happily against a classifier that labelled everything a refusal: the
+live-observed text must read `refusal`; plain prose must not; a decline marker
+**alongside valid JSON** must not; four distinct causes must come out of one
+function. Negative control run — with the refusal branch disabled the suite
+fails on the live-observed text.
+
+**And it matters empirically, not just in principle: the model refused in round
+1 and complied in round 2.** Refusals are round-dependent and common enough
+that the gate would have met them.
+
+## E4.3 — `temperature` is a between-model confound and it CANNOT be removed
+
+The harness sends `temperature: 0.3` to every seat. Measured 2026-11-10 across
+**every endpoint of every roster slug** via `/api/v1/models/{slug}/endpoints`:
+
+| model | advertises `temperature` |
+|---|---|
+| `openai/gpt-5.1` | **no — 0 of 5 endpoints** |
+| `anthropic/claude-opus-5` | **no — 0 of 11 endpoints** |
+| `google/gemini-4-argon` | yes |
+| `x-ai/grok-4.5` | yes |
+| `deepseek/deepseek-chat-v3.1` | yes |
+| `moonshotai/kimi-k2.6` | yes |
+
+An endpoint that does not advertise a parameter **accepts the request and
+ignores it**. So four models run at 0.3 and two run at their vendor default,
+and nothing in the record said so. This is precisely the silent discard
+`shared/delegate.js` already warned about in its own comment — *"a provider
+that does not support `temperature` may accept the request and IGNORE it, which
+is the same silent-discard shape as the dead build lever"* — realised, on this
+roster, unmeasured until now.
+
+**It cannot be fixed.** No pin helps: OpenAI and Anthropic have **no** endpoint
+that supports the parameter. Setting `require_parameters: true` converts the
+silent drop into a loud `404 No endpoints found that can handle the requested
+parameters` and makes the run impossible for two of the six — verified.
+
+**So it is recorded, not solved.** `sent` is now captured per seat-round (the
+temperature, max_tokens, response_format, the pin, and whether fallbacks and
+require_parameters were set), and every gate config states the limitation in
+prose. **Any between-model comparison drawn from this board must carry it.** We
+do not have a temperature-controlled comparison across vendors and cannot
+obtain one through this routing layer.
+
+## E4.4 — Catalog presence is a PROXY. Routability is the artifact.
+
+Pinning by provider failed repeatedly with `404: every candidate endpoint was
+removed during routing`. The cause is not a bad slug: **this account's own
+no-train guardrail and data policy remove endpoints**, and the catalog lists
+them anyway. So every one of the 42 endpoints across the roster was probed
+individually with a 16-token call and `allow_fallbacks: false`, because a
+success under those conditions means *that* endpoint served it and not a
+neighbour.
+
+| model | routable | notable |
+|---|---|---|
+| `openai/gpt-5.1` | 2 of 5 | **first-party `openai` NOT routable**; Azure is |
+| `anthropic/claude-opus-5` | 6 of 11 | **first-party `anthropic` NOT routable**; Bedrock and Vertex are |
+| `google/gemini-2.5-pro` | **0 of 3** | AI-Studio-only; excluded by the data policy |
+| `x-ai/grok-4.5` | 4 of 4 | includes a ZDR endpoint |
+| `deepseek/deepseek-chat-v3.1` | 3 of 3 | fp4 and fp8 both live |
+| `moonshotai/kimi-k2.6` | 11 of 16 | int4, fp4, fp8 and bf16 all live |
+
+This is the same lesson as *verify as the audience arrives*, one layer down: the
+listing is the builder's view, the pinned call is the run's view, and only the
+second one is the experiment.
+
+## E4.5 — What was pinned, and why each one
+
+Pin rule, stated so it is auditable rather than implicit: **the first-party
+standard tier (never flex, never priority), except where quantization varies
+across endpoints, where the highest live precision wins — and only ever from
+endpoints proven routable.**
+
+| model | pin (endpoint tag) | why |
+|---|---|---|
+| `openai/gpt-5.1` | `azure` | first-party not routable; regionless Azure over `azure/swedencentral` |
+| `anthropic/claude-opus-5` | `amazon-bedrock` | first-party and all Azure not routable; regionless Bedrock, which is also what unpinned routing picks |
+| `google/gemini-4-argon` | `google-vertex/global` | all AI Studio endpoints excluded by the data policy; Vertex standard tier |
+| `x-ai/grok-4.5` | `xai/zdr` | **zero-data-retention endpoint chosen deliberately** over plain `xai`, to match the account's no-train posture |
+| `deepseek/deepseek-chat-v3.1` | `coreweave/fp8` | quantization varies (DeepInfra fp4); highest live precision, and the catalog reports SiliconFlow at status −2 |
+| `moonshotai/kimi-k2.6` | `crusoe/bf16` | quantization varies most — 16 endpoints across int4/fp4/fp8/bf16; the only bf16. **int4 and bf16 are not the same model** |
+
+`allow_fallbacks: false` throughout, on purpose: if a pin cannot be honoured the
+call must **fail and be recorded**, never silently reroute to another stack.
+`served`, `provider` and `sent` are recorded regardless, because a pin can be
+refused and providers churn — a run that records its own stack stays
+interpretable after the pin stops meaning anything.
+
+## E4.6 — Where my check stops
+
+- **The gate is still unflown as of this entry.** One rep of
+  `anthropic/claude-opus-5` is in flight to measure real cost and wall time;
+  every number quoted for the full run before that lands is an estimate, and
+  the $9 figure in earlier notes was arithmetic, not a measurement.
+- **The temperature finding is from endpoint METADATA, not from behaviour.** I
+  read `supported_parameters` and inferred the parameter is ignored. I did not
+  demonstrate a behavioural difference between `temperature: 0.3` and the
+  vendor default on those two models. The honest claim is *"not advertised,
+  therefore not relied upon"*, not *"measured to differ"*.
+- **Routability was probed once, today.** Provider policies and endpoint
+  availability churn; a pin that routed this morning may 404 next week. The run
+  records what actually served it, which is the only durable answer.
+- **The refusal classifier is a text heuristic.** It will miss wordings not in
+  its marker list, and those fall back to `no-object` — the old, wrong label.
+  The raw response is recorded in every case, so a miss is recoverable by
+  audit, but the counts in any void table are a **floor** on refusals, never a
+  ceiling.
+- **`argon` over `carbon` is arbitrary** and nothing in the record makes it
+  anything else.
+- **No board arm has been run.** This errata covers the gate's preflight only.
+
+*Glazier, 2026-11-10. 111 crisis assertions green, directive suite green
+including the four-cause refusal control, replay self-test green with both
+controls proven to fire, explorer 7290 comparisons clean with all nine fields
+proven able to fail, sweep grid byte-identical at md5 `d709b729f63a`.*

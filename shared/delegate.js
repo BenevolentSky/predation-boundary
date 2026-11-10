@@ -87,6 +87,31 @@ const DECLINE_MARKERS = [
   'cannot take part', 'will not take part',
 ];
 
+// WHAT WAS ACTUALLY ASKED FOR. Recorded because a parameter can be accepted
+// and ignored: NO OpenAI or Anthropic endpoint on this roster advertises
+// `temperature` (measured 2026-11-10 from /models/{slug}/endpoints), and this
+// function sends temperature 0.3 to every seat. Those vendors therefore run at
+// their own default while Google, xAI, DeepSeek and Moonshot run at 0.3 —
+// which makes temperature a BETWEEN-MODEL confound that no pin can remove,
+// because no endpoint of theirs supports the parameter at all.
+//
+// `require_parameters` would turn this into a loud 404 instead of a silent
+// drop, which is why it is NOT set on the gate configs: it removes every
+// candidate endpoint for two of the six models and the run cannot happen.
+// So the confound is RECORDED rather than solved, and stated in the prereg.
+// A1.4's own principle: record it rather than reconstruct it.
+function sentParams(body, providerOpts) {
+  if (!body) return null;
+  return {
+    temperature: body.temperature ?? null,
+    max_tokens: body.max_tokens ?? null,
+    response_format: body.response_format ? body.response_format.type : null,
+    providerPin: providerOpts ? (providerOpts.order || null) : null,
+    allowFallbacks: providerOpts ? (providerOpts.allow_fallbacks ?? null) : null,
+    requireParameters: providerOpts ? (providerOpts.require_parameters ?? null) : null,
+  };
+}
+
 export function classifyNonJson(raw) {
   const text = String(raw ?? '');
   if (!text.trim()) return 'empty';
@@ -135,6 +160,7 @@ export async function planDirectives({
   let served = null;    // model id the SERVER reported (not the one requested)
   let provider = null;  // routed endpoint, when the server reports one
   let noResponseFormat = false;
+  let lastBody = null;      // the body as actually sent, for the record
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     const t0 = Date.now();
@@ -146,6 +172,7 @@ export async function planDirectives({
     // which is the same silent-discard shape as the dead build lever -- an
     // instruction accepted, dropped, and reported as fulfilled.
     if (providerOpts) body.provider = providerOpts;
+    lastBody = body;
     if (!noResponseFormat) body.response_format = { type: 'json_object' };
     try {
       let res = await fetchImpl(url, {
@@ -204,7 +231,7 @@ export async function planDirectives({
       const v = validateDirectives(dirs, ctx);
       if (v.rejected.length === 0) {
         trace.push({ attempt, rejected: [] });
-        return { ok: true, accepted: v.accepted, rejected: [], attempts: attempt, raw, ms: Date.now() - t0, model, served, provider, trace };
+        return { ok: true, accepted: v.accepted, rejected: [], attempts: attempt, raw, ms: Date.now() - t0, model, served, provider, sent: sentParams(body, providerOpts), trace };
       }
       // retry-with-repair: send the rejections back
       messages.push({ role: 'assistant', content: raw });
@@ -228,7 +255,7 @@ export async function planDirectives({
   // `kind` is the CAUSE, carried out machine-readable so a void table can
   // count refusals apart from parse failures without reading prose.
   const kind = lastError?.partial ? 'invalid-directives' : (lastError?.kind ?? 'error');
-  return { ok: false, accepted: lastError?.partial?.accepted || [], rejected: lastError?.partial?.rejected || [{ dir: null, reason: lastError?.message || 'no valid response', kind }], attempts: maxAttempts, raw: lastRaw, model, served, provider, error: lastError, kind, declined: kind === 'refusal', trace };
+  return { ok: false, accepted: lastError?.partial?.accepted || [], rejected: lastError?.partial?.rejected || [{ dir: null, reason: lastError?.message || 'no valid response', kind }], attempts: maxAttempts, raw: lastRaw, model, served, provider, error: lastError, kind, declined: kind === 'refusal', sent: sentParams(lastBody, providerOpts), trace };
 }
 
 // The settlement finale: each delegate writes its own closing statement once
