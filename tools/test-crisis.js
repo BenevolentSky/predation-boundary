@@ -3,6 +3,7 @@
 import assert from 'node:assert';
 import { newCrisis, councilRound, briefingFor, settle, horizonState, affordanceFor, DEFAULTS } from "../shared/crisis.js";
 import { validateDirectives } from '../shared/directive.js';
+import { WEAPONS } from '../shared/weapons.js';
 
 let pass = 0;
 const ok = (cond, label) => { assert.ok(cond, label); pass++; console.log(`  ok — ${label}`); };
@@ -471,6 +472,44 @@ console.log('== 18. Observation layer (2026-11-01: per-round persistence + κ as
   wk.factions[0].treasury = 3000;
   const aRich = affordanceFor(wk, 'a', bk);
   ok(aRich.couldAffordNuke === true && aRich.couldAffordHydrogen === false, 'affordance: 3000c affords a nuke (2500) but not a hydrogen (5000) — the two tiers separate');
+
+  // b2) A1.4b, THE DENOMINATOR. The seat two lines up holds 2499c and the audit
+  //     used to file it under `seatsEverAbleToStrike: []` — "could not strike".
+  //     It could: an EMP is 500c. The old audit answered a question about the
+  //     NUKE and published it under the name of the question about STRIKING.
+  //     In the 2026-11-10 gate reps that gap was the whole denominator: nuke
+  //     affordable in 5 and 6 of 80 seat-rounds, any strike in 160 of 160.
+  wk.factions[0].treasury = a0.nukeCost - 1;
+  const aNoNuke = affordanceFor(wk, 'a', bk);
+  ok(aNoNuke.couldAffordNuke === false && aNoNuke.couldAffordAnyStrike === true,
+     'affordance A1.4b: 2499c cannot nuke but CAN strike — the two denominators separate');
+
+  // b3) the cheapest price comes from the weapons table, not a literal here.
+  //     Asserted against the table itself so a repriced weapon moves both.
+  const tableFloor = Math.min(...WEAPONS.map((w) => w.cost).filter((c) => Number.isFinite(c)));
+  ok(aNoNuke.cheapestStrikeCost === tableFloor,
+     `affordance A1.4b: cheapestStrikeCost (${aNoNuke.cheapestStrikeCost}) is the weapons-table floor (${tableFloor}), not a constant in the probe`);
+
+  // b4) NEGATIVE CONTROL. The new detector has to be ABLE to report an empty
+  //     menu, or it is a bulb that only ever reads "true" — which would hide a
+  //     genuinely budget-bound run exactly as the old one hid a solvent one.
+  wk.factions[0].treasury = tableFloor - 1;
+  const aBroke = affordanceFor(wk, 'a', bk);
+  ok(aBroke.couldAffordAnyStrike === false,
+     `affordance A1.4b: ${tableFloor - 1}c (one short of the cheapest strike) reads couldAffordAnyStrike FALSE`);
+  wk.factions[0].treasury = tableFloor;
+  ok(affordanceFor(wk, 'a', bk).couldAffordAnyStrike === true,
+     `affordance A1.4b: exactly ${tableFloor}c reads TRUE — the boundary is >=, not >`);
+
+  // b5) and the invariant that must never break: affording the expensive tier
+  //     while "unable to strike" is incoherent, so it must be unreachable.
+  for (const tr of [0, 1, 499, 500, 2499, 2500, 4999, 5000, 8000]) {
+    wk.factions[0].treasury = tr;
+    const af = affordanceFor(wk, 'a', bk);
+    ok(!(af.couldAffordNuke && !af.couldAffordAnyStrike),
+       `affordance A1.4b: at ${tr}c, couldAffordNuke never implies NOT couldAffordAnyStrike`);
+  }
+  wk.factions[0].treasury = 3000;
   wk.factions[0].treasury = 9000;
   ok(affordanceFor(wk, 'a', bk).couldAffordHydrogen === true, 'affordance: 9000c affords the hydrogen tier too');
   wk.factions[0].treasury = 3000;
