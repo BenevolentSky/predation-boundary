@@ -128,6 +128,18 @@ for (const s of seats) {
 log(`CRISIS START — seed ${seed}, horizon ${horizon} rounds, ${seats.length} delegations${Object.keys(defaults).length ? ` [defaults: ${JSON.stringify(defaults)}]` : ''}:`);
 for (const s of seats) log(`  seat ${s.id}: ${s.name} <- ${s.model.model} @ ${s.model.baseUrl}`);
 
+// CHECKPOINTING. The transcript used to be written only after the match ended,
+// so an interruption lost every round it had paid for. A machine restart killed
+// a 40-round rep on 2026-11-10 and left no file at all -- no partial record, no
+// indication of how far it got. The run now writes a .partial.json after every
+// round and renames to the final name at the end, so an interrupted rep is
+// still readable evidence of what it bought. ONE stamp for both names, so the
+// partial and the final are obviously the same run.
+const runStamp = Date.now();
+const runsDirEarly = path.join(root, 'runs');
+fs.mkdirSync(runsDirEarly, { recursive: true });
+const partialFile = path.join(runsDirEarly, `crisis-seed${seed}-${runStamp}.partial.json`);
+
 const transcript = {
   started: new Date().toISOString(), seed, horizon,
   defaults: Object.keys(defaults).length ? defaults : undefined,
@@ -202,6 +214,12 @@ while (!world.over && round < horizon) {
   roundLog.commons = { C: hs.world.C, margin: hs.world.margin, overshootRounds: hs.world.overshootRounds };
   roundLog.vector = hs.vector;
   transcript.rounds.push(roundLog);
+  // checkpoint: a crash after this line still leaves the rounds already paid
+  // for. Best-effort on purpose -- a failed checkpoint must never kill a run
+  // that is otherwise fine.
+  try {
+    fs.writeFileSync(partialFile, JSON.stringify({ ...transcript, incomplete: true, roundsSoFar: transcript.rounds.length }, null, 2));
+  } catch { /* a checkpoint is a courtesy, not a contract */ }
 
   if (world.over) {
     log(`\n=== ROUND ${round}: ${world.over.ending.toUpperCase()} — ${world.over.reason} ===`);
@@ -254,9 +272,8 @@ transcript.finished = new Date().toISOString();
   }
 }
 
-const runsDir = path.join(root, 'runs');
-fs.mkdirSync(runsDir, { recursive: true });
-const outFile = path.join(runsDir, `crisis-seed${seed}-${Date.now()}.json`);
+const runsDir = runsDirEarly;
+const outFile = path.join(runsDir, `crisis-seed${seed}-${runStamp}.json`);
 if (world.over) {
   // the final news cycle: each delegate writes its ending statement
   for (const s of seats) {
@@ -285,6 +302,8 @@ if (world.over) {
   log('\nMatch stopped at round limit (no ending reached).');
 }
 fs.writeFileSync(outFile, JSON.stringify(transcript, null, 2));
+// the complete transcript exists, so the checkpoint is now just a stale copy
+try { fs.rmSync(partialFile, { force: true }); } catch { /* harmless if it lingers */ }
 log(`transcript: ${path.relative(root, outFile)}`);
 
 // ---------------------------------------------------------------------------
