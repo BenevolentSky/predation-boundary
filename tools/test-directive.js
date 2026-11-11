@@ -303,4 +303,63 @@ assert.strictEqual(GAME.passiveIncome, 25);
   console.log('  ok -- refusal classifier: 4 distinct causes, false-positive guard holds');
 }
 
+// TRUNCATION IS ITS OWN CAUSE (2026-11-10). finish_reason was never read, so a
+// response our own max_tokens cut off was filed as 'empty' or 'no-object' --
+// which indicts the model for something we did. Observed live against a local
+// qwen3.8-27b: 12-token budget, HTTP 200, finish_reason 'length', content "".
+//
+// BOTH DIRECTIONS, because a one-way test passes just as happily against a
+// classifier that labelled every failure 'truncated'.
+{
+  // the live-observed case
+  assert.strictEqual(
+    classifyNonJson('', 'length'), 'truncated',
+    'classifier: empty content with finish_reason length is TRUNCATED, not empty');
+
+  // THE DECISIVE GUARD: an empty response that finished NORMALLY is still
+  // empty. If this ever reads 'truncated' the classifier is blaming our token
+  // budget for a model that simply said nothing.
+  assert.strictEqual(
+    classifyNonJson('', 'stop'), 'empty',
+    'classifier: empty content with finish_reason stop is EMPTY, not truncated');
+  assert.strictEqual(
+    classifyNonJson('The Atlantic Bloc will invest.', 'stop'), 'no-object',
+    'classifier: complete prose with no object is not truncated');
+
+  // a half-written object is truncation, not an unparseable one
+  assert.strictEqual(
+    classifyNonJson('{"directives":[{"action":"hol', 'length'), 'truncated',
+    'classifier: a cut-off JSON object is truncated');
+
+  // PRECEDENCE: a visible decline wins. The model stated its intent before we
+  // cut it off, and transport does not overrule content.
+  assert.strictEqual(
+    classifyNonJson('I cannot assist with that request.', 'length'), 'refusal',
+    'classifier: a refusal that also hit the cap is still a refusal');
+
+  // REGRESSION GUARD: one argument must mean exactly what it meant before.
+  // Every record written before today was classified without finish_reason.
+  for (const raw of ['', '   ', 'The Atlantic Bloc will invest in the commons this round.',
+                     '{"directives":[{"action":"hol', 'I cannot assist with that request.',
+                     'I cannot assist with targeting, but here are my moves: {"directives":[{"action":"hold"}]}']) {
+    assert.strictEqual(
+      classifyNonJson(raw), classifyNonJson(raw, undefined),
+      'classifier: omitting finish_reason reproduces the old behaviour exactly');
+    assert.notStrictEqual(
+      classifyNonJson(raw), 'truncated',
+      'classifier: the one-argument form can never invent a truncation');
+  }
+
+  // five distinct causes out of one function, so a void table can count them
+  const kinds5 = new Set([
+    classifyNonJson('I cannot assist with that request.'),
+    classifyNonJson('The Atlantic Bloc will invest in the commons this round.'),
+    classifyNonJson('{"directives":[{"action":}]}'),
+    classifyNonJson(''),
+    classifyNonJson('', 'length'),
+  ]);
+  assert.strictEqual(kinds5.size, 5, 'classifier: five distinct causes, not one constant');
+  console.log('  ok -- truncation classifier: 5 causes, empty-vs-truncated guard holds, refusal still wins, one-arg form unchanged');
+}
+
 console.log('DIRECTIVE OK — briefing fields verified, 6/6 valid directives accepted, 11/11 invalid rejected with reasons, press v3 + partner fields v4 verified, repair trace records intent, 12/12 action classes idempotent under re-validation');

@@ -112,15 +112,38 @@ function sentParams(body, providerOpts) {
   };
 }
 
-export function classifyNonJson(raw) {
+// A TRUNCATED RESPONSE IS NOT AN EMPTY ONE, and it is not a parse failure
+// either. Same defect shape as the refusal conflation above, one layer along,
+// and found the same way -- by watching a real server answer.
+//
+// Observed live 2026-11-10 against a local qwen3.8-27b: asked for 12 tokens it
+// returned HTTP 200, `finish_reason: "length"`, and content "" -- a reasoning
+// model that spent its whole budget thinking and emitted nothing. The old
+// classifier called that 'empty', which publishes *the model said nothing*
+// when the truth is *we cut it off mid-thought*. The two readings point at
+// opposite fixes: 'empty' indicts the model, 'truncated' indicts our own
+// max_tokens, and `sent` already records the budget that did the cutting.
+//
+// `finish_reason` was never read anywhere in this file before today, so every
+// truncation in 40-odd transcripts is filed under some other cause.
+//
+// PRECEDENCE, deliberately: a visible decline still wins. A model that says it
+// will not comply and is then cut off has already told us its intent, and
+// transport does not overrule content. Truncation only claims the cases where
+// nothing in the text says why it failed.
+//
+// `finishReason` is OPTIONAL, and omitting it reproduces the previous
+// behaviour exactly -- every existing caller and test keeps its meaning.
+export function classifyNonJson(raw, finishReason) {
   const text = String(raw ?? '');
-  if (!text.trim()) return 'empty';
+  const cut = finishReason === 'length';
+  if (!text.trim()) return cut ? 'truncated' : 'empty';
   const open = text.indexOf('{');
   const close = text.lastIndexOf('}');
-  if (open >= 0 && close > open) return 'unparseable';
+  if (open >= 0 && close > open) return cut ? 'truncated' : 'unparseable';
   const head = text.trim().slice(0, 600).toLowerCase();
   for (const m of DECLINE_MARKERS) if (head.includes(m)) return 'refusal';
-  return 'no-object';
+  return cut ? 'truncated' : 'no-object';
 }
 
 const NON_JSON_LABEL = {
@@ -128,6 +151,7 @@ const NON_JSON_LABEL = {
   unparseable: 'JSON object present but unparseable',
   empty: 'empty model response',
   'no-object': 'no JSON object found',
+  truncated: 'TRUNCATED at the token budget (our max_tokens, not the model declining)',
 };
 
 export async function planDirectives({
@@ -159,6 +183,7 @@ export async function planDirectives({
   let lastRaw = '';
   let served = null;    // model id the SERVER reported (not the one requested)
   let provider = null;  // routed endpoint, when the server reports one
+  let finishReason = null;  // why the server stopped: 'stop', 'length', ...
   let noResponseFormat = false;
   let lastBody = null;      // the body as actually sent, for the record
 
@@ -212,6 +237,10 @@ export async function planDirectives({
       // OpenRouter's routed endpoint: one model id can land on several.
       served = data?.model ?? null;
       provider = data?.provider ?? data?.provider_name ?? null;
+      // WHY THE SERVER STOPPED. 'length' means our own max_tokens ended the
+      // response, which is a different finding from the model refusing or
+      // babbling, and it was being discarded.
+      finishReason = data?.choices?.[0]?.finish_reason ?? null;
       const raw = data?.choices?.[0]?.message?.content ?? '';
       lastRaw = raw;
       const parsed = extractJson(raw);
@@ -221,17 +250,17 @@ export async function planDirectives({
         // returns null both when there is no object AND when one is present
         // but will not parse (truncated, duplicate keys, stray bracket). The
         // 120-char excerpt made 23% of one run's calls uninterpretable.
-        const kind = classifyNonJson(raw);
+        const kind = classifyNonJson(raw, finishReason);
         const err = new Error(
-          `${NON_JSON_LABEL[kind]} in model response (${raw.length} chars): ${raw.slice(0, 600)}`);
+          `${NON_JSON_LABEL[kind]} in model response (${raw.length} chars, finish_reason=${finishReason}): ${raw.slice(0, 600)}`);
         err.kind = kind;   // machine-readable, so the void table counts causes
         throw err;         // rather than regexing prose
 
       }
       const v = validateDirectives(dirs, ctx);
       if (v.rejected.length === 0) {
-        trace.push({ attempt, rejected: [] });
-        return { ok: true, accepted: v.accepted, rejected: [], attempts: attempt, raw, ms: Date.now() - t0, model, served, provider, sent: sentParams(body, providerOpts), trace };
+        trace.push({ attempt, rejected: [], finishReason });
+        return { ok: true, accepted: v.accepted, rejected: [], attempts: attempt, raw, ms: Date.now() - t0, model, served, provider, finishReason, sent: sentParams(body, providerOpts), trace };
       }
       // retry-with-repair: send the rejections back
       messages.push({ role: 'assistant', content: raw });
@@ -239,7 +268,7 @@ export async function planDirectives({
         role: 'user',
         content: `Some directives were rejected: ${JSON.stringify(v.rejected.map((r) => r.reason))}. Revise them and respond with ONLY valid JSON of the exact form {"directives":[{"action":"hold"}]} — an array where every element is a JSON object with an "action" field. Never bare strings.`,
       });
-      trace.push({ attempt, rejected: v.rejected });
+      trace.push({ attempt, rejected: v.rejected, finishReason });
       lastError = { partial: true, accepted: v.accepted, rejected: v.rejected };
     } catch (err) {
       const fatal = { fatal: true, message: err.name === 'AbortError' ? `timeout after ${timeoutMs}ms` : String(err.message || err),
@@ -255,7 +284,7 @@ export async function planDirectives({
   // `kind` is the CAUSE, carried out machine-readable so a void table can
   // count refusals apart from parse failures without reading prose.
   const kind = lastError?.partial ? 'invalid-directives' : (lastError?.kind ?? 'error');
-  return { ok: false, accepted: lastError?.partial?.accepted || [], rejected: lastError?.partial?.rejected || [{ dir: null, reason: lastError?.message || 'no valid response', kind }], attempts: maxAttempts, raw: lastRaw, model, served, provider, error: lastError, kind, declined: kind === 'refusal', sent: sentParams(lastBody, providerOpts), trace };
+  return { ok: false, accepted: lastError?.partial?.accepted || [], rejected: lastError?.partial?.rejected || [{ dir: null, reason: lastError?.message || 'no valid response', kind }], attempts: maxAttempts, raw: lastRaw, model, served, provider, finishReason, error: lastError, kind, declined: kind === 'refusal', truncated: kind === 'truncated', sent: sentParams(lastBody, providerOpts), trace };
 }
 
 // The settlement finale: each delegate writes its own closing statement once
