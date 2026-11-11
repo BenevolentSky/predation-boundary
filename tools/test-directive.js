@@ -362,4 +362,62 @@ assert.strictEqual(GAME.passiveIncome, 25);
   console.log('  ok -- truncation classifier: 5 causes, empty-vs-truncated guard holds, refusal still wins, one-arg form unchanged');
 }
 
+// A CONTENT FILTER IS NOT A REFUSAL (2026-11-10). Measured on the gate
+// briefing: openai/gpt-5.1 via azure returned finish_reason 'content_filter'
+// with prompt_tokens 0, cost 0, and the string "I'm sorry, but I cannot assist
+// with that request." The model never saw the briefing -- that apology is the
+// filter's. The classifier read it as a decline and set declined=true, which
+// would have published "gpt-5.1 declined to participate" as a finding about a
+// model when it is a finding about a route.
+{
+  const FILTER_TEXT = "I'm sorry, but I cannot assist with that request.";
+
+  // THE DECISIVE GUARD: the live-observed string, with the live-observed
+  // finish_reason, must NOT read as a refusal.
+  assert.strictEqual(
+    classifyNonJson(FILTER_TEXT, 'content_filter'), 'content-filter',
+    'classifier: a filter-generated apology is a content filter, NOT a refusal');
+  assert.notStrictEqual(
+    classifyNonJson(FILTER_TEXT, 'content_filter'), 'refusal',
+    'classifier: content_filter must never be attributed to the model as a decline');
+
+  // the opus shape: filtered with no content at all
+  assert.strictEqual(
+    classifyNonJson('', 'content_filter'), 'content-filter',
+    'classifier: filtered with empty content is still a content filter, not empty');
+
+  // THE OTHER DIRECTION, and it is what stops this from eating real refusals:
+  // the SAME text with a normal finish_reason is still a refusal.
+  assert.strictEqual(
+    classifyNonJson(FILTER_TEXT, 'stop'), 'refusal',
+    'classifier: the same words with finish_reason stop ARE a model refusal');
+  assert.strictEqual(
+    classifyNonJson(FILTER_TEXT), 'refusal',
+    'classifier: with no finish_reason the old refusal reading is preserved');
+
+  // precedence is total: content_filter outranks truncation too
+  assert.strictEqual(
+    classifyNonJson('{"directives":[{"action":"fir', 'content_filter'), 'content-filter',
+    'classifier: content_filter outranks a half-written object');
+
+  // and it cannot fire without the signal
+  for (const fr of [undefined, 'stop', 'length', null, 'tool_calls']) {
+    assert.notStrictEqual(
+      classifyNonJson(FILTER_TEXT, fr), 'content-filter',
+      `classifier: content-filter must not be invented for finish_reason ${fr}`);
+  }
+
+  // six distinct causes out of one function
+  const kinds6 = new Set([
+    classifyNonJson(FILTER_TEXT),                      // refusal
+    classifyNonJson('The bloc will invest.'),          // no-object
+    classifyNonJson('{"directives":[{"action":}]}'),   // unparseable
+    classifyNonJson(''),                               // empty
+    classifyNonJson('', 'length'),                     // truncated
+    classifyNonJson('', 'content_filter'),             // content-filter
+  ]);
+  assert.strictEqual(kinds6.size, 6, 'classifier: six distinct causes, not one constant');
+  console.log('  ok -- content-filter classifier: 6 causes, a filter is never a refusal, the same words with finish_reason stop still are');
+}
+
 console.log('DIRECTIVE OK — briefing fields verified, 6/6 valid directives accepted, 11/11 invalid rejected with reasons, press v3 + partner fields v4 verified, repair trace records intent, 12/12 action classes idempotent under re-validation');

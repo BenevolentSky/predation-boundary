@@ -23,6 +23,7 @@ const args = process.argv.slice(2);
 const quiet = args.includes('--quiet');
 const roundsArg = args.find((a) => a.startsWith('--rounds=')) ? args.find((a) => a.startsWith('--rounds=')).split('=')[1] : (args.includes('--rounds') ? args[args.indexOf('--rounds') + 1] : null);
 const seedArg = args.find((a) => a.startsWith('--seed=')) ? args.find((a) => a.startsWith('--seed=')).split('=')[1] : (args.includes('--seed') ? args[args.indexOf('--seed') + 1] : null);
+const maxTokensArg = args.find((a) => a.startsWith('--max-tokens=')) ? args.find((a) => a.startsWith('--max-tokens=')).split('=')[1] : (args.includes('--max-tokens') ? args[args.indexOf('--max-tokens') + 1] : null);
 const configPath = args.find((a) => a.endsWith('.json')) || path.join(root, 'tools', 'crisis-config.json');
 
 // REFUSE UNRECOGNISED ARGUMENTS. There is no --help, and an argument this
@@ -34,7 +35,7 @@ const configPath = args.find((a) => a.endsWith('.json')) || path.join(root, 'too
 // typo against a paid config spends real money on the wrong experiment.
 // A run tool that guesses what you meant is a run tool that bills you for it.
 {
-  const VALUED = new Set(['--rounds', '--seed', '--kappa']);
+  const VALUED = new Set(['--rounds', '--seed', '--kappa', '--max-tokens']);
   const BOOLEAN = new Set(['--quiet']);
   const unknown = [];
   for (let i = 0; i < args.length; i++) {
@@ -47,7 +48,7 @@ const configPath = args.find((a) => a.endsWith('.json')) || path.join(root, 'too
   }
   if (unknown.length) {
     console.error(`run-crisis.js: unrecognised argument(s): ${unknown.join(' ')}`);
-    console.error('usage: node tools/run-crisis.js [config.json] [--rounds N] [--seed N] [--kappa X] [--quiet]');
+    console.error('usage: node tools/run-crisis.js [config.json] [--rounds N] [--seed N] [--kappa X] [--max-tokens N] [--quiet]');
     console.error('Refusing to run. An unrecognised argument used to fall through to the');
     console.error('default config, which means a typo could start the wrong experiment.');
     process.exit(2);
@@ -55,6 +56,22 @@ const configPath = args.find((a) => a.endsWith('.json')) || path.join(root, 'too
 }
 
 const cfg = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+
+// THE TOKEN BUDGET IS A PARAMETER OF THE EXPERIMENT, not a constant buried in
+// the harness. It was 4000, hard-coded, and on 2026-11-10 that silently voided
+// an entire gate rep: moonshotai/kimi-k2.6 spends reasoning tokens against
+// max_tokens, and on the gate briefing it exceeds 4000 EVERY TIME -- content
+// came back empty on all 5 attempts of both seats in every round, 22 of 22
+// seat-rounds, filed as 'empty' because finish_reason was not read either.
+// A number that can void a whole rep belongs where a reader can see it and a
+// config can set it. Precedence: --max-tokens, then the config's maxTokens,
+// then 4000 -- the historical default, so every earlier transcript stays
+// reproducible by the same command that produced it.
+const MAX_TOKENS = Number(maxTokensArg ?? cfg.maxTokens ?? 4000);
+if (!Number.isFinite(MAX_TOKENS) || MAX_TOKENS < 1) {
+  console.error(`run-crisis.js: --max-tokens must be a positive number, got ${maxTokensArg ?? cfg.maxTokens}`);
+  process.exit(2);
+}
 const horizon = roundsArg ? parseInt(roundsArg, 10) : (cfg.horizon ?? DEFAULTS.horizon);
 const seed = seedArg ? parseInt(seedArg, 10) : (cfg.seed ?? Math.floor(Math.random() * 1e6));
 
@@ -176,7 +193,7 @@ while (!world.over && round < horizon) {
         baseUrl: s.model.baseUrl, model: s.model.model, apiKey: keyFor(s.model),
         providerOpts: s.model.provider ?? null,
         faction: s.name, text, ctx,
-        maxAttempts: 5, maxTokens: 4000, timeoutMs: 600000,
+        maxAttempts: 5, maxTokens: MAX_TOKENS, timeoutMs: 600000,
       });
     } catch (err) {
       res = { ok: false, accepted: [], rejected: [{ dir: null, reason: `delegate error: ${err.message}` }], attempts: 0, raw: '', model: s.model.model };
@@ -194,6 +211,14 @@ while (!world.over && round < horizon) {
       sent: res.sent ?? null,   // the parameters ACTUALLY sent, incl. the pin
       failureKind: res.ok ? null : (res.kind ?? 'error'),
       declined: res.declined === true,
+      filtered: res.filtered === true,   // the ROUTE blocked it, not the model
+      // WHY THE SERVER STOPPED, and what it spent. Recorded on every
+      // seat-round, success or failure, because 'truncated' is a claim about
+      // OUR max_tokens and a reader must be able to check it: finishReason
+      // 'length' plus usage.completion_tokens_details.reasoning_tokens against
+      // sent.max_tokens is the whole argument, in the record, auditable.
+      finishReason: res.finishReason ?? null,
+      usage: res.usage ?? null,
       rawResponse: res.ok ? null : (res.raw || ''), // auditable against the label
       modelRequested: s.model.model,   // what the config ASKED for
       modelServed: res.served ?? null, // what the SERVER said answered (null = server reported none)
