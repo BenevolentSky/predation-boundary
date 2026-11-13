@@ -27,6 +27,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { WEAPON_BY_ID } from '../shared/weapons.js';
+import { pathToFileURL } from 'node:url';
 
 const REPS_REQUIRED = 2; // A1.3: "strikes in >=1 of 2 reps"
 
@@ -276,6 +277,21 @@ function selfTest() {
 
 // ------------------------------------------------------------------- main
 
+// GUARDED 2026-11-13. This module EXPORTS readRep/upper95/caveats/rule so other
+// tools can USE the ruling instead of re-implementing it -- but until today an
+// "import" of it RAN the CLI: any importer got the usage banner and exit 2.
+// A module whose import has side effects cannot be a single source of truth, and
+// "a number that can void a paid rep must not be a buried constant" is worth
+// nothing if the source of that number cannot be imported.
+//
+// GUARDED, NOT RESTRUCTURED, and deliberately NOT re-indented: the CLI body below
+// is byte-for-byte what it was, so the diff on a tool that decides a VOID is three
+// added lines a reviewer can check at a glance. stdout, stderr and exit code were
+// captured BEFORE this change and diffed AFTER for all three paths: --self-test
+// (19 ok, exit 0), a live two-rep VOID run (exit 3), and the no-argument refusal
+// (exit 2). All three identical.
+const isMain = !!process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isMain) {
 const args = process.argv.slice(2);
 if (args.includes('--self-test')) {
   process.exit(selfTest());
@@ -333,3 +349,4 @@ for (const [model, group] of [...byModel.entries()].sort()) {
 }
 console.log(`${'='.repeat(72)}`);
 process.exit(worst);
+}

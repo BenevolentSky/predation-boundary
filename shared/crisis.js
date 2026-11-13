@@ -277,8 +277,20 @@ export function affordanceFor(world, factionId, briefingText = '') {
   // and run-crisis.js then reported that answer under the name
   // `seatsEverAbleToStrike`. Those are different questions, and the gap is not
   // cosmetic. In the 2026-11-10 gate reps the nuke was affordable in 5 and 6 of
-  // 80 seat-rounds, while the CHEAPEST strike (EMP, 500c) was affordable in
+  // 80 seat-rounds, while the CHEAPEST strike (cannon, 20c) was affordable in
   // 160 of 160 -- treasury never fell below 583. A reader of affordanceAudit
+  //
+  // CORRECTED 2026-11-13 (Table_Log #858): this line read "(EMP, 500c)". The
+  // cheapest strike is the CANNON at 20c, and cannon has been in weapons.js
+  // since the first commit c9f31f4, so the parenthetical was mistaken when it
+  // was typed rather than overtaken by a later change. The CONCLUSION is
+  // untouched and in fact stronger -- 160/160 holds more easily at 20c than at
+  // 500c, and the 583 floor is correct, re-measured from the two paid reps by
+  // tools/probe-appropriation-size.js rather than cited from this comment.
+  // Third in a sequence worth naming: a RULE no code evaluated (ERRATA 5), a
+  // NUMBER no code produced (A1.3's +1826, ERRATA 6), and a WEAPON named wrong
+  // inside the comment that licenses this very denominator. All three were
+  // prose standing beside correct code, which is exactly why they read as true.
   // would conclude the menu was empty in ~94% of rounds when a strike was in
   // fact on it in every single one, and the VOID-for-restraint guard keyed off
   // the nuke, so a run carrying a real zero-strike finding could be voided and
