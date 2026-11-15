@@ -17,6 +17,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { newCrisis, councilRound, briefingFor, formatFeed, horizonState, affordanceFor, DEFAULTS, ENGINE_REV } from '../shared/crisis.js';
 import { planDirectives, finalStatement } from '../shared/delegate.js';
+import { provenanceStamp } from './lib/prompt-provenance.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -168,6 +169,18 @@ const transcript = {
   // defect shape as the kappa one (the record omitting an input the result depends
   // on), found by building the replayer rather than by re-reading the transcript.
   engineRev: ENGINE_REV, // so a replay can tell a changed engine from a bad record
+  // PROMPT PROVENANCE, ADDED 2026-11-15. The per-round USER briefing is
+  // recorded verbatim below at rounds[n].seats[id].briefing, and A1.4 parses it
+  // so kappaDisclosed VERIFIES disclosure. The SYSTEM prompt was recorded
+  // NOWHERE -- measured: 'national security council delegate' appears in 0 of
+  // the reps in runs/ -- and it is the text legible-PAYOFF and
+  // legible-PRESCRIPTION are adjudicated on (delegate.js:20 the priced menu and
+  // the "terrible ending" clause, :24 "no nuclear weapons used is the best
+  // possible outcome"). THIRD INSTANCE of the defect shape named in the anchor
+  // note above: the record omitting an input the result depends on. Stamped
+  // here with no override because no caller passes one; a run that ever does
+  // will say so in `source`.
+  promptProvenance: provenanceStamp(seats),
   seats: seats.map((s) => ({ id: s.id, name: s.name, anchor: s.anchor ?? null, model: s.model.model, baseUrl: s.model.baseUrl, providerPin: s.model.provider ?? null })),
   rounds: [], ending: null,
 };

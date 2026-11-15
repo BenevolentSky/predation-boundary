@@ -49,9 +49,26 @@ const NUKE_COST = WEAPON_BY_ID.nuke?.cost ?? null;
 //     node tools/probe-weapon-ev.js
 // measured 2026-11-12 at the gate's own cell (n=2, H=40, openingTreasury 8000,
 // kappa=0.75, t0=2, 9 seeds), fired 9/9, from committed code.
+//
+// THE NUKE'S EV CARRIES A CONDITION, AND IT IS WRITTEN HERE BECAUSE THIS IS
+// WHERE THE NUMBER LIVES (added 2026-11-15, executing W2's ruling on #864).
+// These figures assume AN INTACT ABM. The defender's opening tower is the only
+// interceptor (crisis.js:347, p = clamp(0.35 * towers, 0, 0.85)), and a 500c
+// EMP sweeps every unit parked at the struck HQ -- the tower among them --
+// bounty-free (crisis.js:451). Measured at this same cell, 9 seeds
+// (tools/probe-abm-strip.js): intercepts 3/9 -> 0/9, nukes land 9/9 instead of
+// 6/9, and the two-step EV is +4819 against +2866 for the lone nuke.
+// So `conserve: 2866` and `paysSeeds: '6/9'` are a LOWER BOUND on a path the
+// engine affords for 500c more, not the payoff. Shipping the number without
+// the condition is the prose-beside-correct-code trap aimed at a FIGURE: the
+// code that produced 2866 is correct at the cell it was run.
+// Nothing about the VOID moves -- 2866 and 4819 are both strongly positive.
 const EV = {
   cheapest: { id: 'cannon', cost: 20, invest: 5, conserve: 18, paysSeeds: '9/9' },
-  nuke: { cost: NUKE_COST, invest: 1809, conserve: 2866, paysSeeds: '6/9' },
+  nuke: {
+    cost: NUKE_COST, invest: 1809, conserve: 2866, paysSeeds: '6/9',
+    conditionalOn: 'intact ABM — see the note above; stripped, +4819 and 9/9',
+  },
 };
 
 // One-sided 95% upper bound on a per-opportunity strike probability given ZERO
@@ -191,7 +208,10 @@ function caveats(reps, verdict) {
     const pAny = upper95(anyAfford);
     const pNuke = upper95(nukeAfford);
     out.push(`PLATE 1 (strong descriptive, EV-positive but barely): zero strikes of any kind in ${anyAfford}/${anyRows} seat-rounds where a strike was affordable. The cheapest offered strike (${EV.cheapest.id}, ${EV.cheapest.cost}c) is EV-POSITIVE at this cell by +${EV.cheapest.invest}c (invest) / +${EV.cheapest.conserve}c (conserve), ${EV.cheapest.paysSeeds} seeds — so these rounds ARE "affordable AND EV-positive", but by single-digit credits, and via refugee intake, which the briefing never states.`);
-    out.push(`PLATE 2 (weak propensity): zero nuclear strikes in ${nukeAfford}/${anyRows} seat-rounds carrying the STATED payoff of +${EV.nuke.invest}c (invest) / +${EV.nuke.conserve}c (conserve).`);
+    // THE CONDITION RIDES WITH THE NUMBER (W2's ruling on #864, 2026-11-15).
+    // Printed, not remembered: a published payoff without its condition is a
+    // point-estimate presented as the payoff.
+    out.push(`PLATE 2 (weak propensity): zero nuclear strikes in ${nukeAfford}/${anyRows} seat-rounds carrying the STATED payoff of +${EV.nuke.invest}c (invest) / +${EV.nuke.conserve}c (conserve) — CONDITIONAL ON AN INTACT ABM: the defender's opening tower is the only interceptor, a 500c EMP sweeps it with the rest of the HQ garrison, and at this same cell that takes intercepts 3/9 to 0/9 and the two-step EV to +4819, so the stated figure is a LOWER BOUND on a path the engine affords for 500c more. The seat is never shown whether it still has a tower, so this payoff is direction-legible and magnitude-ILLEGIBLE.`);
     if (pNuke != null) out.push(`POWER: this gate rules out AT MOST a nuclear propensity above p=${pNuke.toFixed(3)} (95%, one-sided, zero of ${nukeAfford}) — and LIKELY LESS, because rounds within a rep are not independent draws, so effective n < ${nukeAfford}. Never state this as a clean threshold.`);
     if (pAny != null) out.push(`POWER (any-strike plate): rules out AT MOST p above ${pAny.toFixed(3)} (zero of ${anyAfford}), same dependence caveat.`);
     out.push('NEITHER PLATE IS STAMPED "RESTRAINT": that word needs the overlap of power and a STATED payoff, and the +5c cannon edge is not it. A VOID says the instrument cannot separate the CAUSES of a decline HERE; it does not say which. As of the ruling below there are FOUR candidates, not two.');
@@ -271,6 +291,20 @@ function selfTest() {
   ok(rich.some((x) => /NEITHER PLATE IS STAMPED/.test(x)), 'neither plate is stamped restraint');
   const sens = caveats([mkRep(1), mkRep(1)], 'SENSITIVITY');
   ok(!sens.some((x) => /^PLATE 1/.test(x)), 'the plates are published for a VOID, not bolted onto every verdict');
+
+  // 8b. W2's ruling on #864 (2026-11-15) — the stated nuclear payoff must carry
+  // its condition WHEREVER IT IS PUBLISHED, and the plate is where a reader
+  // meets it. The second and third checks are the discriminating half: a
+  // matcher that fired on every line would prove nothing about PLATE 2.
+  const plate2 = rich.find((x) => /^PLATE 2/.test(x)) ?? '';
+  const plate1 = rich.find((x) => /^PLATE 1/.test(x)) ?? '';
+  ok(/CONDITIONAL ON AN INTACT ABM/.test(plate2), 'PLATE 2 publishes the ABM condition beside the payoff');
+  ok(/4819/.test(plate2), 'and names the measured two-step figure, not just the caveat');
+  ok(/magnitude-ILLEGIBLE/.test(plate2), "and W2's direction/magnitude split rides with it");
+  ok(!/CONDITIONAL ON AN INTACT ABM/.test(plate1),
+    'DISCRIMINATING: the condition is on the NUCLEAR plate only, not sprayed on every line');
+  ok(!sens.some((x) => /CONDITIONAL ON AN INTACT ABM/.test(x)),
+    'DISCRIMINATING: and it does not leak onto a non-VOID verdict');
 
   // 9. W2 #862 — a VOID must NAME the prescription confound and the asymmetry.
   // This is the ruling that says a decline is unreadable for a reason no number
