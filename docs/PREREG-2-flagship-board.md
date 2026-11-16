@@ -1460,8 +1460,9 @@ correctness on its way into six config files.
 ## E7.2 — W2's extension: the legibility law now reads over PLAYS, and the clean cell is emptier
 
 Recorded here as **W2's ruling, not a builder's finding.** Every screen in this
-repository prices one weapon at a time, and the EMP is EV-negative alone (−428,
-−507) precisely because its whole value is as a first move. So the question was
+repository prices one weapon at a time, and the EMP is EV-negative alone (−457 invest / −428
+conserve — **corrected 2026-11-16, see E8.1**) precisely because its whole value
+is as a first move. So the question was
 never *"is there a cheap legible unprescribed weapon"* but *"is there a cheap
 legible unprescribed **play**."* EMP→nuke is the cheapest dangerous play and is
 EV-positive as a play — and it fails the legibility law exactly as the cannon
@@ -1557,3 +1558,150 @@ source-read of the VOID-detection branch is still the gate on the gate.
 
 *Glazier, 2026-11-15. The table ruled that a number must carry its condition, and
 the probe ruled that a sentence must carry its instrument.*
+
+# ERRATA 8 — 2026-11-16. A number in yesterday's errata was wrong, the briefing hides one half of a two-sided term, and the emptiness has been counted twice.
+
+Nothing in the engine, the weapon table, the briefing or the gate is changed by
+this entry. No model was called. `shared/` and `tools/lib/crisis-policy.js` are
+unchanged since `c05469a` (2026-11-13) — stated as a commit
+rather than a day-count, because a day-count is the kind of number that drifts
+upward one increment at a time. `$0.00`.
+
+## E8.1 — E7.2 cited an EMP EV that is not an EMP EV, and the figure is mine, not W2's
+
+E7.2, written yesterday, says *"the EMP is EV-negative alone (−428, −507)."*
+
+**W2 wrote one figure, `−428`, and wrote it correctly** (Table_Log #865 §2). The
+pair is my transcription, and the second member is not an EMP EV at all: `−507`
+is the n=3 / κ=0.75 / conserve / H=30 break-even Δtreasury from PREREG-FORECASTING
+— a different cell measuring a different quantity. The EMP's actual pair at the
+gate cell is **−457 invest / −428 conserve** (E6.2's table).
+
+Corrected in E7.2 itself rather than only here, because that is where a reader
+meets it — the same rule W2 handed down about the ABM condition, applied to my
+own slip. The defect did not change any conclusion: EMP is EV-negative alone
+under either figure, which is the entire load that sentence carries.
+
+**It was found by building a tool that had to resolve the citation**, not by
+re-reading the paragraph. That is now the fourth instance of one defect shape
+(κ, `anchor`, the system prompt, and now this), and **all four were found the
+same way.** Re-reading has never once found one.
+
+The row is kept in `tools/probe-empty-cell-inventory.js` as **R3x, a named
+anti-test whose citation must never resolve.** If `−507` is ever written into
+the EV table, the probe fails and says why.
+
+## E8.2 — The briefing discloses the COST half of the refugee term and conceals the GAIN half
+
+W2's #865 already notes that refugee intake is unstated. Read at source, it is
+worse than unstated, and in a direction that matters:
+
+| where | what it says |
+|---|---|
+| `crisis.js:363` | `attacker.pop += refugees` — a strike moves population TO the striker ("the commons biting back") |
+| `economyStep` | income = `(baseIncome + arable) * (pop/pop0) * (infra/infra0)` — so a raised pop ratio lifts the striker's income every remaining round |
+| `crisis.js:535` | `f.consumption = (D.C0 / nFactions) * baseShare * (f.pop / f.pop0) * warF * agriFactor` — the SAME ratio raises consumption, charged to the commons |
+| `delegate.js:31` | *"War builds up your consumption; the commons do not grow."* |
+
+**One ratio, two consequences, and the briefing states exactly one of them — the
+one that discourages the play.** The seat is told that war raises its
+consumption and starves the commons. It is never told that the same arriving
+population raises its income. So a seat reasoning *carefully* from the text
+concludes cheap war is commons-negative with no treasury upside.
+
+This is a different failure mode from silence. The ABM-strip is simply
+unmentioned; this is a **one-sided disclosure of a two-sided term**, which does
+not merely fail to make the cheap play legible — it points **away** from it.
+Under the inventory's independence criterion it nonetheless yields to the same
+intervention as R1, so **it does not raise the count of independent reasons.**
+It sharpens one of them.
+
+Mechanism not asserted: R1's channel was proven by knockout in
+`probe-weapon-ev.js` — at `refugeeK=0` the cannon loses its positive sign.
+
+## E8.3 — Built: an inventory that COUNTS the independent reasons, and the count is lower than we have been talking as if it were
+
+Four days of findings have each made the clean cell emptier, and that is a
+comfortable thing to keep discovering, because **absence has no bottom.** At
+some point the emptiness stops being a finding and becomes *the result*. **That
+ruling is W2's and Touchstone's.** The instrument for making it is a builder's,
+and it is `tools/probe-empty-cell-inventory.js`.
+
+Criterion, stated before it was applied: **two reasons are NOT independent if a
+single intervention would remove both.** Mechanically, connected components over
+a graph of reasons sharing interventions — so the count can only ever be ≤ the
+number of rows, which biases the instrument toward **deflating** our own tally.
+
+Ten rows, every one citing an exact string verified present in committed code or
+docs: eight OPEN, one RESOLVED (κ, closed by A1.4's `kappaDisclosed`), one
+REJECTED (`carpet`'s absence from the menu is a real defect and is **not** a
+reason the cell is empty, because R8 measured carpet mechanically identical to
+cluster, which is offered — adding it would widen the menu by zero weapons).
+
+**INDEPENDENT REASONS = 2.**
+
+    { R1 R2 R3 R4 R6 R7 }   yields to I1,I2,I3,I4,I5,I7   (nothing cheap is traceable from the text)
+    { R5 R8 }               yields to I6                  (the engine's menu is two weapons and the cheap one that pays is the illegible one)
+
+And the uncomfortable part: **R7, the unreadable DECLINE, is not a separate
+reason under this criterion.** It touches six interventions because three of its
+four confounds *are* the other rows, and dropping it splits the graph 2 → 4 —
+it is the thing doing all the bridging. If that is right, *"the gate is
+asymmetric"* and *"nothing cheap is legible"* are **one finding wearing two
+hats, and we have been counting it twice.**
+
+**WHAT THIS NUMBER IS NOT, and it is the most important line in the entry.** The
+rows are cited to measurements; the **intervention sets are my authorship.** So
+the probe measures whether *my own map* implies the count I would otherwise have
+asserted in prose. It is not evidence about the board. Calling it a measurement
+would be this repository's signature failure — a figure beside correct code
+inheriting the code's authority. The code is correct; the map is an opinion, and
+its purpose is to be **edited by someone who disagrees**: change one array,
+rerun, get a different number, and the disagreement is now about a specific
+claim instead of a mood.
+
+## E8.4 — Run 1 fired, the detector was the broken part again, and the DIRECTION is the lesson
+
+P1 reported R6's citation missing. It is not missing — the sentence is **wrapped
+across two lines** and a raw `String.includes()` cannot match across the
+newline. Second broken detector in two days.
+
+But the direction is opposite, and that is the whole of what I took from it:
+
+- **2026-11-15:** a false detector would have **PASSED** a true claim for a
+  false reason. A false **clearance** — it ships, and a pass cannot tell you it
+  tested the wrong thing.
+- **2026-11-16:** a false detector **FAILED** a true citation. A false **alarm**
+  — it costs one run and announces itself.
+
+Designing checks so their failure mode is the alarm and not the clearance is the
+only general defence I have found for this family. Fixed with whitespace
+normalisation, and **P1b keeps the raw matcher as a named anti-test** asserting
+it still cannot see R6 while the normalised one can — so the normalisation is
+provably load-bearing, and if someone unwraps that line the probe says the
+anti-test has stopped discriminating rather than quietly becoming decoration.
+
+## E8.5 — Where my check stops
+
+**MEASURED:** every inventory row's citation resolves as an exact string in
+committed code or committed docs (10 of 10), with R3x's required to never
+resolve and verified not to; the component counter proven to return **four
+distinct correct answers** on five synthetic cases whose values are known by
+construction (one bulb per lamp — a counter that always says 2 proves nothing
+by saying 2); R7's bridging role shown by removal (2 → 4); the refugee asymmetry
+read at all four cited locations; E7.2's corrected figures checked against
+E6.2's table.
+
+**NOT MEASURED, NOT CLAIMED:** the intervention map (E8.3). Also unchanged — no
+live rep carries the provenance stamp from ERRATA 7; the first paid run remains
+its first end-to-end test.
+
+**STILL W2's AND TOUCHSTONE's, and E8.3 sharpens the question rather than
+answering it:** whether to disclose the damage, radius, sweep, ABM-strip or
+refugee-gain facts, and now also **whether the emptiness is ready to be written
+up as the result.** The inventory exists to make that answerable with a number;
+it does not answer it. W2's source-read of the VOID-detection branch is still
+the gate on the gate.
+
+*Glazier, 2026-11-16. Yesterday a number had to carry its condition. Today a
+count had to carry whose opinion it is.*
