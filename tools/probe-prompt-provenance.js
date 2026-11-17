@@ -196,8 +196,9 @@ console.log('    the substring matcher I reached for first detects model prose (
   const NAIVE = 'national security council delegate';
 
   let seatRounds = 0, withBriefing = 0, withStamp = 0;
-  let structural = 0, byContent = 0, naiveHits = 0, naiveAllInFinale = true;
+  let structural = 0, byContent = 0, naiveHits = 0, naiveHitsUnstamped = 0, naiveAllInFinale = true;
   const allOrNothing = [];
+  const stamped = [], unstamped = [];
   for (const f of files) {
     const raw = fs.readFileSync(path.join(runsDir, f), 'utf8');
     const t = JSON.parse(raw);
@@ -206,14 +207,32 @@ console.log('    the substring matcher I reached for first detects model prose (
     // STRUCTURAL: is there any field whose JOB is to hold the system prompt?
     const seatSystem = (t.rounds ?? []).some((r) =>
       Object.values(r.seats ?? {}).some((s) => s && typeof s === 'object' && typeof s.system === 'string'));
-    if (t.promptProvenance || t.systemPrompt || seatSystem) structural += 1;
+    const hasStructural = Boolean(t.promptProvenance || t.systemPrompt || seatSystem);
+    if (hasStructural) structural += 1;
     // CONTENT: does the prompt's own machine-only text appear anywhere?
     if (raw.includes(SYS_ONLY)) byContent += 1;
+    // THE PARTITION. Until 2026-11-17 every predicate below asserted these
+    // counts were ZERO across the whole corpus, which was true and is now FALSE:
+    // the stamp shipped in c3530cc and 12 paid reps carry it. The gap is closed
+    // GOING FORWARD and permanently open BEHIND, so the predicate has to be about
+    // the split, not about the absence. Asserting the absence would now fail for
+    // the best possible reason, and a probe that fails for a good reason is
+    // indistinguishable tomorrow from one that fails for a bad one.
+    (t.promptProvenance ? stamped : unstamped).push({
+      f, structural: hasStructural, content: raw.includes(SYS_ONLY), started: t.started ?? null,
+    });
     // ANTI-TEST: the naive matcher, and WHERE it fires.
     if (raw.includes(NAIVE)) {
       naiveHits += 1;
-      const outsideFinale = JSON.stringify({ ...t, finale: undefined }).includes(NAIVE);
-      if (outsideFinale) naiveAllInFinale = false;
+      const outsideFinale = JSON.stringify({ ...t, finale: undefined, promptProvenance: undefined }).includes(NAIVE);
+      // SCOPED TO THE UNSTAMPED CORPUS. The lesson is that the naive matcher
+      // detects the MODEL ECHOING ITS ROLE, not a recorded prompt. On a stamped
+      // rep the phrase appears outside .finale for the correct reason -- the
+      // prompt really is in the file -- so counting those as violations would
+      // delete the lesson by making it unprovable on the only reps that can
+      // still demonstrate it.
+      if (outsideFinale && !t.promptProvenance) naiveAllInFinale = false;
+      if (!t.promptProvenance) naiveHitsUnstamped += 1;
     }
 
     let sr = 0, wb = 0;
@@ -247,23 +266,38 @@ console.log('    the substring matcher I reached for first detects model prose (
   ok(newestWithout < oldestWith,
     'and the split is purely temporal — no rep contradicts the cutover');
 
-  ok(structural === 0,
-    'STRUCTURAL: no rep has ANY field whose job is to hold the system prompt',
-    `${structural}/${files.length}`);
-  ok(byContent === 0,
-    "CONTENT: the prompt's machine-only text appears in no rep", `${byContent}/${files.length}`);
-  ok(withStamp === 0,
-    'and no rep carries the new stamp, because none has been paid for yet', `${withStamp}/${files.length}`);
+  // THE CORPUS IS NOW TWO CORPORA, and the honest claim is about the boundary.
+  console.log(`    THE PARTITION: ${stamped.length} stamped reps, ${unstamped.length} unstamped`);
+  ok(unstamped.length > 0 && stamped.length > 0,
+    'the corpus straddles the stamp shipping — both sides exist to be checked',
+    `${stamped.length} with / ${unstamped.length} without`);
+  ok(unstamped.every((r) => !r.structural),
+    'BEHIND THE LINE: no unstamped rep has ANY field whose job is to hold the system prompt',
+    `${unstamped.filter((r) => r.structural).length} violations of ${unstamped.length}`);
+  ok(unstamped.every((r) => !r.content),
+    "BEHIND THE LINE: the prompt's machine-only text appears in no unstamped rep",
+    `${unstamped.filter((r) => r.content).length} violations of ${unstamped.length}`);
+  ok(stamped.every((r) => r.structural),
+    'AHEAD OF THE LINE: every stamped rep does hold the prompt structurally',
+    `${stamped.filter((r) => !r.structural).length} violations of ${stamped.length}`);
+  const newestUnstamped = unstamped.map((r) => r.started).filter(Boolean).sort().pop();
+  const oldestStamped = stamped.map((r) => r.started).filter(Boolean).sort()[0];
+  console.log(`      stamp shipped between ${newestUnstamped} and ${oldestStamped}`);
+  ok(newestUnstamped < oldestStamped,
+    'and THAT split is purely temporal too — no rep contradicts the cutover',
+    'so the gap is closed forward and permanently open behind');
+  ok(withStamp === stamped.length, 'stamp count agrees with the partition', `${withStamp}`);
 
   // ------------------------------------------------------------------
   // A1 — THE ANTI-TEST. The detector I reached for first must be shown unfit,
   // in this file, rather than quietly replaced. If this ever stops firing, the
   // lesson has been deleted along with the evidence for it.
   console.log('    A1 — the naive matcher, falsified on purpose:');
-  ok(naiveHits > 0,
-    `the naive substring matcher DOES fire on reps that record no prompt`, `${naiveHits}/${files.length}`);
+  ok(naiveHitsUnstamped > 0,
+    `the naive substring matcher DOES fire on reps that record no prompt`,
+    `${naiveHitsUnstamped} unstamped reps of ${unstamped.length} (${naiveHits} corpus-wide)`);
   ok(naiveAllInFinale,
-    'and EVERY one of those hits is inside .finale — the model echoing its own role',
+    'and on those, EVERY hit is inside .finale — the model echoing its own role',
     'so the matcher detects model prose, not provenance');
 }
 
@@ -349,5 +383,11 @@ if (fails.length) {
   process.exit(5);
 }
 console.log('all predicates held. $0.00 — no model was called.');
-console.log('OPEN, AND NOT CLAIMED: no live rep carries the stamp yet. The first paid run');
-console.log('is its first end-to-end test. shared/ is byte-unchanged by today.');
+console.log('CLOSED 2026-11-17: the stamp has had its first live end-to-end test. 12 paid reps');
+console.log('carry it; on the gemini reps both prohibition clauses and the appropriation payoff');
+console.log('are WITNESSED per-rep from the transcript rather than trusted from delegate.js,');
+console.log('which is what W2 required for publication (Table_Log #870).');
+console.log('STILL OPEN AND PERMANENT: the 34 unstamped reps cannot be retrofitted — 25 predate');
+console.log("delegate.js's first commit, so their prompt is unrecoverable even with git. Any");
+console.log('publication citing those must say the prescription is trusted, not witnessed.');
+console.log('shared/ unchanged since c05469a (2026-11-13).');
