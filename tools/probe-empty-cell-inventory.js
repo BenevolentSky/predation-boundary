@@ -233,14 +233,22 @@ const ROWS = [
   },
   {
     id: 'R7',
-    status: 'OPEN',
+    status: 'EFFECT',
     claim: 'The DECLINE is unreadable: abstention is confounded four ways (principle / did-not-see-it-pays / '
          + 'could-not-afford / followed-the-prescription), so the gate is ASYMMETRIC -- a fire is legible, a decline '
-         + 'is not.',
+         + 'is not. RECLASSIFIED 2026-11-16 ON A RULING BY TOUCHSTONE (Table_Log #869): this is an EFFECT, not a '
+         + 'cause. The asymmetry is the honest OUTPUT of the other reasons, not a third hole beside them. An EFFECT '
+         + 'row is therefore excluded from the component count -- it is a consequence to be reported, not a reason '
+         + 'to be fixed.',
     cite: { file: 'docs/PREREG-2-flagship-board.md', find: 'ERRATA 5' },
     interventions: ['I1', 'I2', 'I3', 'I4', 'I5', 'I7'],
-    note: 'Touches six interventions because three of its four confounds are the other rows. Whether that makes it a '
-        + 'REASON or a CONSEQUENCE of the others is exactly what the component count decides.',
+    attribution: 'Reclassification belongs to Touchstone (#869). The row and its intervention set are kept verbatim so '
+         + 'the reclassification is auditable rather than a silent deletion.',
+    note: 'AND DROPPING IT COST US THE COMFORTABLE NUMBER. R7 touched six interventions, which made it the BRIDGE '
+        + 'between every text-side reason. With it in, the graph had 2 components. With it out -- which is the '
+        + 'correct structure -- the graph has 4. So the "2" this probe reported on 2026-11-16 was RIGHT ABOUT THE '
+        + 'DECISION AND WRONG ABOUT THE STRUCTURE: it was produced by an effect masquerading as a reason, and the '
+        + 'coincidence hid the fragmentation. See the FAMILY count below for what the 2 actually was.',
   },
   {
     id: 'R8',
@@ -422,28 +430,59 @@ else ok(`counter is LIT: ${distinct.size} distinct answers across 5 constructed 
 // ---------------------------------------------------------------------------
 // P2 — THE COUNT. Hand-derived first; a guard, not a prediction.
 // ---------------------------------------------------------------------------
-say('\nP2 (GUARD — hand-derived before this file was written, NOT pre-registered) — the count is 2.');
+// FAMILIES. Touchstone's #869 ruled that building the cell is TWO DECISIONS --
+// disclosure (ours, cheap, textual) and pricing (Chance's, an engine change).
+// That is a partition over INTERVENTION TYPE, which is coarser than the
+// component graph. I6 is the only engine intervention; everything else is text.
+const ENGINE_IV = new Set(['I6']);
+function families(comps) {
+  const fam = { text: [], engine: [], mixed: [] };
+  for (const g of comps.groups) {
+    const ivs = [...new Set(g.flatMap((id) => ROWS.find((r) => r.id === id).interventions))];
+    const anyEngine = ivs.some((i) => ENGINE_IV.has(i));
+    const anyText = ivs.some((i) => !ENGINE_IV.has(i));
+    (anyEngine && anyText ? fam.mixed : anyEngine ? fam.engine : fam.text).push(g.join(','));
+  }
+  return fam;
+}
+
+say('\nP2 (GUARD, REVISED 2026-11-16 on Touchstone #869) — with R7 reclassified as an EFFECT the count is 4, in 2 FAMILIES.');
 bar('-');
 const live = components(ROWS);
 say(`  OPEN rows considered: ${live.considered.join(', ')}`);
 for (const g of live.groups) {
   const ivs = [...new Set(g.flatMap((id) => ROWS.find((r) => r.id === id).interventions))].sort();
-  say(`    component: { ${pad(g.join(', '), 28)} }  yields to: ${ivs.join(', ')}`);
+  say(`    component: { ${pad(g.join(', '), 20)} }  yields to: ${ivs.join(', ')}`);
 }
+const fam = families(live);
 say(`  INDEPENDENT REASONS = ${live.count}`);
-if (live.count === 2) ok('guard holds at 2 — no drift since the hand derivation');
-else fail(`guard was 2, the map now gives ${live.count}. The map changed; re-derive before quoting either number.`);
+say(`  FAMILIES: text/disclosure = [${fam.text.join(' | ')}]   engine/pricing = [${fam.engine.join(' | ')}]   mixed = [${fam.mixed.join(' | ') || 'none'}]`);
+const famCount = (fam.text.length ? 1 : 0) + (fam.engine.length ? 1 : 0) + fam.mixed.length;
+say(`  DECISION FAMILIES = ${famCount}`);
+if (live.count === 4) ok('component guard holds at 4 — the honest structure with the effect row removed');
+else fail(`component guard was 4, the map now gives ${live.count}. Re-derive before quoting either number.`);
+if (famCount === 2 && fam.mixed.length === 0) ok("family guard holds at 2 and they are DISJOINT — matching the two decisions Touchstone named");
+else fail(`family guard was 2 disjoint; got ${famCount} with ${fam.mixed.length} mixed. A mixed family means one decision cannot be made alone.`);
 
 // ---------------------------------------------------------------------------
 // P4 — R7's bridging work. Also hand-derived.
 // ---------------------------------------------------------------------------
-say('\nP4 (GUARD — hand-derived) — removing R7 (the decline confound) RAISES the count: it is doing the bridging.');
+// P4 — NAMED ANTI-TEST. Keeps the superseded structure measurable so the
+// correction cannot be quietly forgotten. Re-admitting R7 as a REASON must
+// collapse 4 components to 2 -- which is exactly how an effect masquerading as
+// a cause produced a flattering number on 2026-11-16.
+say('\nP4 (ANTI-TEST) — re-admitting R7 as a REASON must COLLAPSE the count to 2. That collapse is the defect.');
 bar('-');
-const withoutR7 = components(ROWS.filter((r) => r.id !== 'R7'));
-say(`  with R7    : ${live.count}  ${live.groups.map((g) => '{' + g.join(',') + '}').join(' ')}`);
-say(`  without R7 : ${withoutR7.count}  ${withoutR7.groups.map((g) => '{' + g.join(',') + '}').join(' ')}`);
-if (withoutR7.count > live.count) ok(`R7 bridges: dropping it takes the count ${live.count} -> ${withoutR7.count}`);
-else fail(`expected the count to RISE without R7; got ${withoutR7.count} against ${live.count}`);
+const asIfR7Open = components(ROWS.map((r) => (r.id === 'R7' ? { ...r, status: 'OPEN' } : r)));
+say(`  R7 as EFFECT (correct) : ${live.count}  ${live.groups.map((g) => '{' + g.join(',') + '}').join(' ')}`);
+say(`  R7 as REASON (the old, flattering structure) : ${asIfR7Open.count}  ${asIfR7Open.groups.map((g) => '{' + g.join(',') + '}').join(' ')}`);
+if (asIfR7Open.count === 2 && live.count === 4) {
+  ok('anti-test holds: one effect row re-admitted as a reason bridges 4 components into 2 and HIDES the fragmentation');
+} else {
+  fail(`anti-test expected 2 (R7 open) against 4 (R7 effect); got ${asIfR7Open.count} against ${live.count}`);
+}
+say('  READING: a row that touches every other row’s intervention is a SYMPTOM, not a cause. It will always');
+say('  look like the thing that unifies the problem, and counting it DEFLATES the count by bridging.');
 
 // ---------------------------------------------------------------------------
 // P5 — the inventory must be able to resolve and to reject.
@@ -486,13 +525,28 @@ emptiness is then ready to be written up as THE RESULT rather than chased
 further. Whether to do that is W2's and Touchstone's ruling, not a builder's.
 This only makes the question answerable with a number.
 
-ONE THING THE COUNT ALREADY SAYS, and it is uncomfortable: we have been talking
-as though there were four or five independent reasons. My own map says ${live.count}.
-R7 (the unreadable decline) is not a separate reason at all under this
-criterion -- it is the SUM of the others, which is why removing it SPLITS the
-graph into ${withoutR7.count}. If that is right, then "the gate is asymmetric" and "nothing
-cheap is legible" are one finding wearing two hats, and we have been counting it
-twice.
+WHAT THIS PROBE GOT WRONG ON ITS FIRST DAY, CORRECTED HERE RATHER THAN QUIETLY.
+On 2026-11-16 it reported 2 independent reasons and said, in this very block,
+that "we have been counting one finding twice." Touchstone ruled (#869) that R7
+-- the unreadable DECLINE -- is an EFFECT and not a cause: the asymmetry is the
+honest OUTPUT of the other reasons, not a third hole beside them.
+
+Removing it does NOT simplify the picture. It FRAGMENTS it: ${live.count} components, not 2.
+R7 touched every other row's intervention, which made it the BRIDGE across the
+whole text side, and a bridge DEFLATES a component count. So the comfortable "2"
+was produced by an effect masquerading as a cause. It was right about the
+DECISION and wrong about the STRUCTURE, and the coincidence hid the
+fragmentation. P4 keeps that collapse as a named anti-test.
+
+THE 2 THAT SURVIVES IS A DIFFERENT 2, and it is Touchstone's, not a graph
+artifact: ${famCount} DECISION FAMILIES, disjoint -- text/disclosure and engine/pricing.
+A briefing line can close the first. NOTHING textual touches the second, because
+the only cheap weapon that pays, pays 0.2% of the purse. That is why "should we
+build the cell" is two decisions and not one.
+
+GENERAL READING, worth more than the numbers: a row that touches every other
+row's intervention is a SYMPTOM. It will always look like the thing that unifies
+the problem, and counting it as a cause makes the problem look smaller than it is.
 `);
 
 bar();
